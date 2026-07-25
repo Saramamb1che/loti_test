@@ -5,6 +5,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Terra Nova Collective - Inversión en Terrenos Residenciales</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Supabase SDK JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -554,9 +556,9 @@
 <a class="font-body-md text-on-primary-fixed-variant opacity-80" href="tel:+50586664297">📞 Teléfono: +505 8666 4297</a>
 </div>
 <div class="col-span-1 flex flex-col gap-3">
-<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Portal Privado</p>
+<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Acceso Privado</p>
 <button onclick="handleNavAuthClick()" class="text-left font-body-md text-amber-300 font-semibold hover:underline flex items-center gap-1">
-    <span class="material-symbols-outlined text-sm">lock</span> Iniciar Sesión / Mi Cuenta
+    <span class="material-symbols-outlined text-sm">lock</span> Iniciar Sesión / Sistema
 </button>
 </div>
 <div class="col-span-1 md:col-span-4 mt-12 pt-8 border-t border-white/10 text-center">
@@ -602,7 +604,6 @@
 <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative overflow-hidden">
     <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
     
-    <!-- Modal Header -->
     <div class="text-center mb-6">
         <div class="w-14 h-14 bg-primary-container/10 text-primary-container rounded-full flex items-center justify-center mx-auto mb-3">
             <span class="material-symbols-outlined text-3xl">lock</span>
@@ -611,7 +612,6 @@
         <p class="text-xs text-gray-500 mt-1">Ingresa tus credenciales para consultar tu lote o administrar la plataforma.</p>
     </div>
 
-    <!-- Login Form -->
     <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
         <div>
             <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Correo o Cédula</label>
@@ -633,7 +633,6 @@
 <!-- Modal 3: Client Dashboard Modal -->
 <div id="client-dashboard-modal" class="fixed inset-0 bg-black/80 z-50 hidden backdrop-blur-md overflow-y-auto p-4 md:p-8">
 <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden my-6 border border-gray-100" id="printable-area">
-    <!-- Header -->
     <div class="bg-primary p-6 md:p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
             <span class="bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full uppercase">Estado de Cuenta Oficial</span>
@@ -650,7 +649,6 @@
         </div>
     </div>
 
-    <!-- Financial Progress Card -->
     <div class="p-6 md:p-8 space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div class="bg-surface p-5 rounded-2xl border border-outline-variant/30">
@@ -671,7 +669,6 @@
             </div>
         </div>
 
-        <!-- Progress Bar -->
         <div class="bg-surface p-6 rounded-2xl border border-outline-variant/30">
             <div class="flex justify-between items-center mb-2">
                 <span class="text-sm font-bold text-gray-700">Progreso de Cancelación del Terreno</span>
@@ -682,7 +679,6 @@
             </div>
         </div>
 
-        <!-- Personal Info & Property Details -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-surface p-6 rounded-2xl border border-outline-variant/30 space-y-3">
                 <h4 class="font-bold text-primary text-base flex items-center gap-2 border-b pb-2">
@@ -704,7 +700,6 @@
             </div>
         </div>
 
-        <!-- Payment History Table -->
         <div class="bg-surface p-6 rounded-2xl border border-outline-variant/30">
             <h4 class="font-bold text-primary text-base flex items-center gap-2 mb-4">
                 <span class="material-symbols-outlined">history</span> Historial de Pagos y Abonos
@@ -724,7 +719,6 @@
             </div>
         </div>
 
-        <!-- Actions -->
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-emerald-50 p-6 rounded-2xl border border-emerald-200">
             <div>
                 <h5 class="font-bold text-emerald-900">¿Deseas realizar un pago o tienes dudas de tu cuota?</h5>
@@ -741,14 +735,14 @@
 <!-- Modal 4: Admin Dashboard Modal -->
 <div id="admin-dashboard-modal" class="fixed inset-0 bg-black/80 z-50 hidden backdrop-blur-md overflow-y-auto p-4 md:p-8">
 <div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden my-4 border border-gray-100">
-    <!-- Header -->
     <div class="bg-primary-container p-6 md:p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
             <div class="flex items-center gap-2">
                 <span class="bg-amber-400 text-amber-950 text-xs font-black px-3 py-1 rounded-full uppercase">Panel Administrativo TerraNova</span>
+                <span id="supabase-status-badge" class="bg-emerald-500 text-white text-xs font-bold px-2.5 py-0.5 rounded-full">⚡ Supabase Ready</span>
             </div>
             <h2 class="text-2xl md:text-3xl font-extrabold mt-2">Control Global de Clientes y Lotes</h2>
-            <p class="text-xs text-emerald-200 mt-1">Gestión de cartera, registro de clientes, abonados y contratos.</p>
+            <p class="text-xs text-emerald-200 mt-1">Gestión de cartera, registro de clientes, abonados y contratos en la nube.</p>
         </div>
         <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-full text-xs font-bold flex items-center gap-1">
             <span class="material-symbols-outlined text-sm">logout</span> Cerrar Sesión Admin
@@ -756,7 +750,6 @@
     </div>
 
     <div class="p-6 md:p-8 space-y-8">
-        <!-- Admin Metrics -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="bg-surface p-5 rounded-2xl border border-outline-variant/30">
                 <span class="text-xs font-bold text-gray-500 uppercase">Clientes Registrados</span>
@@ -776,18 +769,21 @@
             </div>
         </div>
 
-        <!-- Action bar & Search -->
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-surface p-4 rounded-2xl border border-outline-variant/30">
             <div class="relative w-full sm:w-96">
                 <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">search</span>
                 <input type="text" id="admin-search-input" onkeyup="filterAdminClients()" placeholder="Buscar por Nombre, Cédula o Lote..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary-container">
             </div>
-            <button onclick="openNewClientModal()" class="w-full sm:w-auto bg-primary-container text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-primary-fixed-variant transition-all shadow-md flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined">person_add</span> + Registrar Nuevo Cliente / Lote
-            </button>
+            <div class="flex gap-2 w-full sm:w-auto">
+                <button onclick="exportToCSV()" class="bg-emerald-700 text-white px-4 py-3 rounded-xl font-bold text-xs hover:bg-emerald-800 transition-all flex items-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-base">download</span> Exportar a Excel/CSV
+                </button>
+                <button onclick="openNewClientModal()" class="bg-primary-container text-white px-5 py-3 rounded-xl font-bold text-xs hover:bg-primary-fixed-variant transition-all shadow-md flex items-center gap-1">
+                    <span class="material-symbols-outlined text-base">person_add</span> + Registrar Cliente
+                </button>
+            </div>
         </div>
 
-        <!-- Clients Table -->
         <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
@@ -906,70 +902,33 @@
 </div>
 
 <script>
-    // --- DATABASE & INITIALIZATION ---
-    const INITIAL_USERS = [
-        {
-            id: "ADMIN-01",
-            role: "admin",
-            correo: "admin@terranova.com",
-            password: "admin123",
-            nombre: "Administrador TerraNova"
-        },
-        {
-            id: "CLI-1001",
-            role: "cliente",
-            nombre: "Carlos Alberto Mendoza",
-            cedula: "001-150890-0002U",
-            correo: "carlos@email.com",
-            password: "cliente123",
-            telefono: "+505 8899 1122",
-            direccion: "Reparto San Juan, Managua",
-            numeroLote: "Lote B-12",
-            proyecto: "Valle Esmeralda Fase I",
-            saldoTotalUSD: 15000,
-            saldoPendienteUSD: 9000,
-            plazoMeses: 36,
-            historialPagos: [
-                { fecha: "2026-01-15", montoUSD: 3000, concepto: "Prima Inicial" },
-                { fecha: "2026-02-15", montoUSD: 1500, concepto: "Abono a Capital Cuota 1" },
-                { fecha: "2026-03-15", montoUSD: 1500, concepto: "Abono a Capital Cuota 2" }
-            ]
-        },
-        {
-            id: "CLI-1002",
-            role: "cliente",
-            nombre: "María José Rodríguez",
-            cedula: "001-220485-0010K",
-            correo: "maria@email.com",
-            password: "cliente123",
-            telefono: "+505 8777 3344",
-            direccion: "Carretera Masaya Km 12",
-            numeroLote: "Lote A-05",
-            proyecto: "Bosque Real Privada",
-            saldoTotalUSD: 28000,
-            saldoPendienteUSD: 14000,
-            plazoMeses: 48,
-            historialPagos: [
-                { fecha: "2026-01-10", montoUSD: 8000, concepto: "Prima Inicial" },
-                { fecha: "2026-03-01", montoUSD: 6000, concepto: "Abono Especial" }
-            ]
-        }
-    ];
+    // --- SUPABASE CLOUD DATABASE ---
+    const SUPABASE_URL     = "https://dxrcapzeisszorxomqe.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_JPNL5JgkagkCvBgT0LIsUg_au_efiqe";
+    const ADMIN_EMAIL      = "admin@terranova.com";
+    const ADMIN_PASSWORD   = "admin123";
 
-    function getDB() {
-        const db = localStorage.getItem('terranova_db');
-        if (!db) {
-            localStorage.setItem('terranova_db', JSON.stringify(INITIAL_USERS));
-            return INITIAL_USERS;
-        }
-        return JSON.parse(db);
-    }
-
-    function saveDB(users) {
-        localStorage.setItem('terranova_db', JSON.stringify(users));
-    }
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let currentUser = null;
+
+    // --- HELPERS ---
+    function showToast(msg, type = 'success') {
+        const t = document.createElement('div');
+        t.className = `fixed bottom-6 right-6 z-[9999] px-5 py-3 rounded-xl shadow-xl font-bold text-sm transition-all ${
+            type === 'success' ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'
+        }`;
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3500);
+    }
+
+    function showLoginLoading(loading) {
+        const btn = document.querySelector('#form-login button[type=submit]');
+        if (btn) btn.textContent = loading ? 'Verificando...' : 'Ingresar';
+    }
+
+
 
     // --- NAVIGATION & GENERAL UI ---
     const nav = document.getElementById('main-nav');
@@ -1045,39 +1004,84 @@
 
     function openAuthModal() {
         document.getElementById('auth-modal').classList.remove('hidden');
+        document.getElementById('login-error').classList.add('hidden');
+        document.getElementById('login-email').value = '';
+        document.getElementById('login-password').value = '';
     }
     function closeAuthModal() {
         document.getElementById('auth-modal').classList.add('hidden');
     }
 
-    function handleLogin(e) {
+    async function handleLogin(e) {
         e.preventDefault();
-        const input = document.getElementById('login-email').value.trim().toLowerCase();
-        const pass = document.getElementById('login-password').value;
+        const input  = document.getElementById('login-email').value.trim().toLowerCase();
+        const pass   = document.getElementById('login-password').value;
         const errDiv = document.getElementById('login-error');
         errDiv.classList.add('hidden');
+        showLoginLoading(true);
 
-        const db = getDB();
-        const found = db.find(u => 
-            (u.correo.toLowerCase() === input || (u.cedula && u.cedula.toLowerCase() === input)) && 
-            u.password === pass
-        );
-
-        if (found) {
-            currentUser = found;
+        // 1. Check admin credentials (hardcoded for security)
+        if (input === ADMIN_EMAIL.toLowerCase() && pass === ADMIN_PASSWORD) {
+            currentUser = { role: 'admin', nombre: 'Administrador TerraNova', correo: ADMIN_EMAIL };
             closeAuthModal();
             updateNavState();
-            
-            // Automatic Role Filtering
-            if (found.role === 'admin') {
-                renderAdminDashboard();
+            renderAdminDashboard();
+            showLoginLoading(false);
+            return;
+        }
+
+        // 2. Check client in Supabase (by email or cedula)
+        try {
+            const { data, error } = await db
+                .from('clientes')
+                .select('*')
+                .or(`correo.eq.${input},cedula.eq.${input}`)
+                .eq('password', pass)
+                .maybeSingle();
+
+            if (error) throw error;
+
+            if (data) {
+                // Load payments for this client
+                const { data: pagosData } = await db
+                    .from('pagos')
+                    .select('*')
+                    .eq('cliente_id', data.id)
+                    .order('fecha', { ascending: false });
+
+                currentUser = {
+                    role: 'cliente',
+                    id: data.id,
+                    nombre: data.nombre,
+                    cedula: data.cedula,
+                    correo: data.correo,
+                    telefono: data.telefono,
+                    direccion: data.direccion,
+                    proyecto: data.proyecto,
+                    numeroLote: data.numero_lote,
+                    saldoTotalUSD: parseFloat(data.saldo_total),
+                    saldoPendienteUSD: parseFloat(data.saldo_pendiente),
+                    plazoMeses: data.plazo_meses,
+                    historialPagos: (pagosData || []).map(p => ({
+                        fecha: p.fecha,
+                        montoUSD: parseFloat(p.monto),
+                        concepto: p.concepto
+                    }))
+                };
+                closeAuthModal();
+                updateNavState();
+                renderClientDashboard(currentUser);
             } else {
-                renderClientDashboard(found);
+                errDiv.textContent = 'Credenciales inválidas. Verifica tu correo/cédula y contraseña.';
+                errDiv.classList.remove('hidden');
             }
-        } else {
-            errDiv.textContent = "Credenciales inválidas. Verifica tu correo/cédula y contraseña.";
+        } catch (err) {
+            console.error('Login error:', err);
+            errDiv.textContent = 'Error de conexión. Intenta de nuevo.';
             errDiv.classList.remove('hidden');
         }
+
+        showLoginLoading(false);
     }
 
     function updateNavState() {
@@ -1108,9 +1112,10 @@
         updateNavState();
         document.getElementById('client-dashboard-modal').classList.add('hidden');
         document.getElementById('admin-dashboard-modal').classList.add('hidden');
+        showToast('Sesión cerrada correctamente.');
     }
 
-    // --- CLIENT DASHBOARD (PROPIEDAD Y CUOTAS DE CLIENTE) ---
+    // --- CLIENT DASHBOARD ---
     function renderClientDashboard(user) {
         document.getElementById('client-dash-name').textContent = user.nombre;
         document.getElementById('client-dash-meta').textContent = `Lote: ${user.numeroLote} • Proyecto: ${user.proyecto}`;
@@ -1161,18 +1166,26 @@
         document.getElementById('client-dashboard-modal').classList.remove('hidden');
     }
 
-    // --- ADMIN DASHBOARD (GESTIÓN Y EDICIÓN COMPLETA) ---
-    function renderAdminDashboard() {
-        const db = getDB();
-        const clients = db.filter(u => u.role === 'cliente');
+    // --- ADMIN DASHBOARD & EXPORT ---
+    async function renderAdminDashboard() {
+        document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+        document.getElementById('admin-clients-table-body').innerHTML =
+            `<tr><td colspan="7" class="p-6 text-center text-gray-400">Cargando datos...</td></tr>`;
+
+        const { data: clients, error } = await db.from('clientes').select('*').order('fecha_registro', { ascending: false });
+
+        if (error) {
+            showToast('Error al cargar clientes: ' + error.message, 'error');
+            return;
+        }
 
         const totalClients = clients.length;
         let carteraTotal = 0;
         let saldoPendiente = 0;
 
         clients.forEach(c => {
-            carteraTotal += (c.saldoTotalUSD || 0);
-            saldoPendiente += (c.saldoPendienteUSD || 0);
+            carteraTotal  += parseFloat(c.saldo_total || 0);
+            saldoPendiente += parseFloat(c.saldo_pendiente || 0);
         });
         const totalRecaudado = Math.max(0, carteraTotal - saldoPendiente);
 
@@ -1181,8 +1194,13 @@
         document.getElementById('admin-metric-collected').textContent = `$${totalRecaudado.toLocaleString()} USD`;
         document.getElementById('admin-metric-pending').textContent = `$${saldoPendiente.toLocaleString()} USD`;
 
-        renderAdminClientsTable(clients);
-        document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+        // Normalise field names for the table renderer
+        const normalised = clients.map(c => ({
+            id: c.id, nombre: c.nombre, correo: c.correo, cedula: c.cedula,
+            telefono: c.telefono, proyecto: c.proyecto, numeroLote: c.numero_lote,
+            saldoTotalUSD: parseFloat(c.saldo_total), saldoPendienteUSD: parseFloat(c.saldo_pendiente)
+        }));
+        renderAdminClientsTable(normalised);
     }
 
     function renderAdminClientsTable(clientsList) {
@@ -1243,19 +1261,43 @@
         });
     }
 
-    function filterAdminClients() {
-        const query = document.getElementById('admin-search-input').value.toLowerCase();
-        const db = getDB();
-        const clients = db.filter(u => u.role === 'cliente' && (
-            u.nombre.toLowerCase().includes(query) ||
-            (u.cedula && u.cedula.toLowerCase().includes(query)) ||
-            (u.numeroLote && u.numeroLote.toLowerCase().includes(query)) ||
-            u.proyecto.toLowerCase().includes(query)
-        ));
-        renderAdminClientsTable(clients);
+    async function filterAdminClients() {
+        const query = document.getElementById('admin-search-input').value.trim().toLowerCase();
+
+        if (!query) { renderAdminDashboard(); return; }
+
+        const { data: clients } = await db
+            .from('clientes')
+            .select('*')
+            .or(`nombre.ilike.%${query}%,cedula.ilike.%${query}%,numero_lote.ilike.%${query}%,proyecto.ilike.%${query}%`);
+
+        const normalised = (clients || []).map(c => ({
+            id: c.id, nombre: c.nombre, correo: c.correo, cedula: c.cedula,
+            telefono: c.telefono, proyecto: c.proyecto, numeroLote: c.numero_lote,
+            saldoTotalUSD: parseFloat(c.saldo_total), saldoPendienteUSD: parseFloat(c.saldo_pendiente)
+        }));
+        renderAdminClientsTable(normalised);
     }
 
-    // --- FORMULARIO DE CLIENTE (CREAR Y EDITAR REGISTROS POR EL ADMIN) ---
+    async function exportToCSV() {
+        const { data: clients } = await db.from('clientes').select('*');
+        if (!clients || clients.length === 0) return alert('No hay datos para exportar.');
+
+        let csv = 'ID,Nombre,Cedula,Correo,Telefono,Lote,Proyecto,SaldoTotalUSD,SaldoPendienteUSD,PlazoMeses\n';
+        clients.forEach(c => {
+            csv += `"${c.id}","${c.nombre}","${c.cedula}","${c.correo}","${c.telefono || ''}","${c.numero_lote || ''}","${c.proyecto || ''}",${c.saldo_total},${c.saldo_pendiente},${c.plazo_meses}\n`;
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url  = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `TerraNova_Clientes_${new Date().toISOString().split('T')[0]}.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+    }
+
+    // --- FORMULARIO DE CLIENTE ---
     function openNewClientModal() {
         document.getElementById('admin-form-title').textContent = "Registrar Nuevo Cliente / Lote";
         document.getElementById('edit-client-id').value = "";
@@ -1266,89 +1308,76 @@
         document.getElementById('admin-client-form-modal').classList.add('hidden');
     }
 
-    function editClient(id) {
-        const db = getDB();
-        const client = db.find(u => u.id === id);
-        if (!client) return;
+    async function editClient(id) {
+        const { data: c } = await db.from('clientes').select('*').eq('id', id).single();
+        if (!c) return;
 
-        document.getElementById('admin-form-title').textContent = "Editar Cliente y Lote";
-        document.getElementById('edit-client-id').value = client.id;
-        document.getElementById('form-cli-name').value = client.nombre;
-        document.getElementById('form-cli-cedula').value = client.cedula;
-        document.getElementById('form-cli-email').value = client.correo;
-        document.getElementById('form-cli-phone').value = client.telefono;
-        document.getElementById('form-cli-address').value = client.direccion;
-        document.getElementById('form-cli-project').value = client.proyecto;
-        document.getElementById('form-cli-lot').value = client.numeroLote;
-        document.getElementById('form-cli-total').value = client.saldoTotalUSD;
-        document.getElementById('form-cli-pending').value = client.saldoPendienteUSD;
-        document.getElementById('form-cli-months').value = client.plazoMeses || 36;
-        document.getElementById('form-cli-password').value = client.password;
-
+        document.getElementById('admin-form-title').textContent = 'Editar Cliente y Lote';
+        document.getElementById('edit-client-id').value   = c.id;
+        document.getElementById('form-cli-name').value    = c.nombre;
+        document.getElementById('form-cli-cedula').value  = c.cedula;
+        document.getElementById('form-cli-email').value   = c.correo;
+        document.getElementById('form-cli-phone').value   = c.telefono || '';
+        document.getElementById('form-cli-address').value = c.direccion || '';
+        document.getElementById('form-cli-project').value = c.proyecto || '';
+        document.getElementById('form-cli-lot').value     = c.numero_lote || '';
+        document.getElementById('form-cli-total').value   = c.saldo_total;
+        document.getElementById('form-cli-pending').value = c.saldo_pendiente;
+        document.getElementById('form-cli-months').value  = c.plazo_meses || 36;
+        document.getElementById('form-cli-password').value = c.password || '';
         document.getElementById('admin-client-form-modal').classList.remove('hidden');
     }
 
-    function saveAdminClient(e) {
+    async function saveAdminClient(e) {
         e.preventDefault();
         const editId = document.getElementById('edit-client-id').value;
-        const db = getDB();
 
+        const payload = {
+            nombre:          document.getElementById('form-cli-name').value,
+            cedula:          document.getElementById('form-cli-cedula').value,
+            correo:          document.getElementById('form-cli-email').value,
+            password:        document.getElementById('form-cli-password').value,
+            telefono:        document.getElementById('form-cli-phone').value,
+            direccion:       document.getElementById('form-cli-address').value,
+            proyecto:        document.getElementById('form-cli-project').value,
+            numero_lote:     document.getElementById('form-cli-lot').value,
+            saldo_total:     parseFloat(document.getElementById('form-cli-total').value),
+            saldo_pendiente: parseFloat(document.getElementById('form-cli-pending').value),
+            plazo_meses:     parseInt(document.getElementById('form-cli-months').value)
+        };
+
+        let error;
         if (editId) {
-            const index = db.findIndex(u => u.id === editId);
-            if (index !== -1) {
-                db[index].nombre = document.getElementById('form-cli-name').value;
-                db[index].cedula = document.getElementById('form-cli-cedula').value;
-                db[index].correo = document.getElementById('form-cli-email').value;
-                db[index].telefono = document.getElementById('form-cli-phone').value;
-                db[index].direccion = document.getElementById('form-cli-address').value;
-                db[index].proyecto = document.getElementById('form-cli-project').value;
-                db[index].numeroLote = document.getElementById('form-cli-lot').value;
-                db[index].saldoTotalUSD = parseFloat(document.getElementById('form-cli-total').value);
-                db[index].saldoPendienteUSD = parseFloat(document.getElementById('form-cli-pending').value);
-                db[index].plazoMeses = parseInt(document.getElementById('form-cli-months').value);
-                db[index].password = document.getElementById('form-cli-password').value;
-            }
+            ({ error } = await db.from('clientes').update(payload).eq('id', editId));
         } else {
-            const newClient = {
-                id: "CLI-" + Math.floor(1000 + Math.random() * 9000),
-                role: "cliente",
-                nombre: document.getElementById('form-cli-name').value,
-                cedula: document.getElementById('form-cli-cedula').value,
-                correo: document.getElementById('form-cli-email').value,
-                telefono: document.getElementById('form-cli-phone').value,
-                direccion: document.getElementById('form-cli-address').value,
-                proyecto: document.getElementById('form-cli-project').value,
-                numeroLote: document.getElementById('form-cli-lot').value,
-                saldoTotalUSD: parseFloat(document.getElementById('form-cli-total').value),
-                saldoPendienteUSD: parseFloat(document.getElementById('form-cli-pending').value),
-                plazoMeses: parseInt(document.getElementById('form-cli-months').value),
-                password: document.getElementById('form-cli-password').value,
-                historialPagos: []
-            };
-            db.push(newClient);
+            ({ error } = await db.from('clientes').insert(payload));
         }
 
-        saveDB(db);
+        if (error) { showToast('Error: ' + error.message, 'error'); return; }
+
+        showToast(editId ? 'Cliente actualizado correctamente.' : 'Cliente registrado correctamente.');
         closeNewClientModal();
         renderAdminDashboard();
     }
 
-    function deleteClient(id) {
-        if (!confirm("¿Estás seguro de que deseas eliminar este cliente?")) return;
-        let db = getDB();
-        db = db.filter(u => u.id !== id);
-        saveDB(db);
+    async function deleteClient(id) {
+        if (!confirm('¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.')) return;
+        const { error } = await db.from('clientes').delete().eq('id', id);
+        if (error) { showToast('Error al eliminar: ' + error.message, 'error'); return; }
+        showToast('Cliente eliminado.');
         renderAdminDashboard();
     }
 
     // --- SISTEMA DE ABONOS ---
-    function openPaymentModal(id) {
-        const db = getDB();
-        const client = db.find(u => u.id === id);
-        if (!client) return;
+    async function openPaymentModal(id) {
+        const { data: c } = await db.from('clientes').select('id,nombre,numero_lote,saldo_pendiente').eq('id', id).single();
+        if (!c) return;
 
-        document.getElementById('pay-client-id').value = client.id;
-        document.getElementById('pay-client-name').textContent = `Cliente: ${client.nombre} (${client.numeroLote}) • Saldo Pendiente Actual: $${client.saldoPendienteUSD.toLocaleString()} USD`;
+        document.getElementById('pay-client-id').value = c.id;
+        document.getElementById('pay-client-name').textContent =
+            `Cliente: ${c.nombre} (${c.numero_lote}) • Saldo Pendiente: $${parseFloat(c.saldo_pendiente).toLocaleString()} USD`;
+        document.getElementById('pay-amount').value = '';
+        document.getElementById('pay-concept').value = 'Abono a mensualidad';
         document.getElementById('pay-date').value = new Date().toISOString().split('T')[0];
         document.getElementById('payment-modal').classList.remove('hidden');
     }
@@ -1357,26 +1386,30 @@
         document.getElementById('payment-modal').classList.add('hidden');
     }
 
-    function handleRecordPayment(e) {
+    async function handleRecordPayment(e) {
         e.preventDefault();
         const clientId = document.getElementById('pay-client-id').value;
-        const amount = parseFloat(document.getElementById('pay-amount').value);
-        const concept = document.getElementById('pay-concept').value;
-        const date = document.getElementById('pay-date').value;
+        const amount   = parseFloat(document.getElementById('pay-amount').value);
+        const concept  = document.getElementById('pay-concept').value;
+        const date     = document.getElementById('pay-date').value;
 
-        const db = getDB();
-        const client = db.find(u => u.id === clientId);
-        if (client) {
-            client.saldoPendienteUSD = Math.max(0, client.saldoPendienteUSD - amount);
-            if (!client.historialPagos) client.historialPagos = [];
-            client.historialPagos.unshift({
-                fecha: date,
-                montoUSD: amount,
-                concepto: concept
-            });
-            saveDB(db);
-        }
+        // 1. Get current balance
+        const { data: c } = await db.from('clientes').select('saldo_pendiente').eq('id', clientId).single();
+        if (!c) return;
 
+        const newBalance = Math.max(0, parseFloat(c.saldo_pendiente) - amount);
+
+        // 2. Insert payment record
+        const { error: payError } = await db.from('pagos').insert({
+            cliente_id: clientId, fecha: date, monto: amount, concepto: concept
+        });
+        if (payError) { showToast('Error al guardar abono: ' + payError.message, 'error'); return; }
+
+        // 3. Update client balance
+        const { error: updError } = await db.from('clientes').update({ saldo_pendiente: newBalance }).eq('id', clientId);
+        if (updError) { showToast('Error al actualizar saldo: ' + updError.message, 'error'); return; }
+
+        showToast(`Abono de $${amount.toLocaleString()} registrado correctamente.`);
         closePaymentModal();
         renderAdminDashboard();
     }
