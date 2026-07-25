@@ -141,13 +141,13 @@
 <a class="text-on-surface-variant hover:text-primary transition-all text-body-md" href="#contacto">Contacto</a>
 </div>
 <div class="hidden md:flex items-center gap-3">
-    <!-- Portal / Mi Cuenta Button -->
-    <button onclick="openAuthModal()" id="nav-user-btn" class="border border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-5 py-2 rounded-full font-label-sm text-label-sm transition-all flex items-center gap-2 font-semibold shadow-sm">
-        <span class="material-symbols-outlined" style="font-size: 20px;">account_circle</span>
-        <span id="nav-user-text">Portal / Mi Cuenta</span>
+    <!-- Unico Botón de Iniciar Sesión / Acceso -->
+    <button onclick="handleNavAuthClick()" id="nav-user-btn" class="border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-5 py-2 rounded-full font-label-sm text-label-sm transition-all flex items-center gap-2 font-semibold shadow-sm">
+        <span class="material-symbols-outlined" style="font-size: 20px;" id="nav-icon">lock</span>
+        <span id="nav-user-text">Iniciar Sesión</span>
     </button>
     
-    <a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita%20para%20conocer%20los%20terrenos." target="_blank" class="bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-6 py-2 rounded-full font-label-sm text-label-sm active:scale-95 transition-all duration-200 shadow-sm flex items-center gap-2">
+    <a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita%20para%20conocer%20los%20terrenos." target="_blank" class="bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-6 py-2.5 rounded-full font-label-sm text-label-sm active:scale-95 transition-all duration-200 shadow-sm flex items-center gap-2 font-semibold">
         <span class="material-symbols-outlined text-green-800" style="font-size: 20px;">calendar_month</span>
         Agenda tu visita
     </a>
@@ -168,12 +168,12 @@
 <a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#nosotros" onclick="toggleMobileMenu()">Nosotros</a>
 <a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#contacto" onclick="toggleMobileMenu()">Contacto</a>
 
-<button onclick="openAuthModal(); toggleMobileMenu();" class="w-full bg-surface-container text-primary py-3 rounded-full font-bold flex items-center justify-center gap-2 border border-primary/20">
-    <span class="material-symbols-outlined">account_circle</span>
-    Portal / Mi Cuenta
+<button onclick="handleNavAuthClick(); toggleMobileMenu();" class="w-full bg-primary-container text-white py-3 rounded-full font-bold flex items-center justify-center gap-2">
+    <span class="material-symbols-outlined">lock</span>
+    <span id="mobile-nav-user-text">Iniciar Sesión</span>
 </button>
 
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita." target="_blank" class="bg-primary-container text-white text-center py-3 rounded-full font-semibold mt-1 flex items-center justify-center gap-2">
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita." target="_blank" class="bg-secondary-container text-on-secondary-container text-center py-3 rounded-full font-semibold mt-1 flex items-center justify-center gap-2">
     <span class="material-symbols-outlined">chat</span>
     Contactar por WhatsApp (+505 86664297)
 </a>
@@ -199,13 +199,13 @@
     Terrenos residenciales desde <strong class="text-secondary-fixed font-bold">$12,000 USD</strong> con financiamiento flexible y ubicación estratégica.
 </p>
 <div class="flex flex-col sm:flex-row gap-stack-md w-full sm:w-auto mt-4">
-<a href="#lotificaciones" class="bg-primary-container text-white px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-primary-fixed-variant transition-all shadow-lg hover:shadow-xl w-full sm:w-auto text-center flex items-center justify-center gap-2">
+<a href="#lotificaciones" class="bg-primary-container text-white px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-primary-fixed-variant transition-all shadow-lg hover:shadow-xl w-full sm:w-auto text-center flex items-center justify-center gap-2 font-bold">
     <span class="material-symbols-outlined">grid_view</span>
     Ver lotes disponibles
 </a>
-<button onclick="openAuthModal()" class="border-2 border-white text-white bg-black/40 backdrop-blur-sm px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-white hover:text-primary transition-all w-full sm:w-auto text-center flex items-center justify-center gap-2">
+<button onclick="handleNavAuthClick()" class="border-2 border-white text-white bg-black/40 backdrop-blur-sm px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-white hover:text-primary transition-all w-full sm:w-auto text-center flex items-center justify-center gap-2 font-bold">
     <span class="material-symbols-outlined text-amber-300">lock</span>
-    Ingresar a mi cuenta de cliente
+    Acceso Privado / Iniciar Sesión
 </button>
 </div>
 </div>
@@ -554,9 +554,9 @@
 <a class="font-body-md text-on-primary-fixed-variant opacity-80" href="tel:+50586664297">📞 Teléfono: +505 8666 4297</a>
 </div>
 <div class="col-span-1 flex flex-col gap-3">
-<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Portal de Usuarios</p>
-<button onclick="openAuthModal()" class="text-left font-body-md text-amber-300 font-semibold hover:underline flex items-center gap-1">
-    <span class="material-symbols-outlined text-sm">lock</span> Acceder al Portal de Clientes
+<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Acceso Privado</p>
+<button onclick="handleNavAuthClick()" class="text-left font-body-md text-amber-300 font-semibold hover:underline flex items-center gap-1">
+    <span class="material-symbols-outlined text-sm">lock</span> Iniciar Sesión / Sistema
 </button>
 </div>
 <div class="col-span-1 md:col-span-4 mt-12 pt-8 border-t border-white/10 text-center">
@@ -597,8 +597,8 @@
 </div>
 </div>
 
-<!-- Modal 2: Auth / Login / Register Modal -->
-<div id="auth-modal" class="fixed inset-0 bg-black/70 z-50 hidden backdrop-blur-md flex items-center justify-center p-4">
+<!-- Modal 2: Unified Login Modal -->
+<div id="auth-modal" class="fixed inset-0 bg-black/75 z-50 hidden backdrop-blur-md flex items-center justify-center p-4">
 <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative overflow-hidden">
     <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
     
@@ -607,71 +607,24 @@
         <div class="w-14 h-14 bg-primary-container/10 text-primary-container rounded-full flex items-center justify-center mx-auto mb-3">
             <span class="material-symbols-outlined text-3xl">lock</span>
         </div>
-        <h3 class="text-2xl font-bold text-primary">Portal de Clientes</h3>
-        <p class="text-xs text-gray-500 mt-1">Ingresa para consultar tu estado de cuenta o gestionar lotes.</p>
-    </div>
-
-    <!-- Auth Tabs -->
-    <div class="flex bg-gray-100 rounded-full p-1 mb-6">
-        <button id="tab-login" onclick="switchAuthTab('login')" class="w-1/2 py-2 text-sm font-bold rounded-full bg-white text-primary shadow-sm transition-all">Iniciar Sesión</button>
-        <button id="tab-register" onclick="switchAuthTab('register')" class="w-1/2 py-2 text-sm font-bold rounded-full text-gray-500 hover:text-primary transition-all">Registrarse</button>
+        <h3 class="text-2xl font-bold text-primary">Acceso al Sistema</h3>
+        <p class="text-xs text-gray-500 mt-1">Ingresa tus credenciales para consultar tu lote o administrar la plataforma.</p>
     </div>
 
     <!-- Login Form -->
     <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
         <div>
             <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Correo o Cédula</label>
-            <input type="text" id="login-email" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary-container focus:outline-none text-sm" placeholder="ej. carlos@email.com o 001-150890-0002U">
+            <input type="text" id="login-email" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary-container focus:outline-none text-sm" placeholder="ej. cliente@email.com o 001-150890-0002U">
         </div>
         <div>
             <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Contraseña</label>
             <input type="password" id="login-password" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary-container focus:outline-none text-sm" placeholder="••••••••">
         </div>
-        <div id="login-error" class="text-red-600 text-xs hidden text-center font-semibold"></div>
-        <button type="submit" class="w-full bg-primary-container text-white py-3.5 rounded-xl font-bold hover:bg-primary-fixed-variant transition-all shadow-md flex items-center justify-center gap-2">
-            <span class="material-symbols-outlined">login</span> Iniciar Sesión
-        </button>
-
-        <div class="pt-4 border-t border-gray-200 mt-4 text-center">
-            <p class="text-xs text-gray-500 mb-2">Accesos Demo para probar:</p>
-            <div class="flex gap-2 justify-center">
-                <button type="button" onclick="quickFillLogin('carlos@email.com', 'cliente123')" class="text-xs bg-emerald-50 text-emerald-800 border border-emerald-300 px-3 py-1.5 rounded-lg hover:bg-emerald-100">👤 Ver Demo Cliente</button>
-                <button type="button" onclick="quickFillLogin('admin@terranova.com', 'admin123')" class="text-xs bg-amber-50 text-amber-800 border border-amber-300 px-3 py-1.5 rounded-lg hover:bg-amber-100">👑 Ver Demo Admin</button>
-            </div>
-        </div>
-    </form>
-
-    <!-- Register Form (Hidden by default) -->
-    <form id="form-register" onsubmit="handleRegister(event)" class="space-y-3 hidden">
-        <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nombre Completo</label>
-            <input type="text" id="reg-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary-container text-sm" placeholder="ej. Juan Pérez">
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-            <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Cédula / ID</label>
-                <input type="text" id="reg-cedula" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="001-XXXXXX-XXXX">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Teléfono</label>
-                <input type="tel" id="reg-phone" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="+505 8888 8888">
-            </div>
-        </div>
-        <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Correo Electrónico</label>
-            <input type="email" id="reg-email" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="juan@email.com">
-        </div>
-        <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Dirección de Domicilio</label>
-            <input type="text" id="reg-address" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="Managua, Nicaragua">
-        </div>
-        <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Contraseña</label>
-            <input type="password" id="reg-password" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="Mínimo 6 caracteres">
-        </div>
-        <div id="reg-error" class="text-red-600 text-xs hidden text-center font-semibold"></div>
-        <button type="submit" class="w-full bg-secondary-container text-on-secondary-container py-3 rounded-xl font-bold hover:bg-secondary-fixed-dim transition-all shadow-md">
-            Crear Cuenta de Cliente
+        <div id="login-error" class="text-red-600 text-xs hidden text-center font-semibold bg-red-50 p-2 rounded-lg border border-red-200"></div>
+        
+        <button type="submit" class="w-full bg-primary-container text-white py-3.5 rounded-xl font-bold hover:bg-primary-fixed-variant transition-all shadow-md flex items-center justify-center gap-2 text-base">
+            <span class="material-symbols-outlined">login</span> Ingresar
         </button>
     </form>
 </div>
@@ -830,7 +783,7 @@
                 <input type="text" id="admin-search-input" onkeyup="filterAdminClients()" placeholder="Buscar por Nombre, Cédula o Lote..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary-container">
             </div>
             <button onclick="openNewClientModal()" class="w-full sm:w-auto bg-primary-container text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-primary-fixed-variant transition-all shadow-md flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined">person_add</span> + Registrar Nuevo Cliente
+                <span class="material-symbols-outlined">person_add</span> + Registrar Nuevo Cliente / Lote
             </button>
         </div>
 
@@ -911,14 +864,14 @@
                 <input type="number" id="form-cli-months" required min="1" value="36" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
             </div>
             <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Contraseña de Acceso</label>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Contraseña de Acceso para el Cliente</label>
                 <input type="text" id="form-cli-password" required value="cliente123" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
             </div>
         </div>
 
         <div class="flex gap-3 pt-4 border-t">
             <button type="button" onclick="closeNewClientModal()" class="w-1/2 py-3 rounded-xl border border-gray-300 font-bold text-gray-700 text-sm">Cancelar</button>
-            <button type="submit" class="w-1/2 bg-primary-container text-white py-3 rounded-xl font-bold text-sm hover:bg-primary-fixed-variant">Guardar Cliente</button>
+            <button type="submit" class="w-1/2 bg-primary-container text-white py-3 rounded-xl font-bold text-sm hover:bg-primary-fixed-variant">Guardar Registro</button>
         </div>
     </form>
 </div>
@@ -1071,7 +1024,7 @@
         document.getElementById('modal-price').textContent = price;
         document.getElementById('modal-area').textContent = area;
         document.getElementById('modal-status').textContent = status;
-        document.getElementById('modal-desc').textContent = desc || 'Ubicación privilegiada con facilidades de pago en dólares y entrega rápida.';
+        document.getElementById('modal-desc').textContent = desc || 'Ubicación privilegeda con facilidades de pago en dólares y entrega rápida.';
         const message = `Hola, estoy interesado en recibir más detalles sobre el proyecto *${title}* con precio de *${price}*.`;
         document.getElementById('modal-wa-btn').href = `https://wa.me/50586664297?text=${encodeURIComponent(message)}`;
         document.getElementById('project-modal').classList.remove('hidden');
@@ -1080,41 +1033,21 @@
         document.getElementById('project-modal').classList.add('hidden');
     }
 
-    // --- AUTHENTICATION SYSTEM ---
-    function openAuthModal() {
+    // --- UNIFIED AUTHENTICATION ROUTING ---
+    function handleNavAuthClick() {
         if (currentUser) {
             if (currentUser.role === 'admin') renderAdminDashboard();
             else renderClientDashboard(currentUser);
-            return;
+        } else {
+            openAuthModal();
         }
+    }
+
+    function openAuthModal() {
         document.getElementById('auth-modal').classList.remove('hidden');
     }
     function closeAuthModal() {
         document.getElementById('auth-modal').classList.add('hidden');
-    }
-
-    function switchAuthTab(tab) {
-        const btnLogin = document.getElementById('tab-login');
-        const btnReg = document.getElementById('tab-register');
-        const formLogin = document.getElementById('form-login');
-        const formReg = document.getElementById('form-register');
-
-        if (tab === 'login') {
-            btnLogin.className = "w-1/2 py-2 text-sm font-bold rounded-full bg-white text-primary shadow-sm transition-all";
-            btnReg.className = "w-1/2 py-2 text-sm font-bold rounded-full text-gray-500 hover:text-primary transition-all";
-            formLogin.classList.remove('hidden');
-            formReg.classList.add('hidden');
-        } else {
-            btnReg.className = "w-1/2 py-2 text-sm font-bold rounded-full bg-white text-primary shadow-sm transition-all";
-            btnLogin.className = "w-1/2 py-2 text-sm font-bold rounded-full text-gray-500 hover:text-primary transition-all";
-            formReg.classList.remove('hidden');
-            formLogin.classList.add('hidden');
-        }
-    }
-
-    function quickFillLogin(email, password) {
-        document.getElementById('login-email').value = email;
-        document.getElementById('login-password').value = password;
     }
 
     function handleLogin(e) {
@@ -1134,62 +1067,39 @@
             currentUser = found;
             closeAuthModal();
             updateNavState();
-            if (found.role === 'admin') renderAdminDashboard();
-            else renderClientDashboard(found);
+            
+            // Automatic Role Filtering
+            if (found.role === 'admin') {
+                renderAdminDashboard();
+            } else {
+                renderClientDashboard(found);
+            }
         } else {
-            errDiv.textContent = "Credenciales incorrectas. Verifica correo/cédula y contraseña.";
+            errDiv.textContent = "Credenciales inválidas. Verifica tu correo/cédula y contraseña.";
             errDiv.classList.remove('hidden');
         }
-    }
-
-    function handleRegister(e) {
-        e.preventDefault();
-        const name = document.getElementById('reg-name').value;
-        const cedula = document.getElementById('reg-cedula').value;
-        const phone = document.getElementById('reg-phone').value;
-        const email = document.getElementById('reg-email').value.trim().toLowerCase();
-        const address = document.getElementById('reg-address').value;
-        const password = document.getElementById('reg-password').value;
-        const errDiv = document.getElementById('reg-error');
-
-        const db = getDB();
-        if (db.some(u => u.correo.toLowerCase() === email)) {
-            errDiv.textContent = "Este correo electrónico ya está registrado.";
-            errDiv.classList.remove('hidden');
-            return;
-        }
-
-        const newUser = {
-            id: "CLI-" + Math.floor(1000 + Math.random() * 9000),
-            role: "cliente",
-            nombre: name,
-            cedula: cedula,
-            correo: email,
-            password: password,
-            telefono: phone,
-            direccion: address,
-            numeroLote: "Por Asignar",
-            proyecto: "Sin asignar",
-            saldoTotalUSD: 0,
-            saldoPendienteUSD: 0,
-            plazoMeses: 36,
-            historialPagos: []
-        };
-
-        db.push(newUser);
-        saveDB(db);
-        currentUser = newUser;
-        closeAuthModal();
-        updateNavState();
-        renderClientDashboard(newUser);
     }
 
     function updateNavState() {
         const text = document.getElementById('nav-user-text');
+        const mobText = document.getElementById('mobile-nav-user-text');
+        const icon = document.getElementById('nav-icon');
+
         if (currentUser) {
-            text.textContent = currentUser.role === 'admin' ? "👑 Panel Admin" : "👤 Mi Cuenta (" + currentUser.nombre.split(' ')[0] + ")";
+            if (currentUser.role === 'admin') {
+                text.textContent = "👑 Panel Admin";
+                mobText.textContent = "👑 Panel Admin";
+                icon.textContent = "admin_panel_settings";
+            } else {
+                const primerNombre = currentUser.nombre.split(' ')[0];
+                text.textContent = `👤 Mi Cuenta (${primerNombre})`;
+                mobText.textContent = `👤 Mi Cuenta (${primerNombre})`;
+                icon.textContent = "account_circle";
+            }
         } else {
-            text.textContent = "Portal / Mi Cuenta";
+            text.textContent = "Iniciar Sesión";
+            mobText.textContent = "Iniciar Sesión";
+            icon.textContent = "lock";
         }
     }
 
@@ -1200,7 +1110,7 @@
         document.getElementById('admin-dashboard-modal').classList.add('hidden');
     }
 
-    // --- CLIENT DASHBOARD ---
+    // --- CLIENT DASHBOARD (PROPIEDAD Y CUOTAS DE CLIENTE) ---
     function renderClientDashboard(user) {
         document.getElementById('client-dash-name').textContent = user.nombre;
         document.getElementById('client-dash-meta').textContent = `Lote: ${user.numeroLote} • Proyecto: ${user.proyecto}`;
@@ -1230,7 +1140,7 @@
         const tbody = document.getElementById('client-dash-payments-table');
         tbody.innerHTML = '';
         if (!user.historialPagos || user.historialPagos.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay pagos registrados aún.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay abonos registrados en tu contrato aún.</td></tr>`;
         } else {
             user.historialPagos.forEach(p => {
                 const tr = document.createElement('tr');
@@ -1239,19 +1149,19 @@
                     <td class="p-3 font-semibold text-gray-800">${p.fecha}</td>
                     <td class="p-3 text-gray-600">${p.concepto}</td>
                     <td class="p-3 font-bold text-emerald-700">+$${p.montoUSD.toLocaleString()} USD</td>
-                    <td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded-full font-bold">COMPLETADO</span></td>
+                    <td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded-full font-bold">REGISTRADO</span></td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        const msg = `Hola, soy ${user.nombre} (Cédula: ${user.cedula}), cliente del lote ${user.numeroLote} (${user.proyecto}). Quisiera reportar un pago / consultar mi cuota.`;
+        const msg = `Hola, soy ${user.nombre} (Cédula: ${user.cedula}), cliente del lote ${user.numeroLote} (${user.proyecto}). Quisiera consultar mi cuota/pago.`;
         document.getElementById('client-dash-wa-btn').href = `https://wa.me/50586664297?text=${encodeURIComponent(msg)}`;
 
         document.getElementById('client-dashboard-modal').classList.remove('hidden');
     }
 
-    // --- ADMIN DASHBOARD ---
+    // --- ADMIN DASHBOARD (GESTIÓN Y EDICIÓN COMPLETA) ---
     function renderAdminDashboard() {
         const db = getDB();
         const clients = db.filter(u => u.role === 'cliente');
@@ -1280,7 +1190,7 @@
         tbody.innerHTML = '';
 
         if (clientsList.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-500">No se encontraron clientes registrados.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-500">No hay clientes registrados en la base de datos.</td></tr>`;
             return;
         }
 
@@ -1345,9 +1255,9 @@
         renderAdminClientsTable(clients);
     }
 
-    // --- ADMIN CLIENT FORM MODAL ---
+    // --- FORMULARIO DE CLIENTE (CREAR Y EDITAR REGISTROS POR EL ADMIN) ---
     function openNewClientModal() {
-        document.getElementById('admin-form-title').textContent = "Registrar Nuevo Cliente";
+        document.getElementById('admin-form-title').textContent = "Registrar Nuevo Cliente / Lote";
         document.getElementById('edit-client-id').value = "";
         document.getElementById('admin-client-form').reset();
         document.getElementById('admin-client-form-modal').classList.remove('hidden');
@@ -1361,7 +1271,7 @@
         const client = db.find(u => u.id === id);
         if (!client) return;
 
-        document.getElementById('admin-form-title').textContent = "Editar Cliente";
+        document.getElementById('admin-form-title').textContent = "Editar Cliente y Lote";
         document.getElementById('edit-client-id').value = client.id;
         document.getElementById('form-cli-name').value = client.nombre;
         document.getElementById('form-cli-cedula').value = client.cedula;
@@ -1431,7 +1341,7 @@
         renderAdminDashboard();
     }
 
-    // --- PAYMENT RECORD SYSTEM ---
+    // --- SISTEMA DE ABONOS ---
     function openPaymentModal(id) {
         const db = getDB();
         const client = db.find(u => u.id === id);
@@ -1471,7 +1381,7 @@
         renderAdminDashboard();
     }
 
-    // Contact Form Redirection
+    // Contact Form Handler
     function handleFormSubmit(e) {
         e.preventDefault();
         const nombre = document.getElementById('nombre').value;
