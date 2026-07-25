@@ -8,7 +8,9 @@
 <!-- Supabase SDK JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Leaflet.js Live Satellite Map Library -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -453,69 +455,91 @@
 </div>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
 <!-- Proyecto 1: Las Praderas -->
 <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
-<div class="relative h-64 overflow-hidden">
+<div class="relative h-56 overflow-hidden">
 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO8j-aApEFWtkUjo3gBmQ53iqBhq0OfnCLGRB4JZnelLheQAs2LR5eLh4&s=10" alt="Las Praderas" />
 <div class="absolute top-4 right-4 bg-primary-container text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Disponible</div>
 </div>
-<div class="p-6 flex flex-col flex-grow">
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Las Praderas</h3>
-<p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
-<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Zona de Alta Plusvalía
+<div class="p-5 flex flex-col flex-grow">
+<h3 class="font-headline-md text-[18px] font-bold text-on-surface mb-1">Las Praderas</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant flex items-center gap-1 mb-4">
+<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Alta Plusvalía
 </p>
-<div class="grid grid-cols-2 gap-4 mb-6">
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 200 m²</span></div>
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$23,000 USD</span></div>
+<div class="grid grid-cols-2 gap-3 mb-5">
+<div class="flex flex-col"><span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface text-sm">Desde 200 m²</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-base">$23,000 USD</span></div>
 </div>
-<div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
-<button onclick="openProjectModal('Las Praderas', '$23,000 USD', '200 m²', 'Disponible', 'Excelente lote ubicado en zona residencial de alta plusvalía, con topografía plana, accesos estructurados y factibilidad de servicios públicos.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Las%20Praderas%20($23,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
+<div class="mt-auto pt-3 border-t border-outline-variant/30 flex gap-2">
+<button onclick="openProjectModal('Las Praderas', '$23,000 USD', '200 m²', 'Disponible', 'Excelente lote ubicado en zona residencial de alta plusvalía, con topografía plana, accesos estructurados y servicios públicos.')" class="w-full text-center border border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-3 py-2 rounded-full font-label-sm text-xs transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Las%20Praderas%20($23,000%20USD)" target="_blank" class="bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 18px;">chat</span></a>
 </div>
 </div>
 </article>
 
 <!-- Proyecto 2: Villa Real -->
 <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
-<div class="relative h-64 overflow-hidden">
+<div class="relative h-56 overflow-hidden">
 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=800&auto=format&fit=crop" alt="Villa Real" />
 <div class="absolute top-4 right-4 bg-amber-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Últimos lotes</div>
 </div>
-<div class="p-6 flex flex-col flex-grow">
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Villa Real</h3>
-<p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
+<div class="p-5 flex flex-col flex-grow">
+<h3 class="font-headline-md text-[18px] font-bold text-on-surface mb-1">Villa Real</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant flex items-center gap-1 mb-4">
 <span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Corredor Exclusivo
 </p>
-<div class="grid grid-cols-2 gap-4 mb-6">
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 250 m²</span></div>
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$24,000 USD</span></div>
+<div class="grid grid-cols-2 gap-3 mb-5">
+<div class="flex flex-col"><span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface text-sm">Desde 250 m²</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-base">$24,000 USD</span></div>
 </div>
-<div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
-<button onclick="openProjectModal('Villa Real', '$24,000 USD', '250 m²', 'Últimos Lotes', 'Terrenos residenciales en un entorno privado y tranquilo. Cuenta con garita de seguridad, excelente acceso y rápida revalorización.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Villa%20Real%20($24,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
+<div class="mt-auto pt-3 border-t border-outline-variant/30 flex gap-2">
+<button onclick="openProjectModal('Villa Real', '$24,000 USD', '250 m²', 'Últimos Lotes', 'Terrenos residenciales en un entorno privado y tranquilo. Cuenta con garita de seguridad, excelente acceso y rápida revalorización.')" class="w-full text-center border border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-3 py-2 rounded-full font-label-sm text-xs transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Villa%20Real%20($24,000%20USD)" target="_blank" class="bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 18px;">chat</span></a>
 </div>
 </div>
 </article>
 
 <!-- Proyecto 3: La Fe -->
 <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
-<div class="relative h-64 overflow-hidden">
+<div class="relative h-56 overflow-hidden">
 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop" alt="La Fe" />
 <div class="absolute top-4 right-4 bg-teal-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Preventa</div>
 </div>
-<div class="p-6 flex flex-col flex-grow">
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">La Fe</h3>
-<p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
+<div class="p-5 flex flex-col flex-grow">
+<h3 class="font-headline-md text-[18px] font-bold text-on-surface mb-1">La Fe</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant flex items-center gap-1 mb-4">
 <span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Vista Panorámica
 </p>
-<div class="grid grid-cols-2 gap-4 mb-6">
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 180 m²</span></div>
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$20,000 USD</span></div>
+<div class="grid grid-cols-2 gap-3 mb-5">
+<div class="flex flex-col"><span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface text-sm">Desde 180 m²</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-base">$20,000 USD</span></div>
 </div>
-<div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
-<button onclick="openProjectModal('La Fe', '$20,000 USD', '180 m²', 'Preventa', 'Proyecto en preventa con precios de oportunidad y cuotas iniciales adaptables. Excelente inversión con retorno proyectado a mediano plazo.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20La%20Fe%20($20,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
+<div class="mt-auto pt-3 border-t border-outline-variant/30 flex gap-2">
+<button onclick="openProjectModal('La Fe', '$20,000 USD', '180 m²', 'Preventa', 'Proyecto en preventa con precios de oportunidad y cuotas iniciales adaptables. Excelente inversión con retorno proyectado a mediano plazo.')" class="w-full text-center border border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-3 py-2 rounded-full font-label-sm text-xs transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20La%20Fe%20($20,000%20USD)" target="_blank" class="bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 18px;">chat</span></a>
+</div>
+</div>
+</article>
+
+<!-- Proyecto 4: Santa Elena -->
+<article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop" alt="Santa Elena" />
+<div class="absolute top-4 right-4 bg-indigo-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Nueva Etapa</div>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<h3 class="font-headline-md text-[18px] font-bold text-on-surface mb-1">Santa Elena</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant flex items-center gap-1 mb-4">
+<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Zona Residencial
+</p>
+<div class="grid grid-cols-2 gap-3 mb-5">
+<div class="flex flex-col"><span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface text-sm">Desde 220 m²</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-base">$22,000 USD</span></div>
+</div>
+<div class="mt-auto pt-3 border-t border-outline-variant/30 flex gap-2">
+<button onclick="openProjectModal('Santa Elena', '$22,000 USD', '220 m²', 'Nueva Etapa', 'Desarrollo en zona de alta proyección con excelente conectividad, áreas verdes y lotes planos listos para escriturar.')" class="w-full text-center border border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-3 py-2 rounded-full font-label-sm text-xs transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Santa%20Elena%20($22,000%20USD)" target="_blank" class="bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 18px;">chat</span></a>
 </div>
 </div>
 </article>
@@ -523,66 +547,31 @@
 </div>
 </section>
 
-<!-- 5. Interactive Map Section -->
+<!-- 5. Live Satellite Map Section -->
 <section class="py-section-gap w-full bg-surface-container" id="ubicaciones">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 <div class="text-center mb-8">
-<h2 class="font-headline-lg text-headline-lg text-primary mb-3">Explora nuestras ubicaciones</h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Ubicaciones privilegiadas con fácil acceso y entorno natural.</p>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-3">🛰️ Ubicaciones en Vivo — Vista Satelital HD</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Explora el entorno real en alta definición. Puedes arrastrar, hacer zoom y presionar sobre cada pin para ver los detalles de cada lotificación.</p>
 
-<div class="inline-flex bg-surface border border-outline-variant/30 rounded-full p-1.5 mt-4 shadow-md">
-    <button id="map-btn-standard" onclick="switchMapView('standard')" class="px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-xs shadow-sm transition-all font-bold">🌱 Vista Terreno</button>
-    <button id="map-btn-sat" onclick="switchMapView('sat')" class="px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-xs hover:text-primary transition-all font-bold">🛰️ Vista Satelital</button>
+<!-- Quick Project Selector Badges -->
+<div class="flex flex-wrap justify-center gap-2 mt-4">
+    <button onclick="focusLeafletMarker(0)" class="px-4 py-1.5 rounded-full border border-amber-500/40 bg-surface text-on-surface font-bold text-xs hover:bg-amber-500 hover:text-white transition-all shadow-sm flex items-center gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Villa Real ($24k USD)
+    </button>
+    <button onclick="focusLeafletMarker(1)" class="px-4 py-1.5 rounded-full border border-emerald-500/40 bg-surface text-on-surface font-bold text-xs hover:bg-emerald-500 hover:text-white transition-all shadow-sm flex items-center gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Las Praderas ($23k USD)
+    </button>
+    <button onclick="focusLeafletMarker(2)" class="px-4 py-1.5 rounded-full border border-teal-500/40 bg-surface text-on-surface font-bold text-xs hover:bg-teal-500 hover:text-white transition-all shadow-sm flex items-center gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span> La Fe ($20k USD)
+    </button>
+    <button onclick="focusLeafletMarker(3)" class="px-4 py-1.5 rounded-full border border-indigo-500/40 bg-surface text-on-surface font-bold text-xs hover:bg-indigo-500 hover:text-white transition-all shadow-sm flex items-center gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> Santa Elena ($22k USD)
+    </button>
 </div>
-</div>
-
-<div class="w-full h-[480px] bg-slate-900 rounded-2xl border border-outline-variant/30 shadow-2xl overflow-hidden relative flex items-center justify-center">
-<div class="absolute inset-0 transition-all duration-500" id="map-layer" style="transform: scale(1);">
-    <img id="map-img-standard" class="w-full h-full object-cover opacity-90 transition-opacity duration-500" src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1400&auto=format&fit=crop" alt="Mapa de desarrollo" />
-    <img id="map-img-sat" class="w-full h-full object-cover hidden opacity-95 transition-opacity duration-500" src="Vista_Satelital.png" alt="Vista Satelital" />
-</div>
-
-<div class="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-10">
-<div class="flex justify-between items-start pointer-events-auto">
-    <div class="bg-black/75 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 shadow-md">
-        <span class="text-xs font-bold text-white uppercase tracking-wider" id="map-label">📍 Mapa General de Desarrollo</span>
-    </div>
-    <div class="bg-black/75 backdrop-blur-md rounded-xl shadow-md border border-white/10 p-1.5 flex flex-col gap-1">
-        <button onclick="zoomMap(0.15)" class="w-9 h-9 flex items-center justify-center text-white hover:bg-white/20 rounded-lg transition-colors" title="Acercar">
-            <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
-        </button>
-        <div class="h-px bg-white/10 w-full"></div>
-        <button onclick="zoomMap(-0.15)" class="w-9 h-9 flex items-center justify-center text-white hover:bg-white/20 rounded-lg transition-colors" title="Alejar">
-            <span class="material-symbols-outlined" style="font-size: 20px;">remove</span>
-        </button>
-    </div>
 </div>
 
-<!-- Marker 1: Las Praderas -->
-<div class="absolute top-[32%] left-[25%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('Las Praderas', '$23,000 USD', '200 m²', 'Disponible')">
-    <div class="flex flex-col items-center">
-        <span class="material-symbols-outlined text-emerald-400 drop-shadow-lg text-4xl animate-bounce">location_on</span>
-        <span class="bg-black/90 text-white text-xs px-3 py-1 rounded-full font-bold shadow-xl border border-emerald-500/40 backdrop-blur-sm group-hover:bg-emerald-700 transition-all">Las Praderas ($23,000 USD)</span>
-    </div>
-</div>
-
-<!-- Marker 2: Villa Real -->
-<div class="absolute top-[52%] left-[58%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('Villa Real', '$24,000 USD', '250 m²', 'Últimos Lotes')">
-    <div class="flex flex-col items-center">
-        <span class="material-symbols-outlined text-amber-400 drop-shadow-lg text-4xl animate-bounce">location_on</span>
-        <span class="bg-black/90 text-white text-xs px-3 py-1 rounded-full font-bold shadow-xl border border-amber-500/40 backdrop-blur-sm group-hover:bg-amber-700 transition-all">Villa Real ($24,000 USD)</span>
-    </div>
-</div>
-
-<!-- Marker 3: La Fe -->
-<div class="absolute top-[28%] left-[74%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('La Fe', '$20,000 USD', '180 m²', 'Preventa')">
-    <div class="flex flex-col items-center">
-        <span class="material-symbols-outlined text-teal-300 drop-shadow-lg text-4xl animate-bounce">location_on</span>
-        <span class="bg-black/90 text-white text-xs px-3 py-1 rounded-full font-bold shadow-xl border border-teal-500/40 backdrop-blur-sm group-hover:bg-teal-700 transition-all">La Fe ($20,000 USD)</span>
-    </div>
-</div>
-</div>
-</div>
+<div class="w-full h-[520px] rounded-3xl border border-outline-variant/30 shadow-2xl overflow-hidden relative z-10" id="live-satellite-map"></div>
 </div>
 </section>
 
@@ -707,6 +696,7 @@
             <option value="Las Praderas ($23,000 USD)">Las Praderas ($23,000 USD)</option>
             <option value="Villa Real ($24,000 USD)">Villa Real ($24,000 USD)</option>
             <option value="La Fe ($20,000 USD)">La Fe ($20,000 USD)</option>
+            <option value="Santa Elena ($22,000 USD)">Santa Elena ($22,000 USD)</option>
             <option value="Asesoría general">Aún no estoy seguro / Asesoría general</option>
         </select>
     </div>
@@ -746,6 +736,7 @@
 <a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Las Praderas ($23k USD)</a>
 <a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Villa Real ($24k USD)</a>
 <a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">La Fe ($20k USD)</a>
+<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Santa Elena ($22k USD)</a>
 </div>
 <div class="col-span-1 flex flex-col gap-3">
 <p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Contacto Directo</p>
@@ -1048,6 +1039,7 @@
                     <option value="Las Praderas">Las Praderas</option>
                     <option value="Villa Real">Villa Real</option>
                     <option value="La Fe">La Fe</option>
+                    <option value="Santa Elena">Santa Elena</option>
                 </select>
             </div>
             <div>
@@ -1204,34 +1196,95 @@
         document.addEventListener('DOMContentLoaded', () => updateDarkModeUI(isDark));
     })();
 
-    // --- MAP FUNCTIONS ---
-    let currentMapScale = 1;
-    function zoomMap(delta) {
-        currentMapScale = Math.min(Math.max(currentMapScale + delta, 0.8), 1.6);
-        document.getElementById('map-layer').style.transform = `scale(${currentMapScale})`;
-    }
+    // --- LEAFLET LIVE SATELLITE MAP LOGIC ---
+    let leafletMap = null;
+    let leafletMarkers = [];
 
-    function switchMapView(type) {
-        const stdImg = document.getElementById('map-img-standard');
-        const satImg = document.getElementById('map-img-sat');
-        const stdBtn = document.getElementById('map-btn-standard');
-        const satBtn = document.getElementById('map-btn-sat');
-        const label = document.getElementById('map-label');
-
-        if (type === 'sat') {
-            stdImg.classList.add('hidden');
-            satImg.classList.remove('hidden');
-            satBtn.className = 'px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-xs shadow-sm transition-all font-bold';
-            stdBtn.className = 'px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-xs hover:text-primary transition-all font-bold';
-            label.textContent = '🛰️ Vista Satelital';
-        } else {
-            satImg.classList.add('hidden');
-            stdImg.classList.remove('hidden');
-            stdBtn.className = 'px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-xs shadow-sm transition-all font-bold';
-            satBtn.className = 'px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-xs hover:text-primary transition-all font-bold';
-            label.textContent = '📍 Mapa General de Desarrollo';
+    const mapProjectsData = [
+        {
+            name: "Villa Real",
+            lat: 13.088500,
+            lng: -86.361556,
+            price: "$24,000 USD",
+            area: "250 m²",
+            status: "Últimos Lotes",
+            desc: "Terrenos residenciales en un entorno privado y tranquilo con garita de seguridad."
+        },
+        {
+            name: "Las Praderas",
+            lat: 13.070944,
+            lng: -86.358528,
+            price: "$23,000 USD",
+            area: "200 m²",
+            status: "Disponible",
+            desc: "Excelente lote en zona de alta plusvalía, con topografía plana y servicios."
+        },
+        {
+            name: "La Fe",
+            lat: 13.065750,
+            lng: -86.358306,
+            price: "$20,000 USD",
+            area: "180 m²",
+            status: "Preventa",
+            desc: "Proyecto en preventa con precios de oportunidad y cuotas iniciales adaptables."
+        },
+        {
+            name: "Santa Elena",
+            lat: 13.068944,
+            lng: -86.342278,
+            price: "$22,000 USD",
+            area: "220 m²",
+            status: "Nueva Etapa",
+            desc: "Desarrollo en zona de alta proyección con excelente conectividad y áreas verdes."
         }
+    ];
+
+    function initLeafletSatelliteMap() {
+        const container = document.getElementById('live-satellite-map');
+        if (!container || leafletMap) return;
+
+        leafletMap = L.map('live-satellite-map', {
+            center: [13.0735, -86.3550],
+            zoom: 13,
+            zoomControl: true
+        });
+
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 18,
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        }).addTo(leafletMap);
+
+        mapProjectsData.forEach((p, idx) => {
+            const popupHTML = `
+                <div class="p-2 text-center font-sans max-w-[210px]">
+                    <span class="bg-emerald-600 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded-full">${p.status}</span>
+                    <h4 class="font-extrabold text-base text-gray-900 mt-1.5">${p.name}</h4>
+                    <p class="text-xs font-bold text-emerald-700 my-1">${p.price} &bull; ${p.area}</p>
+                    <p class="text-[11px] text-gray-600 mb-2 leading-tight">${p.desc}</p>
+                    <button onclick="openProjectModal('${p.name}', '${p.price}', '${p.area}', '${p.status}', '${p.desc}')" class="w-full bg-slate-900 text-white text-xs font-bold py-1.5 px-3 rounded-full hover:bg-emerald-600 transition-colors shadow">
+                        Ver Detalles
+                    </button>
+                </div>
+            `;
+
+            const marker = L.marker([p.lat, p.lng])
+                .addTo(leafletMap)
+                .bindPopup(popupHTML);
+
+            leafletMarkers.push(marker);
+        });
     }
+
+    function focusLeafletMarker(idx) {
+        if (!leafletMap || !leafletMarkers[idx]) return;
+        const p = mapProjectsData[idx];
+        leafletMap.flyTo([p.lat, p.lng], 15, { duration: 1.2 });
+        leafletMarkers[idx].openPopup();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initLeafletSatelliteMap, 300);
+    });
 
     function scrollToSection(id) {
         document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
