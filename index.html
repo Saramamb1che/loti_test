@@ -231,6 +231,60 @@
             color: #38bdf8 !important;
             border: 1px solid rgba(56, 189, 248, 0.3) !important;
         }
+        /* --- CLIENT DASHBOARD DARK MODE OVERRIDES --- */
+        html.dark #client-dashboard-modal #printable-area {
+            background-color: #0f172a !important;
+            border-color: #334155 !important;
+            color: #f8fafc !important;
+        }
+        html.dark #client-dashboard-modal .bg-surface {
+            background-color: #1e293b !important;
+            border-color: #334155 !important;
+            color: #f8fafc !important;
+        }
+        html.dark #client-dashboard-modal .bg-emerald-50 {
+            background-color: rgba(16, 185, 129, 0.18) !important;
+            border: 1px solid rgba(52, 211, 153, 0.35) !important;
+            color: #f8fafc !important;
+        }
+        html.dark #client-dashboard-modal .bg-amber-50 {
+            background-color: rgba(245, 158, 11, 0.18) !important;
+            border: 1px solid rgba(251, 191, 36, 0.35) !important;
+            color: #f8fafc !important;
+        }
+        html.dark #client-dashboard-modal .text-emerald-900,
+        html.dark #client-dashboard-modal .text-emerald-800,
+        html.dark #client-dashboard-modal .text-emerald-700 {
+            color: #34d399 !important;
+        }
+        html.dark #client-dashboard-modal .text-amber-800,
+        html.dark #client-dashboard-modal .text-amber-700 {
+            color: #fbbf24 !important;
+        }
+        html.dark #client-dashboard-modal .text-gray-800,
+        html.dark #client-dashboard-modal .text-gray-700,
+        html.dark #client-dashboard-modal .text-gray-500 {
+            color: #e2e8f0 !important;
+        }
+        html.dark #client-dashboard-modal table thead {
+            background-color: #0f172a !important;
+            color: #38bdf8 !important;
+        }
+        html.dark #client-dashboard-modal table tbody tr {
+            border-color: #334155 !important;
+            color: #f8fafc !important;
+        }
+        html.dark #client-dashboard-modal table tbody tr:hover {
+            background-color: #334155 !important;
+        }
+        html.dark #client-dashboard-modal #client-dash-wa-btn {
+            background-color: #059669 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4) !important;
+        }
+        html.dark #client-dashboard-modal #client-dash-wa-btn:hover {
+            background-color: #10b981 !important;
+        }
         @media print {
             body * { visibility: hidden; }
             #printable-area, #printable-area * { visibility: visible; }
@@ -782,7 +836,10 @@
             <h2 id="client-dash-name" class="text-2xl md:text-3xl font-extrabold mt-2"></h2>
             <p id="client-dash-meta" class="text-sm opacity-90 mt-1"></p>
         </div>
-        <div class="flex gap-2">
+        <div class="flex flex-wrap gap-2">
+            <button onclick="refreshClientSessionData(null, true)" title="Actualizar datos y pagos" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-md transition-all active:scale-95">
+                <span class="material-symbols-outlined text-sm" id="client-refresh-icon">refresh</span> Actualizar Datos
+            </button>
             <button onclick="window.print()" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1">
                 <span class="material-symbols-outlined text-sm">print</span> Imprimir
             </button>
@@ -1206,6 +1263,115 @@
         document.getElementById('auth-modal').classList.add('hidden');
     }
 
+    let clientPollTimer = null;
+
+    function saveSessionToStorage(sessionData) {
+        localStorage.setItem('terranova_session', JSON.stringify(sessionData));
+    }
+
+    function clearSessionStorage() {
+        localStorage.removeItem('terranova_session');
+    }
+
+    async function restoreSavedSession() {
+        const raw = localStorage.getItem('terranova_session');
+        if (!raw) return;
+        try {
+            const sess = JSON.parse(raw);
+            if (sess.role === 'admin') {
+                currentUser = { role: 'admin', nombre: 'Administrador TerraNova', correo: ADMIN_EMAIL };
+                updateNavState();
+            } else if (sess.role === 'cliente') {
+                await refreshClientSessionData(sess, false);
+            }
+        } catch (err) {
+            console.error("Error al restaurar sesión:", err);
+        }
+    }
+
+    async function refreshClientSessionData(storedSess, notify = false) {
+        const targetId = (currentUser && currentUser.id) || (storedSess && storedSess.id);
+        const targetEmail = (currentUser && currentUser.correo) || (storedSess && storedSess.correo);
+        const targetPass = (currentUser && currentUser.password) || (storedSess && storedSess.password);
+
+        if (!targetId && !targetEmail) return;
+
+        const refreshIcon = document.getElementById('client-refresh-icon');
+        if (refreshIcon) refreshIcon.classList.add('animate-spin');
+
+        try {
+            let res;
+            if (targetId) {
+                res = await sbFetch('GET', `clientes?select=*&id=eq.${targetId}&limit=1`);
+            } else {
+                res = await sbFetch('GET', `clientes?select=*&correo=eq.${encodeURIComponent(targetEmail)}&limit=1`);
+            }
+
+            if (res.data && res.data.length > 0) {
+                const data = res.data[0];
+                const { data: pagosData } = await sbFetch('GET', `pagos?select=*&cliente_id=eq.${data.id}&order=fecha.desc`);
+
+                currentUser = {
+                    role: 'cliente',
+                    id: data.id,
+                    nombre: data.nombre,
+                    cedula: data.cedula,
+                    correo: data.correo,
+                    telefono: data.telefono,
+                    direccion: data.direccion,
+                    proyecto: data.proyecto,
+                    numeroLote: data.numero_lote,
+                    saldoTotalUSD: parseFloat(data.saldo_total || 0),
+                    saldoPendienteUSD: parseFloat(data.saldo_pendiente || 0),
+                    plazoMeses: data.plazo_meses,
+                    password: data.password || targetPass,
+                    historialPagos: (pagosData || []).map(p => ({
+                        fecha: p.fecha,
+                        montoUSD: parseFloat(p.monto || 0),
+                        concepto: p.concepto
+                    }))
+                };
+
+                saveSessionToStorage({
+                    role: 'cliente',
+                    id: currentUser.id,
+                    correo: currentUser.correo,
+                    cedula: currentUser.cedula,
+                    password: currentUser.password
+                });
+
+                updateNavState();
+
+                const clientModal = document.getElementById('client-dashboard-modal');
+                if (clientModal && !clientModal.classList.contains('hidden')) {
+                    renderClientDashboard(currentUser, false);
+                }
+
+                if (notify) showToast('✅ Datos actualizados correctamente.');
+            }
+        } catch (e) {
+            if (notify) showToast('Error al actualizar datos.', 'error');
+        }
+
+        if (refreshIcon) setTimeout(() => refreshIcon.classList.remove('animate-spin'), 600);
+    }
+
+    function startClientPolling() {
+        stopClientPolling();
+        clientPollTimer = setInterval(() => {
+            if (currentUser && currentUser.role === 'cliente') {
+                refreshClientSessionData(null, false);
+            }
+        }, 6000);
+    }
+
+    function stopClientPolling() {
+        if (clientPollTimer) {
+            clearInterval(clientPollTimer);
+            clientPollTimer = null;
+        }
+    }
+
     async function handleLogin(e) {
         e.preventDefault();
         const input = document.getElementById('login-email').value.trim().toLowerCase();
@@ -1217,6 +1383,7 @@
         // 1. Admin login check
         if (input === ADMIN_EMAIL.toLowerCase() && pass === ADMIN_PASSWORD) {
             currentUser = { role: 'admin', nombre: 'Administrador TerraNova', correo: ADMIN_EMAIL };
+            saveSessionToStorage({ role: 'admin' });
             closeAuthModal();
             updateNavState();
             renderAdminDashboard();
@@ -1250,12 +1417,22 @@
                     saldoTotalUSD: parseFloat(data.saldo_total || 0),
                     saldoPendienteUSD: parseFloat(data.saldo_pendiente || 0),
                     plazoMeses: data.plazo_meses,
+                    password: data.password || pass,
                     historialPagos: (pagosData || []).map(p => ({
                         fecha: p.fecha,
                         montoUSD: parseFloat(p.monto || 0),
                         concepto: p.concepto
                     }))
                 };
+
+                saveSessionToStorage({
+                    role: 'cliente',
+                    id: currentUser.id,
+                    correo: currentUser.correo,
+                    cedula: currentUser.cedula,
+                    password: currentUser.password
+                });
+
                 closeAuthModal();
                 updateNavState();
                 renderClientDashboard(currentUser);
@@ -1290,14 +1467,19 @@
 
     function handleLogout() {
         currentUser = null;
+        clearSessionStorage();
+        stopClientPolling();
         updateNavState();
         document.getElementById('client-dashboard-modal').classList.add('hidden');
         document.getElementById('admin-dashboard-modal').classList.add('hidden');
         showToast('Sesión cerrada correctamente.');
     }
 
+    // Auto restore session on load
+    document.addEventListener('DOMContentLoaded', restoreSavedSession);
+
     // --- CLIENT DASHBOARD ---
-    function renderClientDashboard(user) {
+    function renderClientDashboard(user, openModal = true) {
         document.getElementById('client-dash-name').textContent = user.nombre;
         document.getElementById('client-dash-cedula').textContent = `Cédula: ${user.cedula}`;
         document.getElementById('client-dash-phone').textContent = user.telefono || 'No registrado';
@@ -1310,6 +1492,9 @@
         document.getElementById('client-dash-pending').textContent = `$${user.saldoPendienteUSD.toLocaleString()} USD`;
 
         const paid = Math.max(0, user.saldoTotalUSD - user.saldoPendienteUSD);
+        const paidElem = document.getElementById('client-dash-paid');
+        if (paidElem) paidElem.textContent = `$${paid.toLocaleString()} USD`;
+
         const pct = user.saldoTotalUSD > 0 ? Math.round((paid / user.saldoTotalUSD) * 100) : 0;
         document.getElementById('client-dash-percent').textContent = `${pct}% Pagado`;
         document.getElementById('client-dash-progress-bar').style.width = `${pct}%`;
@@ -1338,7 +1523,11 @@
 
         const msg = `Hola, soy ${user.nombre} (Cédula: ${user.cedula}), cliente del lote ${user.numeroLote} (${user.proyecto}). Quisiera consultar mi cuota/pago.`;
         document.getElementById('client-dash-wa-btn').href = `https://wa.me/50586664297?text=${encodeURIComponent(msg)}`;
-        document.getElementById('client-dashboard-modal').classList.remove('hidden');
+        
+        if (openModal) {
+            document.getElementById('client-dashboard-modal').classList.remove('hidden');
+        }
+        startClientPolling();
     }
 
     // --- ADMIN DASHBOARD & CRUD ---
