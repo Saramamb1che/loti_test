@@ -836,15 +836,18 @@
             <h2 id="client-dash-name" class="text-2xl md:text-3xl font-extrabold mt-2"></h2>
             <p id="client-dash-meta" class="text-sm opacity-90 mt-1"></p>
         </div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap items-center gap-2">
             <button onclick="refreshClientSessionData(null, true)" title="Actualizar datos y pagos" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-md transition-all active:scale-95">
                 <span class="material-symbols-outlined text-sm" id="client-refresh-icon">refresh</span> Actualizar Datos
             </button>
             <button onclick="window.print()" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1">
                 <span class="material-symbols-outlined text-sm">print</span> Imprimir
             </button>
-            <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1 transition-all">
-                <span class="material-symbols-outlined text-sm">logout</span> Salir
+            <button onclick="closeClientDashboard()" title="Navegar en el sitio manteniendo tu sesión activa" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1 transition-all">
+                <span class="material-symbols-outlined text-sm">home</span> Volver al Inicio
+            </button>
+            <button onclick="handleLogout()" title="Cerrar sesión en este dispositivo" class="bg-red-600 hover:bg-red-700 text-white px-3.5 py-2 rounded-full text-xs font-bold flex items-center gap-1 transition-all shadow-md">
+                <span class="material-symbols-outlined text-sm">logout</span> Cerrar Sesión
             </button>
         </div>
     </div>
@@ -943,9 +946,14 @@
             <h2 class="text-2xl md:text-3xl font-extrabold mt-2">Control Global de Clientes y Lotes</h2>
             <p class="text-xs text-emerald-200 mt-1">Gestión de cartera, registro de clientes, abonados y contratos en la nube.</p>
         </div>
-        <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-full text-xs font-bold flex items-center gap-1 shadow-md transition-all">
-            <span class="material-symbols-outlined text-sm">logout</span> Cerrar Sesión Admin
-        </button>
+        <div class="flex flex-wrap items-center gap-2">
+            <button onclick="closeAdminDashboard()" title="Navegar en el sitio manteniendo sesión de Admin activa" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1 transition-all">
+                <span class="material-symbols-outlined text-sm">home</span> Volver al Inicio
+            </button>
+            <button onclick="handleLogout()" title="Cerrar sesión de Administrador" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1 shadow-md transition-all">
+                <span class="material-symbols-outlined text-sm">logout</span> Cerrar Sesión Admin
+            </button>
+        </div>
     </div>
 
     <div class="p-6 md:p-8 space-y-8">
@@ -1473,6 +1481,17 @@
         document.getElementById('client-dashboard-modal').classList.add('hidden');
         document.getElementById('admin-dashboard-modal').classList.add('hidden');
         showToast('Sesión cerrada correctamente.');
+    }
+
+    function closeClientDashboard() {
+        document.getElementById('client-dashboard-modal').classList.add('hidden');
+        stopClientPolling();
+        showToast('Volviste al menú principal. Tu sesión sigue activa.');
+    }
+
+    function closeAdminDashboard() {
+        document.getElementById('admin-dashboard-modal').classList.add('hidden');
+        showToast('Volviste al menú principal. Sesión de Admin activa.');
     }
 
     // Auto restore session on load
