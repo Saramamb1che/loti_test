@@ -1288,12 +1288,26 @@
     }
 
     async function exportToCSV() {
-        const { data: clients } = await sbFetch('GET', 'clientes?select=*');
+        const { data: clients } = await sbFetch('GET', 'clientes?select=*&order=fecha_registro.desc');
         if (!clients || clients.length === 0) return alert('No hay datos para exportar.');
 
-        let csv = 'ID,Nombre,Cedula,Correo,Telefono,Lote,Proyecto,SaldoTotalUSD,SaldoPendienteUSD,PlazoMeses\n';
+        // UTF-8 BOM (\uFEFF) + Semicolon delimiter (;) for Excel in Spanish / Windows
+        let csv = '\uFEFF';
+        csv += 'ID;Nombre Completo;Cédula / ID;Correo Electrónico;Teléfono;Número de Lote;Proyecto;Saldo Total USD;Saldo Pendiente USD;Plazo (Meses)\n';
+
         clients.forEach(c => {
-            csv += `"${c.id}","${c.nombre}","${c.cedula}","${c.correo}","${c.telefono || ''}","${c.numero_lote || ''}","${c.proyecto || ''}",${c.saldo_total},${c.saldo_pendiente},${c.plazo_meses}\n`;
+            const id = (c.id || '').replace(/"/g, '""');
+            const nombre = (c.nombre || '').replace(/"/g, '""');
+            const cedula = (c.cedula || '').replace(/"/g, '""');
+            const correo = (c.correo || '').replace(/"/g, '""');
+            const telefono = (c.telefono || '').replace(/"/g, '""');
+            const lote = (c.numero_lote || '').replace(/"/g, '""');
+            const proyecto = (c.proyecto || '').replace(/"/g, '""');
+            const total = c.saldo_total || 0;
+            const pendiente = c.saldo_pendiente || 0;
+            const plazo = c.plazo_meses || 36;
+
+            csv += `"${id}";"${nombre}";"${cedula}";"${correo}";"${telefono}";"${lote}";"${proyecto}";${total};${pendiente};${plazo}\n`;
         });
 
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -1304,6 +1318,7 @@
         link.click();
         URL.revokeObjectURL(url);
     }
+
 
     // --- FORMULARIO DE CLIENTE (CREAR / EDITAR) ---
     function openNewClientModal() {
