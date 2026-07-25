@@ -908,7 +908,32 @@
     const ADMIN_EMAIL      = "admin@terranova.com";
     const ADMIN_PASSWORD   = "admin123";
 
-    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // --- SUPABASE DIRECT REST API (no SDK, bypasses all CORS issues) ---
+    async function sbFetch(method, path, body) {
+        const url = `${SUPABASE_URL}/rest/v1/${path}`;
+        const headers = {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+        };
+        try {
+            const res = await fetch(url, {
+                method,
+                headers,
+                body: body !== undefined ? JSON.stringify(body) : undefined
+            });
+            if (res.status === 204) return { data: [], error: null };
+            const text = await res.text();
+            let parsed;
+            try { parsed = JSON.parse(text); } catch { parsed = text; }
+            if (!res.ok) return { data: null, error: typeof parsed === 'object' ? parsed : { message: text } };
+            return { data: parsed, error: null };
+        } catch (err) {
+            return { data: null, error: { message: err.message, type: 'NETWORK' } };
+        }
+    }
+
 
     let currentUser = null;
 
@@ -1032,22 +1057,22 @@
 
         // 2. Check client in Supabase (by email or cedula)
         try {
-            const { data, error } = await db
-                .from('clientes')
-                .select('*')
-                .or(`correo.eq.${input},cedula.eq.${input}`)
-                .eq('password', pass)
-                .maybeSingle();
+            // Try by correo first, then by cedula
+            let rows;
+            let { data: byEmail } = await sbFetch('GET', `clientes?select=*&correo=eq.${encodeURIComponent(input)}&password=eq.${encodeURIComponent(pass)}&limit=1`);
+            rows = byEmail;
+            if (!rows || rows.length === 0) {
+                let { data: byCedula } = await sbFetch('GET', `clientes?select=*&cedula=eq.${encodeURIComponent(input)}&password=eq.${encodeURIComponent(pass)}&limit=1`);
+                rows = byCedula;
+            }
+            const data = rows && rows.length > 0 ? rows[0] : null;
+            const error = null;
 
             if (error) throw error;
 
             if (data) {
                 // Load payments for this client
-                const { data: pagosData } = await db
-                    .from('pagos')
-                    .select('*')
-                    .eq('cliente_id', data.id)
-                    .order('fecha', { ascending: false });
+                const { data: pagosData } = await sbFetch('GET', `pagos?select=*&cliente_id=eq.${data.id}&order=fecha.desc`);
 
                 currentUser = {
                     role: 'cliente',
@@ -1172,7 +1197,7 @@
         document.getElementById('admin-clients-table-body').innerHTML =
             `<tr><td colspan="7" class="p-6 text-center text-gray-400">Cargando datos...</td></tr>`;
 
-        const { data: clients, error } = await db.from('clientes').select('*').order('fecha_registro', { ascending: false });
+        const { data: clients, error } = await sbFetch('GET', 'clientes?select=*&order=fecha_registro.desc');
 
         if (error) {
             showToast('Error al cargar clientes: ' + error.message, 'error');
@@ -1266,10 +1291,7 @@
 
         if (!query) { renderAdminDashboard(); return; }
 
-        const { data: clients } = await db
-            .from('clientes')
-            .select('*')
-            .or(`nombre.ilike.%${query}%,cedula.ilike.%${query}%,numero_lote.ilike.%${query}%,proyecto.ilike.%${query}%`);
+        const { data: clients } = await sbFetch('GET', `clientes?select=*&or=(nombre.ilike.*${encodeURIComponent(query)}*,cedula.ilike.*${encodeURIComponent(query)}*,numero_lote.ilike.*${encodeURIComponent(query)}*,proyecto.ilike.*${encodeURIComponent(query)}*)`);
 
         const normalised = (clients || []).map(c => ({
             id: c.id, nombre: c.nombre, correo: c.correo, cedula: c.cedula,
@@ -1280,7 +1302,7 @@
     }
 
     async function exportToCSV() {
-        const { data: clients } = await db.from('clientes').select('*');
+        const { data: clients } = await sbFetch('GET', 'clientes?select=*');
         if (!clients || clients.length === 0) return alert('No hay datos para exportar.');
 
         let csv = 'ID,Nombre,Cedula,Correo,Telefono,Lote,Proyecto,SaldoTotalUSD,SaldoPendienteUSD,PlazoMeses\n';
@@ -1309,7 +1331,8 @@
     }
 
     async function editClient(id) {
-        const { data: c } = await db.from('clientes').select('*').eq('id', id).single();
+        const { data: rows } = await sbFetch('GET', `clientes?select=*&id=eq.${id}&limit=1`);
+        const c = rows && rows[0] ? rows[0] : null;
         if (!c) return;
 
         document.getElementById('admin-form-title').textContent = 'Editar Cliente y Lote';
@@ -1363,24 +1386,25 @@
         try {
             let result;
             if (editId) {
-                result = await db.from('clientes').update(payload).eq('id', editId).select();
+                result = await sbFetch('PATCH', `clientes?id=eq.${editId}`, payload);
             } else {
-                result = await db.from('clientes').insert(payload).select();
+                result = await sbFetch('POST', 'clientes', payload);
             }
 
             // Restore button
             if (saveBtn) { saveBtn.textContent = 'Guardar Registro'; saveBtn.disabled = false; }
 
             if (result.error) {
-                const msg = result.error.message || JSON.stringify(result.error);
-                showToast('❌ Error Supabase: ' + msg, 'error');
-                alert('ERROR SUPABASE:\n' + msg + '\n\nCódigo: ' + result.error.code);
+                const msg = result.error.message || result.error.hint || JSON.stringify(result.error);
+                showToast('❌ Error: ' + msg, 'error');
+                alert('ERROR AL GUARDAR:\n' + msg);
                 return;
             }
 
-            if (!result.data || result.data.length === 0) {
-                showToast('⚠️ Operación sin efecto — verifica permisos en Supabase.', 'error');
-                alert('La operación completó pero 0 filas fueron afectadas.\n\nEditId: ' + editId + '\nVerifica que el SQL de GRANT fue ejecutado.');
+            const savedRows = Array.isArray(result.data) ? result.data : [result.data];
+            if (!savedRows || savedRows.length === 0 || !savedRows[0]) {
+                showToast('⚠️ Sin efecto — ejecuta el SQL de GRANT en Supabase.', 'error');
+                alert('0 filas afectadas.\nEjecuta en Supabase SQL Editor:\nGRANT ALL ON TABLE clientes TO anon;\nGRANT ALL ON TABLE pagos TO anon;');
                 return;
             }
 
@@ -1397,7 +1421,7 @@
 
     async function deleteClient(id) {
         if (!confirm('¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.')) return;
-        const { error } = await db.from('clientes').delete().eq('id', id);
+        const { error } = await sbFetch('DELETE', `clientes?id=eq.${id}`);
         if (error) { showToast('Error al eliminar: ' + error.message, 'error'); return; }
         showToast('Cliente eliminado.');
         renderAdminDashboard();
@@ -1405,7 +1429,8 @@
 
     // --- SISTEMA DE ABONOS ---
     async function openPaymentModal(id) {
-        const { data: c } = await db.from('clientes').select('id,nombre,numero_lote,saldo_pendiente').eq('id', id).single();
+        const { data: rows2 } = await sbFetch('GET', `clientes?select=id,nombre,numero_lote,saldo_pendiente&id=eq.${id}&limit=1`);
+        const c = rows2 && rows2[0] ? rows2[0] : null;
         if (!c) return;
 
         document.getElementById('pay-client-id').value = c.id;
@@ -1428,20 +1453,20 @@
         const concept  = document.getElementById('pay-concept').value;
         const date     = document.getElementById('pay-date').value;
 
-        // 1. Get current balance
-        const { data: c } = await db.from('clientes').select('saldo_pendiente').eq('id', clientId).single();
+        const { data: balRows } = await sbFetch('GET', `clientes?select=saldo_pendiente&id=eq.${clientId}&limit=1`);
+        const c = balRows && balRows[0] ? balRows[0] : null;
         if (!c) return;
 
         const newBalance = Math.max(0, parseFloat(c.saldo_pendiente) - amount);
 
         // 2. Insert payment record
-        const { error: payError } = await db.from('pagos').insert({
+        const { error: payError } = await sbFetch('POST', 'pagos', {
             cliente_id: clientId, fecha: date, monto: amount, concepto: concept
         });
         if (payError) { showToast('Error al guardar abono: ' + payError.message, 'error'); return; }
 
         // 3. Update client balance
-        const { error: updError } = await db.from('clientes').update({ saldo_pendiente: newBalance }).eq('id', clientId);
+        const { error: updError } = await sbFetch('PATCH', `clientes?id=eq.${clientId}`, { saldo_pendiente: newBalance });
         if (updError) { showToast('Error al actualizar saldo: ' + updError.message, 'error'); return; }
 
         showToast(`Abono de $${amount.toLocaleString()} registrado correctamente.`);
