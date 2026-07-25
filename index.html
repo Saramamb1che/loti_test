@@ -1330,7 +1330,7 @@
 
     async function saveAdminClient(e) {
         if (e && e.preventDefault) e.preventDefault();
-        const editId = document.getElementById('edit-client-id').value;
+        const editId = document.getElementById('edit-client-id').value.trim();
 
         const nombre    = document.getElementById('form-cli-name').value.trim();
         const cedula    = document.getElementById('form-cli-cedula').value.trim();
@@ -1356,32 +1356,44 @@
             plazo_meses:     parseInt(document.getElementById('form-cli-months').value) || 36
         };
 
-        console.log('[TerraNova] Guardando cliente, payload:', payload, '| editId:', editId);
+        // Show saving indicator
+        const saveBtn = document.querySelector('#admin-client-form-modal button[onclick="saveAdminClient(event)"]');
+        if (saveBtn) { saveBtn.textContent = 'Guardando...'; saveBtn.disabled = true; }
 
         try {
             let result;
             if (editId) {
-                result = await db.from('clientes').update(payload).eq('id', editId);
+                result = await db.from('clientes').update(payload).eq('id', editId).select();
             } else {
-                result = await db.from('clientes').insert(payload);
+                result = await db.from('clientes').insert(payload).select();
             }
 
-            console.log('[TerraNova] Resultado Supabase:', result);
+            // Restore button
+            if (saveBtn) { saveBtn.textContent = 'Guardar Registro'; saveBtn.disabled = false; }
 
             if (result.error) {
-                console.error('[TerraNova] Error Supabase:', result.error);
-                showToast('Error: ' + result.error.message, 'error');
+                const msg = result.error.message || JSON.stringify(result.error);
+                showToast('❌ Error Supabase: ' + msg, 'error');
+                alert('ERROR SUPABASE:\n' + msg + '\n\nCódigo: ' + result.error.code);
                 return;
             }
 
-            showToast(editId ? 'Cliente actualizado correctamente.' : 'Cliente registrado correctamente.');
+            if (!result.data || result.data.length === 0) {
+                showToast('⚠️ Operación sin efecto — verifica permisos en Supabase.', 'error');
+                alert('La operación completó pero 0 filas fueron afectadas.\n\nEditId: ' + editId + '\nVerifica que el SQL de GRANT fue ejecutado.');
+                return;
+            }
+
+            showToast(editId ? '✅ Cliente actualizado correctamente.' : '✅ Cliente registrado correctamente.');
             closeNewClientModal();
             await renderAdminDashboard();
         } catch (err) {
-            console.error('[TerraNova] Error inesperado:', err);
+            if (saveBtn) { saveBtn.textContent = 'Guardar Registro'; saveBtn.disabled = false; }
             showToast('Error inesperado: ' + err.message, 'error');
+            alert('ERROR INESPERADO:\n' + err.message);
         }
     }
+
 
     async function deleteClient(id) {
         if (!confirm('¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.')) return;
