@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-
-<html lang="es"><head>
+<html lang="es" class="scroll-smooth">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Terra Nova Collective - Inversión en Terrenos</title>
+<title>Terra Nova Collective - Inversión en Terrenos Residenciales</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -102,71 +101,106 @@
     </script>
 <style>
         .text-shadow-subtle {
-            text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.6);
         }
         .bg-glass {
-            background: rgba(248, 249, 255, 0.8);
+            background: rgba(248, 249, 255, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
-    </style>
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .whatsapp-btn-pulse {
+            animation: pulse-ring 2s infinite;
+        }
+</style>
 </head>
 <body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+
 <!-- 1. TopNavBar -->
-<nav class="fixed top-0 w-full z-50 bg-surface/90 dark:bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 dark:border-outline/20 shadow-sm transition-all duration-300" id="main-nav">
+<nav class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-all duration-300" id="main-nav">
 <div class="max-w-container-max mx-auto flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4">
-<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">
-                TerraNova
-            </div>
+<a href="#inicio" class="font-headline-md text-headline-md font-bold text-primary flex items-center gap-2">
+    <span class="material-symbols-outlined text-primary-container" style="font-size: 32px;">landscape</span>
+    TerraNova
+</a>
 <div class="hidden md:flex gap-6 items-center">
-<a class="text-secondary dark:text-secondary-fixed font-semibold border-b-2 border-secondary pb-1 text-body-md font-body-md scale-95 active:scale-90 transition-transform duration-200" href="#inicio">Inicio</a>
-<a class="text-on-surface-variant dark:text-on-tertiary-fixed-variant hover:text-primary hover:text-secondary dark:hover:text-secondary-fixed transition-all text-body-md font-body-md scale-95 active:scale-90 transition-transform duration-200" href="#lotificaciones">Lotificaciones</a>
-<a class="text-on-surface-variant dark:text-on-tertiary-fixed-variant hover:text-primary hover:text-secondary dark:hover:text-secondary-fixed transition-all text-body-md font-body-md scale-95 active:scale-90 transition-transform duration-200" href="#ubicaciones">Ubicaciones</a>
-<a class="text-on-surface-variant dark:text-on-tertiary-fixed-variant hover:text-primary hover:text-secondary dark:hover:text-secondary-fixed transition-all text-body-md font-body-md scale-95 active:scale-90 transition-transform duration-200" href="#financiamiento">Financiamiento</a>
-<a class="text-on-surface-variant dark:text-on-tertiary-fixed-variant hover:text-primary hover:text-secondary dark:hover:text-secondary-fixed transition-all text-body-md font-body-md scale-95 active:scale-90 transition-transform duration-200" href="#nosotros">Nosotros</a>
-<a class="text-on-surface-variant dark:text-on-tertiary-fixed-variant hover:text-primary hover:text-secondary dark:hover:text-secondary-fixed transition-all text-body-md font-body-md scale-95 active:scale-90 transition-transform duration-200" href="#contacto">Contacto</a>
+<a class="text-secondary font-semibold border-b-2 border-secondary pb-1 text-body-md transition-all hover:text-primary" href="#inicio">Inicio</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-body-md" href="#lotificaciones">Lotificaciones</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-body-md" href="#ubicaciones">Ubicaciones</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-body-md" href="#financiamiento">Financiamiento</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-body-md" href="#nosotros">Nosotros</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-body-md" href="#contacto">Contacto</a>
 </div>
-<button class="hidden md:block bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-6 py-2 rounded-full font-label-sm text-label-sm scale-95 active:scale-90 transition-transform duration-200 shadow-[0_4px_20px_rgba(6,78,59,0.04)]">
-                Agenda tu visita
-            </button>
+<div class="hidden md:flex items-center gap-3">
+    <a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita%20para%20conocer%20los%20terrenos." target="_blank" class="bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-6 py-2.5 rounded-full font-label-sm text-label-sm active:scale-95 transition-all duration-200 shadow-sm flex items-center gap-2">
+        <span class="material-symbols-outlined text-green-800" style="font-size: 20px;">calendar_month</span>
+        Agenda tu visita
+    </a>
+</div>
 <!-- Mobile Menu Toggle -->
-<button class="md:hidden text-primary" id="mobile-menu-btn">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+<button class="md:hidden text-primary p-2 focus:outline-none" id="mobile-menu-btn" aria-label="Abrir menú">
+<span class="material-symbols-outlined text-3xl" id="menu-icon">menu</span>
 </button>
 </div>
-</nav>
-<!-- 2. Hero Section -->
-<header class="relative w-full h-[85vh] min-h-[600px] flex items-center justify-center mt-16 md:mt-0 pt-20 pb-12" id="inicio">
-<!-- Background Image -->
-<div class="absolute inset-0 z-0 overflow-hidden">
-<div class="bg-cover bg-center w-full h-full object-cover" data-alt="A breathtaking, wide-angle shot of a pristine, high-end residential land development nestled in a lush, green natural landscape. The scene is illuminated by soft, golden hour sunlight, highlighting the rolling hills and strategically planned, spacious lots ready for construction. The mood is aspirational and tranquil, capturing the perfect balance between nature and future modern living. The overall aesthetic is clean, premium, and bright." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCA-zQqemrNZMntmCoNIrJ4ww0r6Xvwi4O0zhljWqgzKK2XlvQtqZrfaWfEh1siBlO4CkAWS8u2pXNpHURMZ5Wu6WWXE8IaSVZvnZZxyBiCeobTO6aiNNHsfy-CUDZ704-O32hkNGTTSbPw7J8JwWI9iBBA3tvj7sm0KT6Rcwsg6MKusqY6JoyizhKNNplkXGUTGEkFV4_b5_TMv3Wp799RFw2UasZRsoR1rz3kKAC22FKfrSGk0Ahc')"></div>
-<!-- Overlay -->
-<div class="absolute inset-0 bg-gradient-to-r from-on-background/70 to-transparent"></div>
+
+<!-- Mobile Dropdown Menu -->
+<div class="hidden md:hidden bg-surface border-b border-outline-variant/30 px-6 py-4 flex flex-col gap-4 shadow-lg transition-all" id="mobile-menu">
+<a class="text-primary font-semibold text-lg py-2 border-b border-outline-variant/20" href="#inicio" onclick="toggleMobileMenu()">Inicio</a>
+<a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#lotificaciones" onclick="toggleMobileMenu()">Lotificaciones</a>
+<a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#ubicaciones" onclick="toggleMobileMenu()">Ubicaciones</a>
+<a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#financiamiento" onclick="toggleMobileMenu()">Financiamiento</a>
+<a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#nosotros" onclick="toggleMobileMenu()">Nosotros</a>
+<a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#contacto" onclick="toggleMobileMenu()">Contacto</a>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita." target="_blank" class="bg-primary-container text-white text-center py-3 rounded-full font-semibold mt-2 flex items-center justify-center gap-2">
+    <span class="material-symbols-outlined">chat</span>
+    Contactar por WhatsApp (+505 86664297)
+</a>
 </div>
+</nav>
+
+<!-- 2. Hero Section -->
+<header class="relative w-full h-[90vh] min-h-[620px] flex items-center justify-center mt-16 md:mt-0 pt-20 pb-12" id="inicio">
+<!-- Background Image - Crisp Ultra High Res -->
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img src="hero_landscape.jpg" alt="Terra Nova Landscape" class="w-full h-full object-cover object-center transform scale-105 hover:scale-100 transition-transform duration-1000 ease-out" />
+<!-- Gradient Overlay for Contrast -->
+<div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-transparent"></div>
+</div>
+
 <div class="relative z-10 w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-gutter">
-<div class="md:col-span-8 flex flex-col items-start gap-stack-lg">
+<div class="md:col-span-9 flex flex-col items-start gap-stack-lg">
+<span class="bg-secondary-container/90 text-on-secondary-container px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide uppercase shadow-sm">
+    ✨ Terrenos Residenciales de Alta Plusvalía
+</span>
 <h1 class="font-display-xl text-display-xl text-white text-shadow-subtle max-w-3xl leading-tight">
-                    Invierte en tu futuro, construye en la naturaleza
-                </h1>
-<p class="font-body-lg text-body-lg text-white/90 max-w-2xl">
-                    Terrenos residenciales con financiamiento flexible y ubicación estratégica.
-                </p>
+    Invierte en tu futuro, construye en la naturaleza
+</h1>
+<p class="font-body-lg text-body-lg text-white/95 max-w-2xl text-shadow-subtle">
+    Terrenos residenciales desde <strong class="text-secondary-fixed font-bold">$12,000 USD</strong> con financiamiento flexible y ubicación estratégica.
+</p>
 <div class="flex flex-col sm:flex-row gap-stack-md w-full sm:w-auto mt-4">
-<button class="bg-primary-container text-white px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-primary-fixed-variant transition-colors shadow-[0_4px_20px_rgba(6,78,59,0.15)] w-full sm:w-auto text-center">
-                        Ver lotes disponibles
-                    </button>
-<button class="border-2 border-white text-white bg-transparent px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-white/10 transition-colors w-full sm:w-auto text-center">
-                        Contactar asesor
-                    </button>
+<a href="#lotificaciones" class="bg-primary-container text-white px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-primary-fixed-variant transition-all shadow-lg hover:shadow-xl w-full sm:w-auto text-center flex items-center justify-center gap-2">
+    <span class="material-symbols-outlined">grid_view</span>
+    Ver lotes disponibles
+</a>
+<a href="https://wa.me/50586664297?text=Hola,%20me%20gustar%C3%ADa%20hablar%20con%20un%20asesor%20sobre%20los%20terrenos." target="_blank" class="border-2 border-white text-white bg-black/30 backdrop-blur-sm px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-white hover:text-primary transition-all w-full sm:w-auto text-center flex items-center justify-center gap-2">
+    <span class="material-symbols-outlined text-green-400">chat</span>
+    Contactar asesor (+505 86664297)
+</a>
 </div>
 </div>
 </div>
 </header>
+
 <!-- 3. Benefits Bento Grid -->
-<section class="py-section-gap w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<section class="py-section-gap w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop" id="nosotros">
 <div class="mb-12 text-center">
 <h2 class="font-headline-lg text-headline-lg text-primary mb-4">¿Por qué invertir con nosotros?</h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Nuestro compromiso es brindarte seguridad, plusvalía y el mejor entorno para tu próximo hogar.</p>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Nuestro compromiso es brindarte seguridad jurídica, plusvalía garantizada y el mejor entorno para tu próximo proyecto.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
 <!-- Benefit 1 -->
@@ -174,8 +208,8 @@
 <div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container mb-2">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">account_balance_wallet</span>
 </div>
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Financiamiento flexible</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Planes a tu medida, sin revisión de buró y con mensualidades congeladas.</p>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Financiamiento en USD</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Planes de pago flexibles en dólares, sin trámites bancarios complejos y sin intereses abusivos.</p>
 </div>
 <!-- Benefit 2 -->
 <div class="bg-surface rounded-xl p-8 border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col items-start gap-stack-md hover:-translate-y-1 transition-transform duration-300">
@@ -183,399 +217,534 @@
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">location_on</span>
 </div>
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Ubicación estratégica</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Zonas de alto crecimiento y plusvalía garantizada, cerca de vialidades principales.</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Zonas de alto crecimiento y plusvalía continua, con acceso rápido a vías principales.</p>
 </div>
 <!-- Benefit 3 -->
 <div class="bg-surface rounded-xl p-8 border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col items-start gap-stack-md hover:-translate-y-1 transition-transform duration-300">
 <div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container mb-2">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">home_work</span>
 </div>
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Servicios incluidos</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Agua, luz, drenaje y calles pavimentadas. Listos para empezar a construir.</p>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Servicios básicos</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Accesos estructurados, agua y energía eléctrica listos para comenzar a construir.</p>
 </div>
 <!-- Benefit 4 -->
 <div class="bg-surface rounded-xl p-8 border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col items-start gap-stack-md hover:-translate-y-1 transition-transform duration-300">
 <div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container mb-2">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">verified_user</span>
 </div>
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Escrituración segura</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Procesos legales transparentes ante notario público para tu tranquilidad total.</p>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Escrituración inmediata</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Documentación legal 100% al día y garantizada para tu absoluta tranquilidad.</p>
 </div>
 </div>
 </section>
+
 <!-- 4. Lot Catalog -->
 <section class="py-section-gap w-full bg-surface-container-lowest" id="lotificaciones">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 <div class="flex justify-between items-end mb-12">
 <div>
 <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Nuestros Proyectos</h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Descubre los desarrollos disponibles y encuentra el espacio perfecto.</p>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Descubre nuestros desarrollos exclusivos y elige el terreno perfecto para tu inversión.</p>
 </div>
 <div class="hidden md:block">
-<button class="text-primary-container font-label-sm text-label-sm flex items-center gap-2 hover:text-primary-fixed-variant transition-colors">
-                        Ver todos
-                        <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+<button onclick="scrollToSection('contacto')" class="text-primary-container font-label-sm text-label-sm flex items-center gap-2 hover:text-primary transition-colors">
+    Ver todos y cotizar
+    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
 </button>
 </div>
 </div>
+
 <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+
 <!-- Card 1 -->
-<article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col group">
+<article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
 <div class="relative h-64 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A bright, high-resolution photo of a serene residential lot in Valle Esmeralda. The image shows a beautifully maintained grassy expanse dotted with a few mature trees under a clear blue sky. In the background, modern, minimalist architectural homes hint at the high-end nature of the development. Soft, natural lighting enhances the rich greens of the landscape, creating an inviting, tranquil mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp7k_qP4IDkIyuISEY7EygiNDYuNjg3Gzv_f1L4QCdKNh6mgblFSev7CUDCrBeyvCMRkg5LeqT6cd0_8EABuBnKfG1v-d6xY--ztYU5zJE-WwL08Q6K7EqLWQ8WlPsCcVhBOdtsNKr0Pfenw50qnA4vGHGD2t4yD-sRfrPprfCTNtUZcBx989Uv0-NT1b2ARASjiwHkHBnQxl6wmNt6v7eX0ryfeY4ahenlO0yVKl5gPQuwBP74pJ9"/>
-<div class="absolute top-4 right-4 bg-primary-container text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm">
-                            Disponible
-                        </div>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop" alt="Valle Esmeralda Fase I" />
+<div class="absolute top-4 right-4 bg-primary-container text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">
+    Disponible
+</div>
 </div>
 <div class="p-6 flex flex-col flex-grow">
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Valle Esmeralda Fase I</h3>
 <p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
 <span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span>
-                            Zona Norte, Valle Esmeralda
-                        </p>
+    Zona de Alta Plusvalía
+</p>
 <div class="grid grid-cols-2 gap-4 mb-6">
 <div class="flex flex-col">
 <span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span>
-<span class="font-body-md font-semibold text-on-surface">Desde 200m²</span>
+<span class="font-body-md font-semibold text-on-surface">Desde 200 m²</span>
 </div>
 <div class="flex flex-col">
-<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Inversión Inicial</span>
-<span class="font-body-md font-semibold text-primary">$150,000 MXN</span>
+<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span>
+<span class="font-body-md font-bold text-primary-container text-lg">$15,000 USD</span>
 </div>
 </div>
-<div class="mt-auto pt-4 border-t border-outline-variant/30">
-<button class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2 rounded-full font-label-sm transition-colors">
-                                Ver detalles
-                            </button>
+<div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
+<button onclick="openProjectModal('Valle Esmeralda Fase I', '$15,000 USD', '200 m²', 'Disponible', 'Excelente lote ubicado en zona residencial con topografía plana, calles de acceso y factibilidad de servicios públicos.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">
+    Ver detalles
+</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Valle%20Esmeralda%20Fase%20I%20($15,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp">
+    <span class="material-symbols-outlined" style="font-size: 20px;">chat</span>
+</a>
 </div>
 </div>
 </article>
+
 <!-- Card 2 -->
-<article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col group">
+<article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
 <div class="relative h-64 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A stunning sunset view over a premium residential lot in Bosque Real. The warm, golden light casts long shadows across the neatly parceled land, which is bordered by a pristine, protected forest edge. In the distance, a subtle view of an upscale clubhouse can be seen. The image is crisp, modern, and aspirational, highlighting the natural beauty and exclusive feel of the development." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpQ_-PzcdPAJmVcszT2h2sCPt972LtYADhElQwHgMib18oHm1cfLBTsZMVBM10lbC9IEzcj1KFCwyMjH4JAyk8_TRmOoRVFuLsAZ0ks1hJJUsFafQsYr9a_k12rgzwd08OrkjjNoVBgJwZDFz9Jh3rmT7KhaOMhdqUDwTcu2IAIA1obvmm-YJCjvPkKGm9h0Ea_ExrrzIofxgVBTkouS4kFgT9TMzSgqNSDhv4wIYEH1jkqeyqBF7H"/>
-<div class="absolute top-4 right-4 bg-outline text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm">
-                            Últimos lotes
-                        </div>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=800&auto=format&fit=crop" alt="Bosque Real Privada" />
+<div class="absolute top-4 right-4 bg-amber-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">
+    Últimos lotes
+</div>
 </div>
 <div class="p-6 flex flex-col flex-grow">
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Bosque Real Privada</h3>
 <p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
 <span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span>
-                            Corredor Ecológico Sur
-                        </p>
+    Corredor Ecológico
+</p>
 <div class="grid grid-cols-2 gap-4 mb-6">
 <div class="flex flex-col">
 <span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span>
-<span class="font-body-md font-semibold text-on-surface">Desde 350m²</span>
+<span class="font-body-md font-semibold text-on-surface">Desde 350 m²</span>
 </div>
 <div class="flex flex-col">
-<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Inversión Inicial</span>
-<span class="font-body-md font-semibold text-primary">$280,000 MXN</span>
+<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span>
+<span class="font-body-md font-bold text-primary-container text-lg">$28,000 USD</span>
 </div>
 </div>
-<div class="mt-auto pt-4 border-t border-outline-variant/30">
-<button class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2 rounded-full font-label-sm transition-colors">
-                                Ver detalles
-                            </button>
+<div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
+<button onclick="openProjectModal('Bosque Real Privada', '$28,000 USD', '350 m²', 'Últimos Lotes', 'Terrenos amplios rodeados de un entorno natural idílico. Cuenta con garita de seguridad, acceso privado y alta demanda residencial.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">
+    Ver detalles
+</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Bosque%20Real%20Privada%20($28,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp">
+    <span class="material-symbols-outlined" style="font-size: 20px;">chat</span>
+</a>
 </div>
 </div>
 </article>
+
 <!-- Card 3 -->
-<article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col group">
+<article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
 <div class="relative h-64 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A bright, airy daytime photograph of the Mirador del Valle land development. The shot focuses on a spacious, flat lot ready for building, surrounded by paved, clean access roads and modern street lighting. Subtle landscaping with native plants borders the property line. The sky is bright blue with a few fluffy clouds, creating a clean, optimistic, and highly professional real estate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLrjoTgH_ZUj35xlTDtONqthZay4ItSpVlv--wZ1vRPL3zo6PfSqZKo_utohYgsUF9szATTHLk2BWlKxCUp2jHfaNH-8Gnn-Tzc6bL_a6LCeVvtH15w5KNOAfbJb1AUjPbaFbE7qESl5avZTP_0SmrkbHnpeEXRuGzb0nQnkBwxS6BfmAwOhbQK0HUQdqlm_1sZfouU-AZVTr1w1PPmodcrqE20vavS9PKUDcT9TChNOB21OvDA-ao"/>
-<div class="absolute top-4 right-4 bg-primary-container text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm">
-                            Preventa
-                        </div>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop" alt="Mirador del Valle" />
+<div class="absolute top-4 right-4 bg-teal-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">
+    Preventa
+</div>
 </div>
 <div class="p-6 flex flex-col flex-grow">
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Mirador del Valle</h3>
 <p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
 <span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span>
-                            Zona de Alta Plusvalía
-                        </p>
+    Vista Panorámica
+</p>
 <div class="grid grid-cols-2 gap-4 mb-6">
 <div class="flex flex-col">
 <span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span>
-<span class="font-body-md font-semibold text-on-surface">Desde 160m²</span>
+<span class="font-body-md font-semibold text-on-surface">Desde 160 m²</span>
 </div>
 <div class="flex flex-col">
-<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Inversión Inicial</span>
-<span class="font-body-md font-semibold text-primary">$120,000 MXN</span>
+<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span>
+<span class="font-body-md font-bold text-primary-container text-lg">$12,000 USD</span>
 </div>
 </div>
-<div class="mt-auto pt-4 border-t border-outline-variant/30">
-<button class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2 rounded-full font-label-sm transition-colors">
-                                Ver detalles
-                            </button>
+<div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
+<button onclick="openProjectModal('Mirador del Valle', '$12,000 USD', '160 m²', 'Preventa', 'Proyecto en preventa con precios especiales de lanzamiento y cuotas iniciales bajas. Ideal para primera inversión o construcción futura.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">
+    Ver detalles
+</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Mirador%20del%20Valle%20($12,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp">
+    <span class="material-symbols-outlined" style="font-size: 20px;">chat</span>
+</a>
 </div>
 </div>
 </article>
+
 </div>
 <div class="mt-8 text-center md:hidden">
-<button class="text-primary-container font-label-sm text-label-sm inline-flex items-center gap-2 hover:text-primary-fixed-variant transition-colors border border-primary-container rounded-full px-6 py-2">
-                    Ver todos los proyectos
-                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+<button onclick="scrollToSection('contacto')" class="text-primary-container font-label-sm text-label-sm inline-flex items-center gap-2 hover:text-primary transition-colors border border-primary-container rounded-full px-6 py-2">
+    Ver todos los proyectos
+    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
 </button>
 </div>
 </div>
 </section>
-<!-- 5. Interactive Map Placeholder -->
+
+<!-- 5. Interactive Map Section -->
 <section class="py-section-gap w-full bg-surface-container" id="ubicaciones">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 <div class="text-center mb-10">
 <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Explora nuestras ubicaciones</h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Zonas estratégicas planeadas para el máximo retorno de tu inversión.</p>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Ubicaciones privilegedas con fácil acceso y entorno natural.</p>
+
 <!-- Toggle -->
-<div class="inline-flex bg-surface border border-outline-variant/30 rounded-full p-1 mt-6 shadow-[0_4px_20px_rgba(6,78,59,0.04)]">
-<button class="px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-label-sm shadow-sm">Vista Mapa</button>
-<button class="px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-label-sm hover:text-primary">Satelital</button>
+<div class="inline-flex bg-surface border border-outline-variant/30 rounded-full p-1 mt-6 shadow-sm">
+<button id="map-btn-standard" onclick="switchMapView('standard')" class="px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-label-sm shadow-sm transition-all">Vista Terreno</button>
+<button id="map-btn-sat" onclick="switchMapView('sat')" class="px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-all">Vista Satelital</button>
 </div>
 </div>
+
 <!-- Map Container -->
-<div class="w-full h-[500px] bg-surface rounded-xl border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] overflow-hidden relative flex items-center justify-center">
-<!-- Map Placeholder Image -->
-<img alt="Mapa de ubicaciones" class="w-full h-full object-cover opacity-60" data-location="Valle Esmeralda, Mexico" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGRHSJirsIKAI74HcS_QwBccP-pKzvaPpyDplsLJ-mE8BLx9pVLuL2F_prSV7b1UgsGaCPReoLKbTpJUBApmPQy5hUq_8j-FJ-It2w6uWivAuqCMl_Uf6PLFt1yEvctT_864NJ0K2lF5VjN8X-Sa2_ylx7hcoo89Jpz91b166NayLE5Ce0eOQLTP7_kOEi26lybDiplrWZvcLqtjQ_sDlwBOfegvPyZ2Qm2DjIwEiczzwwD6srFY0C"/>
-<!-- Map UI Overlay -->
-<div class="absolute inset-0 p-8 flex flex-col justify-between pointer-events-none">
-<div class="flex justify-end pointer-events-auto">
-<div class="bg-surface rounded-lg shadow-sm border border-outline-variant/30 p-2 flex flex-col gap-2">
-<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-variant rounded">
-<span class="material-symbols-outlined" style="font-size: 20px;">add</span>
-</button>
-<div class="h-px bg-outline-variant/30 w-full"></div>
-<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-variant rounded">
-<span class="material-symbols-outlined" style="font-size: 20px;">remove</span>
-</button>
+<div class="w-full h-[450px] bg-slate-900 rounded-xl border border-outline-variant/30 shadow-lg overflow-hidden relative flex items-center justify-center">
+<!-- Map Layer -->
+<div class="absolute inset-0 transition-all duration-500" id="map-layer" style="transform: scale(1);">
+    <img id="map-img-standard" class="w-full h-full object-cover opacity-80" src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1400&auto=format&fit=crop" alt="Mapa de desarrollo" />
+    <img id="map-img-sat" class="w-full h-full object-cover hidden opacity-80" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1400&auto=format&fit=crop" alt="Vista Satelital" />
 </div>
+
+<!-- Controls Overlay -->
+<div class="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
+<div class="flex justify-between items-start pointer-events-auto">
+    <div class="bg-surface/90 backdrop-blur-md px-4 py-2 rounded-lg border border-outline-variant/30 shadow-md">
+        <span class="text-xs font-bold text-primary uppercase tracking-wider" id="map-label">📍 Mapa General de Desarrollo</span>
+    </div>
+    <div class="bg-surface rounded-lg shadow-md border border-outline-variant/30 p-2 flex flex-col gap-2">
+        <button onclick="zoomMap(0.15)" class="w-9 h-9 flex items-center justify-center text-on-surface hover:bg-surface-variant rounded transition-colors" title="Acercar">
+            <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+        </button>
+        <div class="h-px bg-outline-variant/30 w-full"></div>
+        <button onclick="zoomMap(-0.15)" class="w-9 h-9 flex items-center justify-center text-on-surface hover:bg-surface-variant rounded transition-colors" title="Alejar">
+            <span class="material-symbols-outlined" style="font-size: 20px;">remove</span>
+        </button>
+    </div>
 </div>
-<!-- Map Pins -->
-<div class="absolute top-[30%] left-[40%] pointer-events-auto group">
-<div class="relative cursor-pointer">
-<span class="material-symbols-outlined text-primary-container drop-shadow-md" style="font-variation-settings: 'FILL' 1; font-size: 36px;">location_on</span>
-<!-- Tooltip -->
-<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-surface p-3 rounded-lg shadow-lg border border-outline-variant/30 opacity-0 group-hover:opacity-100 transition-opacity w-48 pointer-events-none z-10">
-<p class="font-label-sm text-[12px] font-semibold text-primary mb-1">Valle Esmeralda</p>
-<p class="text-[10px] text-on-surface-variant">Lotes desde 200m²</p>
+
+<!-- Pins -->
+<div class="absolute top-[35%] left-[30%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('Valle Esmeralda Fase I', '$15,000 USD', '200 m²', 'Disponible')">
+    <div class="flex flex-col items-center">
+        <span class="material-symbols-outlined text-green-500 drop-shadow-lg text-4xl animate-bounce">location_on</span>
+        <span class="bg-black/80 text-white text-xs px-2 py-0.5 rounded font-semibold">Valle Esmeralda ($15,000 USD)</span>
+    </div>
 </div>
-</div>
+
+<div class="absolute top-[55%] left-[65%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('Bosque Real Privada', '$28,000 USD', '350 m²', 'Últimos Lotes')">
+    <div class="flex flex-col items-center">
+        <span class="material-symbols-outlined text-amber-400 drop-shadow-lg text-4xl animate-bounce">location_on</span>
+        <span class="bg-black/80 text-white text-xs px-2 py-0.5 rounded font-semibold">Bosque Real ($28,000 USD)</span>
+    </div>
 </div>
 </div>
 </div>
 </div>
 </section>
+
 <!-- 6. Process -->
-<section class="py-section-gap w-full bg-surface-container-lowest relative overflow-hidden">
+<section class="py-section-gap w-full bg-surface-container-lowest relative overflow-hidden" id="financiamiento">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
 <div class="text-center mb-16">
-<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Tu terreno en 4 simples pasos</h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Un proceso claro, transparente y diseñado para darte tranquilidad.</p>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Adquiere tu terreno en 4 sencillos pasos</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Un proceso ágil, transparente y diseñado para que adquieras tu propiedad sin complicaciones.</p>
 </div>
 <div class="relative">
-<!-- Connecting Line (Desktop only) -->
 <div class="hidden md:block absolute top-[40px] left-[10%] right-[10%] h-[2px] border-t-2 border-dashed border-primary/20 z-0"></div>
 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
+
 <!-- Step 1 -->
 <div class="flex flex-col items-center text-center">
-<div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-sm flex items-center justify-center mb-6 relative bg-white">
-<div class="absolute -top-3 -right-3 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">1</div>
-<span class="material-symbols-outlined text-primary" style="font-weight: 300; font-size: 32px;">search</span>
+<div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-md flex items-center justify-center mb-6 relative bg-white">
+<div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">1</div>
+<span class="material-symbols-outlined text-primary text-3xl">search</span>
 </div>
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-2">Elige tu lote</h3>
-<p class="font-body-md text-[14px] text-on-surface-variant">Explora nuestros proyectos y selecciona el espacio ideal para ti.</p>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-2">Selecciona tu lote</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Revisa nuestro catálogo y elige el terreno que mejor se ajuste a tu plan.</p>
 </div>
+
 <!-- Step 2 -->
 <div class="flex flex-col items-center text-center">
-<div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-sm flex items-center justify-center mb-6 relative bg-white">
-<div class="absolute -top-3 -right-3 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">2</div>
-<span class="material-symbols-outlined text-primary" style="font-weight: 300; font-size: 32px;">event_available</span>
+<div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-md flex items-center justify-center mb-6 relative bg-white">
+<div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">2</div>
+<span class="material-symbols-outlined text-primary text-3xl">event_available</span>
 </div>
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-2">Agenda visita</h3>
-<p class="font-body-md text-[14px] text-on-surface-variant">Un asesor te guiará en un recorrido presencial o virtual.</p>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-2">Agenda tu visita</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Coordinamos un recorrido guiado en el sitio o una videollamada interactiva.</p>
 </div>
+
 <!-- Step 3 -->
 <div class="flex flex-col items-center text-center">
 <div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-sm flex items-center justify-center mb-6 relative bg-white">
-<div class="absolute -top-3 -right-3 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">3</div>
-<span class="material-symbols-outlined text-primary" style="font-weight: 300; font-size: 32px;">request_quote</span>
+<div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">3</div>
+<span class="material-symbols-outlined text-primary text-3xl">request_quote</span>
 </div>
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-2">Financia</h3>
-<p class="font-body-md text-[14px] text-on-surface-variant">Armamos un plan de pagos a tu medida con enganche accesible.</p>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-2">Plan de Pagos USD</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Personalizamos un plan de financiamiento en dólares con prima accesible.</p>
 </div>
+
 <!-- Step 4 -->
 <div class="flex flex-col items-center text-center">
 <div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-sm flex items-center justify-center mb-6 relative bg-white">
-<div class="absolute -top-3 -right-3 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">4</div>
-<span class="material-symbols-outlined text-primary" style="font-weight: 300; font-size: 32px;">verified</span>
+<div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">4</div>
+<span class="material-symbols-outlined text-primary text-3xl">verified</span>
 </div>
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-2">Escritura</h3>
-<p class="font-body-md text-[14px] text-on-surface-variant">Formaliza tu inversión y comienza a planear tu futuro hogar.</p>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-2">Firma y Escritura</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Legalizamos el contrato y recibes las escrituras de tu nuevo terreno.</p>
 </div>
-</div>
-</div>
-</div>
-</section>
-<!-- 7. Testimonials / Glassmorphism Cards -->
-<section class="py-section-gap w-full bg-surface-container relative overflow-hidden">
-<!-- Abstract Decoration -->
-<div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-primary-fixed/20 blur-[100px] pointer-events-none"></div>
-<div class="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-secondary-fixed/20 blur-[100px] pointer-events-none"></div>
-<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
-<h2 class="font-headline-lg text-headline-lg text-primary mb-12 text-center">Historias de éxito</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-lg">
-<!-- Testimonial 1 -->
-<div class="bg-glass rounded-2xl p-8 border border-white/50 shadow-lg flex flex-col md:flex-row gap-6 items-start">
-<img class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-sm flex-shrink-0" data-alt="A close-up, high-quality portrait of a smiling young family (mother, father, and a small child) standing in an open field bathed in soft sunlight. They look genuinely happy and relaxed. The background is slightly blurred but clearly shows a green, well-maintained residential land plot. The mood is warm, optimistic, and reassuring, reflecting a successful real estate investment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeDNcSg6WgSsbhTNmdnEvvVYXzBoBWkjE6YVvPKG_RfAzQAVkWve3VY9DaZBOzJWy86_8KH_Qa8qMMfgGl1Np5NUfFoY6lcfvJmBmSajn3AlhIzv3K6bkWjjYFDGYndrOXuslpllcrnZ1uDeglTYcx7ojTMxzRtoi6iKAjghRR1WWEE3qjD55097jFpUSMTZ6U-zjc71bX5vYFRMkWLHxvjbP0XoRT7JRPCpppvV31g2VKx5piG1mO"/>
-<div>
-<div class="flex text-secondary-container mb-3">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant italic mb-4">"El proceso fue increíblemente sencillo. Nos dieron facilidades que no encontramos en ningún otro lado. Hoy ya estamos planeando la construcción de la casa de nuestros sueños."</p>
-<p class="font-label-sm text-label-sm text-on-surface">Familia Martínez <span class="text-outline font-normal">| Valle Esmeralda</span></p>
-</div>
-</div>
-<!-- Testimonial 2 -->
-<div class="bg-glass rounded-2xl p-8 border border-white/50 shadow-lg flex flex-col md:flex-row gap-6 items-start">
-<img class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-sm flex-shrink-0" data-alt="A professional portrait of a confident middle-aged man standing outdoors near an architectural blueprint setup on a temporary table. He is smiling warmly, conveying trust and satisfaction. The background shows a beautifully landscaped development area on a clear, sunny day. The lighting is crisp and the overall aesthetic is premium, modern, and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClPkJiSXsEhOGqNxUSx5n01hp40Ezr9k31eeAfO31BQqOez80ufD2Y6tVOd1U-FdtGjbDzBJ05hcndvTMfHwmP3IwE-yB79uEShiUXWKzctOsbTlgA4ny3xNbOQCsuhUk-SyjREZBDPZW-tIX04AeSeW810dOUttprIj3Z7sqDq-9gduIXphFM0MGZcXOMlNN1QsLqCh46gJCcwPFi8f836NB__F0cCu5644UKl0f2dXic_xEGVNws"/>
-<div>
-<div class="flex text-secondary-container mb-3">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">star</span>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant italic mb-4">"Buscaba una inversión segura para mi retiro. La plusvalía que ha generado el terreno en Bosque Real en solo dos años superó mis expectativas. Excelente atención."</p>
-<p class="font-label-sm text-label-sm text-on-surface">Roberto G. <span class="text-outline font-normal">| Bosque Real</span></p>
-</div>
+
 </div>
 </div>
 </div>
 </section>
-<!-- 8. Contact Form -->
+
+<!-- 7. Contact Form -->
 <section class="py-section-gap w-full bg-surface-container-lowest" id="contacto">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-<div class="bg-surface border border-outline-variant/30 rounded-2xl shadow-[0_4px_20px_rgba(6,78,59,0.04)] overflow-hidden flex flex-col md:flex-row">
+<div class="bg-surface border border-outline-variant/30 rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+
 <!-- Info Side -->
 <div class="w-full md:w-5/12 bg-primary-container p-10 flex flex-col justify-between text-white">
 <div>
 <h2 class="font-headline-lg text-headline-lg mb-4 text-white">Solicita más información</h2>
-<p class="font-body-md text-white/80 mb-8">Déjanos tus datos y un asesor especializado se pondrá en contacto contigo para resolver todas tus dudas.</p>
+<p class="font-body-md text-white/80 mb-8">Déjanos tus datos y un asesor se comunicará contigo vía WhatsApp o llamada telefónica.</p>
+
 <div class="flex flex-col gap-6">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-secondary-fixed">phone_in_talk</span>
-<div>
-<p class="font-label-sm text-[12px] text-white/70">Llámanos</p>
-<p class="font-body-md">+52 (55) 1234 5678</p>
+<a href="https://wa.me/50586664297" target="_blank" class="flex items-center gap-4 hover:bg-white/10 p-2 rounded-lg transition-colors">
+    <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white">
+        <span class="material-symbols-outlined">chat</span>
+    </div>
+    <div>
+        <p class="font-label-sm text-[12px] text-white/70 uppercase">WhatsApp Directo</p>
+        <p class="font-body-md font-bold text-green-300">+505 8666 4297</p>
+    </div>
+</a>
+
+<a href="tel:+50586664297" class="flex items-center gap-4 hover:bg-white/10 p-2 rounded-lg transition-colors">
+    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-secondary-fixed">
+        <span class="material-symbols-outlined">phone_in_talk</span>
+    </div>
+    <div>
+        <p class="font-label-sm text-[12px] text-white/70 uppercase">Llámanos</p>
+        <p class="font-body-md">+505 8666 4297</p>
+    </div>
+</a>
+
+<div class="flex items-center gap-4 p-2">
+    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-secondary-fixed">
+        <span class="material-symbols-outlined">mail</span>
+    </div>
+    <div>
+        <p class="font-label-sm text-[12px] text-white/70 uppercase">Correo Electrónico</p>
+        <p class="font-body-md">contacto@terranovacollective.com</p>
+    </div>
 </div>
 </div>
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-secondary-fixed">mail</span>
-<div>
-<p class="font-label-sm text-[12px] text-white/70">Escríbenos</p>
-<p class="font-body-md">contacto@terranova.com</p>
+</div>
+
+<div class="mt-8 pt-6 border-t border-white/20">
+    <p class="text-xs text-white/70">Atención personalizada de Lunes a Sábado de 8:00 AM a 6:00 PM.</p>
 </div>
 </div>
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-secondary-fixed">location_on</span>
-<div>
-<p class="font-label-sm text-[12px] text-white/70">Oficinas Centrales</p>
-<p class="font-body-md">Av. de los Bosques 123, Ciudad.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 <!-- Form Side -->
 <div class="w-full md:w-7/12 p-10 bg-white">
-<form class="flex flex-col gap-6">
-<!-- Floating Label Input Group -->
+<form id="contact-form" onsubmit="handleFormSubmit(event)" class="flex flex-col gap-6">
 <div class="relative z-0 w-full group">
-<input class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="nombre" name="nombre" placeholder=" " required="" type="text"/>
-<label class="peer-focus:font-medium absolute text-body-md text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="nombre">Nombre completo</label>
+    <input class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="nombre" name="nombre" placeholder=" " required="" type="text"/>
+    <label class="peer-focus:font-medium absolute text-body-md text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="nombre">Nombre completo</label>
 </div>
+
 <div class="relative z-0 w-full group">
-<input class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="telefono" name="telefono" placeholder=" " required="" type="tel"/>
-<label class="peer-focus:font-medium absolute text-body-md text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="telefono">Teléfono de contacto</label>
+    <input class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="telefono" name="telefono" placeholder=" " required="" type="tel"/>
+    <label class="peer-focus:font-medium absolute text-body-md text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="telefono">Teléfono / WhatsApp</label>
 </div>
+
 <div class="relative z-0 w-full group">
-<select class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="proyecto" name="proyecto">
-<option disabled="" selected="" value="">Selecciona un proyecto de interés</option>
-<option value="valle">Valle Esmeralda</option>
-<option value="bosque">Bosque Real</option>
-<option value="mirador">Mirador del Valle</option>
-<option value="otro">Aún no estoy seguro</option>
-</select>
-<label class="peer-focus:font-medium absolute text-label-sm text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container" for="proyecto">Proyecto de Interés</label>
+    <select class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="proyecto" name="proyecto" required>
+        <option disabled="" selected="" value="">Selecciona un proyecto de interés</option>
+        <option value="Valle Esmeralda Fase I ($15,000 USD)">Valle Esmeralda Fase I ($15,000 USD)</option>
+        <option value="Bosque Real Privada ($28,000 USD)">Bosque Real Privada ($28,000 USD)</option>
+        <option value="Mirador del Valle ($12,000 USD)">Mirador del Valle ($12,000 USD)</option>
+        <option value="Asesoría general">Aún no estoy seguro / Asesoría general</option>
+    </select>
+    <label class="peer-focus:font-medium absolute text-label-sm text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container" for="proyecto">Proyecto de Interés</label>
 </div>
-<div class="mt-4">
-<button class="w-full bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-8 py-4 rounded-full font-label-sm text-label-sm shadow-[0_4px_20px_rgba(6,78,59,0.04)] transition-colors" type="button">
-                                Enviar mis datos
-                            </button>
-<p class="text-[12px] text-outline text-center mt-4">Al enviar este formulario, aceptas nuestros <a class="underline hover:text-primary-container" href="#">Términos y Condiciones</a>.</p>
+
+<div class="relative z-0 w-full group">
+    <textarea class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="mensaje" name="mensaje" rows="2" placeholder=" "></textarea>
+    <label class="peer-focus:font-medium absolute text-body-md text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="mensaje">Mensaje o pregunta (opcional)</label>
+</div>
+
+<div class="mt-4 flex flex-col gap-3">
+    <button type="submit" class="w-full bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-8 py-4 rounded-full font-label-sm text-label-sm font-bold shadow-md transition-all flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined">send</span>
+        Enviar datos por WhatsApp
+    </button>
+    <p class="text-[12px] text-outline text-center">Al enviar tus datos, serás redirigido directamente a un chat con nuestro equipo.</p>
 </div>
 </form>
 </div>
+
 </div>
 </div>
 </section>
-<!-- 9. Footer -->
-<footer class="w-full pt-section-gap pb-12 bg-primary dark:bg-on-background">
+
+<!-- 8. Footer -->
+<footer class="w-full pt-section-gap pb-12 bg-primary text-white">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
 <div class="col-span-1 md:col-span-1 flex flex-col gap-4">
-<div class="font-headline-md text-headline-md text-on-primary">
-                    TerraNova
-                </div>
+<div class="font-headline-md text-headline-md text-on-primary flex items-center gap-2">
+    <span class="material-symbols-outlined">landscape</span>
+    TerraNova
+</div>
 <p class="font-body-md text-on-primary-fixed-variant text-[14px]">
-                    Construyendo el futuro en armonía con la naturaleza. Inversiones inteligentes para un patrimonio seguro.
-                </p>
+    Desarrollo e inversión en terrenos de alta plusvalía. Inversiones seguras para tu patrimonio.
+</p>
 </div>
 <div class="col-span-1 flex flex-col gap-3 md:pl-8">
-<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2">Desarrollos</p>
-<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Valle Esmeralda</a>
-<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Bosque Real</a>
-<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Mirador del Valle</a>
+<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Nuestros Proyectos</p>
+<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Valle Esmeralda ($15k USD)</a>
+<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Bosque Real ($28k USD)</a>
+<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Mirador del Valle ($12k USD)</a>
 </div>
 <div class="col-span-1 flex flex-col gap-3">
-<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2">Legal</p>
-<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Privacidad</a>
-<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Términos y Condiciones</a>
-<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Mapa del Sitio</a>
+<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Contacto Directo</p>
+<a class="font-body-md text-green-300 font-semibold hover:underline" href="https://wa.me/50586664297" target="_blank">📲 WhatsApp: +505 8666 4297</a>
+<a class="font-body-md text-on-primary-fixed-variant opacity-80" href="tel:+50586664297">📞 Teléfono: +505 8666 4297</a>
 </div>
 <div class="col-span-1 flex flex-col gap-3">
-<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2">Síguenos</p>
+<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Síguenos</p>
 <div class="flex gap-4">
-<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-on-primary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" href="#">
-<span class="material-symbols-outlined" style="font-size: 20px;">share</span>
+<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-on-primary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" href="https://wa.me/50586664297" target="_blank">
+<span class="material-symbols-outlined" style="font-size: 20px;">chat</span>
 </a>
-<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-on-primary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" href="#">
-<span class="material-symbols-outlined" style="font-size: 20px;">photo_camera</span>
+<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-on-primary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" href="#contacto">
+<span class="material-symbols-outlined" style="font-size: 20px;">mail</span>
 </a>
 </div>
 </div>
 <div class="col-span-1 md:col-span-4 mt-12 pt-8 border-t border-white/10 text-center">
 <p class="font-body-md text-on-primary-fixed-variant text-[14px]">
-                    © 2024 TerraNova Desarrollos. Todos los derechos reservados.
-                </p>
+    © 2026 TerraNova Collective. Todos los derechos reservados.
+</p>
 </div>
 </div>
 </footer>
+
+<!-- 9. Floating WhatsApp Widget -->
+<a href="https://wa.me/50586664297?text=Hola,%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20sus%20terrenos." target="_blank" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-2xl flex items-center gap-3 transition-all hover:scale-110 whatsapp-btn-pulse group" aria-label="Contacto WhatsApp">
+    <span class="material-symbols-outlined text-3xl">chat</span>
+    <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap font-bold pr-2 text-sm">
+        WhatsApp +505 8666 4297
+    </span>
+</a>
+
+<!-- 10. Project Details Modal -->
+<div id="project-modal" class="fixed inset-0 bg-black/60 z-50 hidden backdrop-blur-sm flex items-center justify-center p-4">
+<div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+    <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+    <div class="mb-4">
+        <span id="modal-status" class="bg-primary-container text-white text-xs px-3 py-1 rounded-full font-bold uppercase"></span>
+        <h3 id="modal-title" class="text-2xl font-bold text-primary mt-2"></h3>
+        <p id="modal-price" class="text-xl font-extrabold text-amber-700 mt-1"></p>
+    </div>
+    <div class="bg-surface p-4 rounded-xl mb-4 border border-outline-variant/30">
+        <div class="flex justify-between text-sm mb-2">
+            <span class="text-gray-500">Superficie mínima:</span>
+            <strong id="modal-area" class="text-gray-800"></strong>
+        </div>
+        <div class="flex justify-between text-sm mb-2">
+            <span class="text-gray-500">Moneda:</span>
+            <strong class="text-gray-800">Dólares Estadounidenses (USD)</strong>
+        </div>
+        <p id="modal-desc" class="text-sm text-gray-600 mt-3 pt-3 border-t border-gray-200"></p>
+    </div>
+    <div class="flex gap-3">
+        <a id="modal-wa-btn" href="#" target="_blank" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-full text-center transition-colors flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">chat</span>
+            Cotizar por WhatsApp
+        </a>
+    </div>
+</div>
+</div>
+
 <script>
-        // Simple Navbar shadow effect on scroll
-        const nav = document.getElementById('main-nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 10) {
-                nav.classList.add('shadow-md');
-                nav.classList.remove('shadow-sm');
-            } else {
-                nav.classList.remove('shadow-md');
-                nav.classList.add('shadow-sm');
-            }
-        });
-    </script>
-</body></html>
+    // Navbar scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+            nav.classList.add('shadow-md');
+        } else {
+            nav.classList.remove('shadow-md');
+        }
+    });
+
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const icon = document.getElementById('menu-icon');
+        menu.classList.toggle('hidden');
+        icon.textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+    }
+    document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+    // Smooth Scroll Helper
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Interactive Map Functions
+    let currentMapScale = 1;
+    function zoomMap(delta) {
+        currentMapScale = Math.min(Math.max(currentMapScale + delta, 0.8), 1.6);
+        document.getElementById('map-layer').style.transform = `scale(${currentMapScale})`;
+    }
+
+    function switchMapView(type) {
+        const stdImg = document.getElementById('map-img-standard');
+        const satImg = document.getElementById('map-img-sat');
+        const stdBtn = document.getElementById('map-btn-standard');
+        const satBtn = document.getElementById('map-btn-sat');
+        const label = document.getElementById('map-label');
+
+        if (type === 'sat') {
+            stdImg.classList.add('hidden');
+            satImg.classList.remove('hidden');
+            satBtn.className = 'px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-label-sm shadow-sm transition-all';
+            stdBtn.className = 'px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-all';
+            label.textContent = '🛰️ Vista Satelital de Alta Definición';
+        } else {
+            satImg.classList.add('hidden');
+            stdImg.classList.remove('hidden');
+            stdBtn.className = 'px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-label-sm shadow-sm transition-all';
+            satBtn.className = 'px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-all';
+            label.textContent = '📍 Mapa General de Desarrollo';
+        }
+    }
+
+    // Modal Details Handler
+    function openProjectModal(title, price, area, status, desc) {
+        document.getElementById('modal-title').textContent = title;
+        document.getElementById('modal-price').textContent = price;
+        document.getElementById('modal-area').textContent = area;
+        document.getElementById('modal-status').textContent = status;
+        document.getElementById('modal-desc').textContent = desc || 'Ubicación privilegiada con facilidades de pago en dólares y entrega rápida.';
+        
+        const message = `Hola, estoy interesado en recibir más detalles sobre el proyecto *${title}* con precio de *${price}*.`;
+        document.getElementById('modal-wa-btn').href = `https://wa.me/50586664297?text=${encodeURIComponent(message)}`;
+        
+        document.getElementById('project-modal').classList.remove('hidden');
+    }
+
+    function closeProjectModal() {
+        document.getElementById('project-modal').classList.add('hidden');
+    }
+
+    // Close modal on click outside
+    document.getElementById('project-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'project-modal') closeProjectModal();
+    });
+
+    // Form Submission to WhatsApp
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        const nombre = document.getElementById('nombre').value;
+        const telefono = document.getElementById('telefono').value;
+        const proyecto = document.getElementById('proyecto').value;
+        const mensaje = document.getElementById('mensaje').value;
+
+        const text = `Hola, mi nombre es *${nombre}*.\n📱 Teléfono: ${telefono}\n📌 Proyecto de interés: *${proyecto}*\n${mensaje ? '💬 Mensaje: ' + mensaje : ''}`;
+        
+        window.open(`https://wa.me/50586664297?text=${encodeURIComponent(text)}`, '_blank');
+    }
+</script>
+</body>
+</html>
