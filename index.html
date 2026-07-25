@@ -118,6 +118,119 @@
         .whatsapp-btn-pulse {
             animation: pulse-ring 2s infinite;
         }
+
+        /* --- DARK MODE GLOBAL STYLES --- */
+        html.dark {
+            color-scheme: dark;
+        }
+        html.dark body {
+            background-color: #0f172a !important;
+            color: #f8fafc !important;
+        }
+        html.dark nav,
+        html.dark #main-nav,
+        html.dark #mobile-menu,
+        html.dark .bg-surface,
+        html.dark .bg-white,
+        html.dark .bg-surface-container-lowest,
+        html.dark .bg-surface-container,
+        html.dark .bg-surface-variant {
+            background-color: #1e293b !important;
+            color: #f8fafc !important;
+            border-color: #334155 !important;
+        }
+        /* Headings & Primary Titles */
+        html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+        html.dark .text-gray-900,
+        html.dark .text-gray-800,
+        html.dark .text-gray-700,
+        html.dark .text-on-surface,
+        html.dark .text-primary,
+        html.dark .font-headline-lg,
+        html.dark .font-headline-md {
+            color: #ffffff !important;
+        }
+        /* Body, Paragraphs & Labels */
+        html.dark p,
+        html.dark span:not(.bg-primary-container):not(.bg-amber-400):not(.bg-emerald-600):not(.bg-green-600):not(.bg-red-600),
+        html.dark .text-gray-600,
+        html.dark .text-gray-500,
+        html.dark .text-on-surface-variant,
+        html.dark .text-outline,
+        html.dark label {
+            color: #e2e8f0 !important;
+        }
+        /* Color Accents in Dark Mode */
+        html.dark .text-emerald-700,
+        html.dark .text-emerald-800 {
+            color: #34d399 !important;
+        }
+        html.dark .text-amber-700,
+        html.dark .text-amber-800 {
+            color: #fbbf24 !important;
+        }
+        html.dark .text-secondary {
+            color: #38bdf8 !important;
+        }
+        html.dark .bg-gray-50,
+        html.dark .bg-gray-100 {
+            background-color: #0f172a !important;
+        }
+        html.dark .border-gray-100,
+        html.dark .border-gray-200,
+        html.dark .border-gray-300,
+        html.dark .border-outline-variant\/30 {
+            border-color: #334155 !important;
+        }
+        /* Form Inputs & Tables */
+        html.dark input, 
+        html.dark select, 
+        html.dark textarea {
+            background-color: #0f172a !important;
+            color: #ffffff !important;
+            border-color: #475569 !important;
+        }
+        html.dark table thead {
+            background-color: #0f172a !important;
+            color: #cbd5e1 !important;
+        }
+        html.dark table tbody tr:hover {
+            background-color: #334155 !important;
+        }
+        html.dark .bg-slate-900,
+        html.dark .bg-slate-950 {
+            background-color: #020617 !important;
+        }
+        /* --- ADMIN PANEL DARK MODE ACTION BUTTONS --- */
+        html.dark .bg-emerald-100 {
+            background-color: rgba(16, 185, 129, 0.22) !important;
+            color: #34d399 !important;
+            border: 1px solid rgba(52, 211, 153, 0.4) !important;
+        }
+        html.dark .bg-emerald-100:hover {
+            background-color: rgba(16, 185, 129, 0.4) !important;
+        }
+        html.dark .bg-blue-100 {
+            background-color: rgba(59, 130, 246, 0.22) !important;
+            color: #60a5fa !important;
+            border: 1px solid rgba(96, 165, 250, 0.4) !important;
+        }
+        html.dark .bg-blue-100:hover {
+            background-color: rgba(59, 130, 246, 0.4) !important;
+        }
+        html.dark .bg-red-100 {
+            background-color: rgba(239, 68, 68, 0.22) !important;
+            color: #f87171 !important;
+            border: 1px solid rgba(248, 113, 113, 0.4) !important;
+        }
+        html.dark .bg-red-100:hover {
+            background-color: rgba(239, 68, 68, 0.4) !important;
+        }
+        html.dark .bg-primary-container\/10 {
+            background-color: rgba(56, 189, 248, 0.2) !important;
+            color: #38bdf8 !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+        }
         @media print {
             body * { visibility: hidden; }
             #printable-area, #printable-area * { visibility: visible; }
@@ -143,7 +256,7 @@
 <a class="text-on-surface-variant hover:text-primary transition-all text-body-md" href="#contacto">Contacto</a>
 </div>
 <div class="hidden md:flex items-center gap-3">
-    <!-- Unico Botón de Iniciar Sesión / Acceso -->
+    <!-- Único Botón de Iniciar Sesión / Acceso -->
     <button onclick="handleNavAuthClick()" id="nav-user-btn" class="border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-5 py-2 rounded-full font-label-sm text-label-sm transition-all flex items-center gap-2 font-semibold shadow-sm">
         <span class="material-symbols-outlined" style="font-size: 20px;" id="nav-icon">lock</span>
         <span id="nav-user-text">Iniciar Sesión</span>
@@ -153,12 +266,22 @@
         <span class="material-symbols-outlined text-green-800" style="font-size: 20px;">calendar_month</span>
         Agenda tu visita
     </a>
+
+    <!-- Dark Mode Toggle Button at Far Right -->
+    <button onclick="toggleDarkMode()" title="Cambiar modo oscuro / claro" class="p-2.5 rounded-full border border-outline-variant/30 text-on-surface hover:text-primary hover:bg-surface-variant transition-all flex items-center justify-center shadow-sm ml-1" id="dark-mode-toggle-btn">
+        <span class="material-symbols-outlined text-xl" id="dark-mode-icon">dark_mode</span>
+    </button>
 </div>
 
-<!-- Mobile Menu Toggle -->
-<button class="md:hidden text-primary p-2 focus:outline-none" id="mobile-menu-btn" aria-label="Abrir menú">
-<span class="material-symbols-outlined text-3xl" id="menu-icon">menu</span>
-</button>
+<!-- Mobile Controls (Far Right) -->
+<div class="md:hidden flex items-center gap-2">
+    <button onclick="toggleDarkMode()" title="Modo Oscuro" class="p-2 rounded-full border border-outline-variant/30 text-primary">
+        <span class="material-symbols-outlined text-xl" id="top-mobile-dark-icon">dark_mode</span>
+    </button>
+    <button class="text-primary p-2 focus:outline-none" id="mobile-menu-btn" aria-label="Abrir menú">
+        <span class="material-symbols-outlined text-3xl" id="menu-icon">menu</span>
+    </button>
+</div>
 </div>
 
 <!-- Mobile Dropdown Menu -->
@@ -169,6 +292,11 @@
 <a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#financiamiento" onclick="toggleMobileMenu()">Financiamiento</a>
 <a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#nosotros" onclick="toggleMobileMenu()">Nosotros</a>
 <a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#contacto" onclick="toggleMobileMenu()">Contacto</a>
+
+<button onclick="toggleDarkMode();" class="w-full border border-outline-variant/40 text-on-surface py-2.5 rounded-full font-bold flex items-center justify-center gap-2 transition-all">
+    <span class="material-symbols-outlined text-xl" id="mobile-dark-mode-icon">dark_mode</span>
+    <span id="mobile-dark-mode-text">Modo Oscuro</span>
+</button>
 
 <button onclick="handleNavAuthClick(); toggleMobileMenu();" class="w-full bg-primary-container text-white py-3 rounded-full font-bold flex items-center justify-center gap-2">
     <span class="material-symbols-outlined">lock</span>
@@ -185,7 +313,7 @@
 <!-- 2. Hero Section -->
 <header class="relative w-full h-[90vh] min-h-[620px] flex items-center justify-center mt-16 md:mt-0 pt-20 pb-12" id="inicio">
 <div class="absolute inset-0 z-0 overflow-hidden">
-<img src="hero_landscape.jpg" alt="Terra Nova Landscape" class="w-full h-full object-cover object-center transform scale-105 hover:scale-100 transition-transform duration-1000 ease-out" />
+<img src="Ecoquintas.png" alt="Aerial view of residential lots and homes with a mountain in the background under a bright sky" class="w-full h-full object-cover object-center transform scale-105 hover:scale-100 transition-transform duration-1000 ease-out" />
 <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-transparent"></div>
 </div>
 
@@ -198,7 +326,7 @@
     Invierte en tu futuro, construye en la naturaleza
 </h1>
 <p class="font-body-lg text-body-lg text-white/95 max-w-2xl text-shadow-subtle">
-    Terrenos residenciales desde <strong class="text-secondary-fixed font-bold">$12,000 USD</strong> con financiamiento flexible y ubicación estratégica.
+    Terrenos residenciales  <strong class="text-secondary-fixed font-bold">con financiamiento</strong> flexible y ubicación estratégica.
 </p>
 <div class="flex flex-col sm:flex-row gap-stack-md w-full sm:w-auto mt-4">
 <a href="#lotificaciones" class="bg-primary-container text-white px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-primary-fixed-variant transition-all shadow-lg hover:shadow-xl w-full sm:w-auto text-center flex items-center justify-center gap-2 font-bold">
@@ -272,65 +400,68 @@
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Proyecto 1: Las Praderas -->
 <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
 <div class="relative h-64 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop" alt="Valle Esmeralda Fase I" />
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO8j-aApEFWtkUjo3gBmQ53iqBhq0OfnCLGRB4JZnelLheQAs2LR5eLh4&s=10" alt="Las Praderas" />
 <div class="absolute top-4 right-4 bg-primary-container text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Disponible</div>
 </div>
 <div class="p-6 flex flex-col flex-grow">
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Valle Esmeralda Fase I</h3>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Las Praderas</h3>
 <p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
 <span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Zona de Alta Plusvalía
 </p>
 <div class="grid grid-cols-2 gap-4 mb-6">
 <div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 200 m²</span></div>
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$15,000 USD</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$23,000 USD</span></div>
 </div>
 <div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
-<button onclick="openProjectModal('Valle Esmeralda Fase I', '$15,000 USD', '200 m²', 'Disponible', 'Excelente lote ubicado en zona residencial con topografía plana, calles de acceso y factibilidad de servicios públicos.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Valle%20Esmeralda%20Fase%20I%20($15,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
+<button onclick="openProjectModal('Las Praderas', '$23,000 USD', '200 m²', 'Disponible', 'Excelente lote ubicado en zona residencial de alta plusvalía, con topografía plana, accesos estructurados y factibilidad de servicios públicos.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Las%20Praderas%20($23,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
 </div>
 </div>
 </article>
 
+<!-- Proyecto 2: Villa Real -->
 <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
 <div class="relative h-64 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=800&auto=format&fit=crop" alt="Bosque Real Privada" />
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=800&auto=format&fit=crop" alt="Villa Real" />
 <div class="absolute top-4 right-4 bg-amber-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Últimos lotes</div>
 </div>
 <div class="p-6 flex flex-col flex-grow">
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Bosque Real Privada</h3>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Villa Real</h3>
 <p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
-<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Corredor Ecológico
+<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Corredor Exclusivo
 </p>
 <div class="grid grid-cols-2 gap-4 mb-6">
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 350 m²</span></div>
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$28,000 USD</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 250 m²</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$24,000 USD</span></div>
 </div>
 <div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
-<button onclick="openProjectModal('Bosque Real Privada', '$28,000 USD', '350 m²', 'Últimos Lotes', 'Terrenos amplios rodeados de un entorno natural idílico. Cuenta con garita de seguridad, acceso privado y alta demanda residencial.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Bosque%20Real%20Privada%20($28,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
+<button onclick="openProjectModal('Villa Real', '$24,000 USD', '250 m²', 'Últimos Lotes', 'Terrenos residenciales en un entorno privado y tranquilo. Cuenta con garita de seguridad, excelente acceso y rápida revalorización.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Villa%20Real%20($24,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
 </div>
 </div>
 </article>
 
+<!-- Proyecto 3: La Fe -->
 <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
 <div class="relative h-64 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop" alt="Mirador del Valle" />
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop" alt="La Fe" />
 <div class="absolute top-4 right-4 bg-teal-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Preventa</div>
 </div>
 <div class="p-6 flex flex-col flex-grow">
-<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Mirador del Valle</h3>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">La Fe</h3>
 <p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
 <span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Vista Panorámica
 </p>
 <div class="grid grid-cols-2 gap-4 mb-6">
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 160 m²</span></div>
-<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$12,000 USD</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 180 m²</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$20,000 USD</span></div>
 </div>
 <div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
-<button onclick="openProjectModal('Mirador del Valle', '$12,000 USD', '160 m²', 'Preventa', 'Proyecto en preventa con precios especiales de lanzamiento y cuotas iniciales bajas. Ideal para primera inversión o construcción futura.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Mirador%20del%20Valle%20($12,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
+<button onclick="openProjectModal('La Fe', '$20,000 USD', '180 m²', 'Preventa', 'Proyecto en preventa con precios de oportunidad y cuotas iniciales adaptables. Excelente inversión con retorno proyectado a mediano plazo.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20La%20Fe%20($20,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
 </div>
 </div>
 </article>
@@ -341,49 +472,59 @@
 <!-- 5. Interactive Map Section -->
 <section class="py-section-gap w-full bg-surface-container" id="ubicaciones">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-<div class="text-center mb-10">
-<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Explora nuestras ubicaciones</h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Ubicaciones privilegedas con fácil acceso y entorno natural.</p>
+<div class="text-center mb-8">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-3">Explora nuestras ubicaciones</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Ubicaciones privilegiadas con fácil acceso y entorno natural.</p>
 
-<div class="inline-flex bg-surface border border-outline-variant/30 rounded-full p-1 mt-6 shadow-sm">
-<button id="map-btn-standard" onclick="switchMapView('standard')" class="px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-label-sm shadow-sm transition-all">Vista Terreno</button>
-<button id="map-btn-sat" onclick="switchMapView('sat')" class="px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-all">Vista Satelital</button>
+<div class="inline-flex bg-surface border border-outline-variant/30 rounded-full p-1.5 mt-4 shadow-md">
+    <button id="map-btn-standard" onclick="switchMapView('standard')" class="px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-xs shadow-sm transition-all font-bold">🌱 Vista Terreno</button>
+    <button id="map-btn-sat" onclick="switchMapView('sat')" class="px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-xs hover:text-primary transition-all font-bold">🛰️ Vista Satelital</button>
 </div>
 </div>
 
-<div class="w-full h-[450px] bg-slate-900 rounded-xl border border-outline-variant/30 shadow-lg overflow-hidden relative flex items-center justify-center">
+<div class="w-full h-[480px] bg-slate-900 rounded-2xl border border-outline-variant/30 shadow-2xl overflow-hidden relative flex items-center justify-center">
 <div class="absolute inset-0 transition-all duration-500" id="map-layer" style="transform: scale(1);">
-    <img id="map-img-standard" class="w-full h-full object-cover opacity-80" src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1400&auto=format&fit=crop" alt="Mapa de desarrollo" />
-    <img id="map-img-sat" class="w-full h-full object-cover hidden opacity-80" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1400&auto=format&fit=crop" alt="Vista Satelital" />
+    <img id="map-img-standard" class="w-full h-full object-cover opacity-90 transition-opacity duration-500" src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1400&auto=format&fit=crop" alt="Mapa de desarrollo" />
+    <img id="map-img-sat" class="w-full h-full object-cover hidden opacity-95 transition-opacity duration-500" src="Vista_Satelital.png" alt="Vista Satelital" />
 </div>
 
-<div class="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
+<div class="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none z-10">
 <div class="flex justify-between items-start pointer-events-auto">
-    <div class="bg-surface/90 backdrop-blur-md px-4 py-2 rounded-lg border border-outline-variant/30 shadow-md">
-        <span class="text-xs font-bold text-primary uppercase tracking-wider" id="map-label">📍 Mapa General de Desarrollo</span>
+    <div class="bg-black/75 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 shadow-md">
+        <span class="text-xs font-bold text-white uppercase tracking-wider" id="map-label">📍 Mapa General de Desarrollo</span>
     </div>
-    <div class="bg-surface rounded-lg shadow-md border border-outline-variant/30 p-2 flex flex-col gap-2">
-        <button onclick="zoomMap(0.15)" class="w-9 h-9 flex items-center justify-center text-on-surface hover:bg-surface-variant rounded transition-colors" title="Acercar">
+    <div class="bg-black/75 backdrop-blur-md rounded-xl shadow-md border border-white/10 p-1.5 flex flex-col gap-1">
+        <button onclick="zoomMap(0.15)" class="w-9 h-9 flex items-center justify-center text-white hover:bg-white/20 rounded-lg transition-colors" title="Acercar">
             <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
         </button>
-        <div class="h-px bg-outline-variant/30 w-full"></div>
-        <button onclick="zoomMap(-0.15)" class="w-9 h-9 flex items-center justify-center text-on-surface hover:bg-surface-variant rounded transition-colors" title="Alejar">
+        <div class="h-px bg-white/10 w-full"></div>
+        <button onclick="zoomMap(-0.15)" class="w-9 h-9 flex items-center justify-center text-white hover:bg-white/20 rounded-lg transition-colors" title="Alejar">
             <span class="material-symbols-outlined" style="font-size: 20px;">remove</span>
         </button>
     </div>
 </div>
 
-<div class="absolute top-[35%] left-[30%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('Valle Esmeralda Fase I', '$15,000 USD', '200 m²', 'Disponible')">
+<!-- Marker 1: Las Praderas -->
+<div class="absolute top-[32%] left-[25%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('Las Praderas', '$23,000 USD', '200 m²', 'Disponible')">
     <div class="flex flex-col items-center">
-        <span class="material-symbols-outlined text-green-500 drop-shadow-lg text-4xl animate-bounce">location_on</span>
-        <span class="bg-black/80 text-white text-xs px-2 py-0.5 rounded font-semibold">Valle Esmeralda ($15,000 USD)</span>
+        <span class="material-symbols-outlined text-emerald-400 drop-shadow-lg text-4xl animate-bounce">location_on</span>
+        <span class="bg-black/90 text-white text-xs px-3 py-1 rounded-full font-bold shadow-xl border border-emerald-500/40 backdrop-blur-sm group-hover:bg-emerald-700 transition-all">Las Praderas ($23,000 USD)</span>
     </div>
 </div>
 
-<div class="absolute top-[55%] left-[65%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('Bosque Real Privada', '$28,000 USD', '350 m²', 'Últimos Lotes')">
+<!-- Marker 2: Villa Real -->
+<div class="absolute top-[52%] left-[58%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('Villa Real', '$24,000 USD', '250 m²', 'Últimos Lotes')">
     <div class="flex flex-col items-center">
         <span class="material-symbols-outlined text-amber-400 drop-shadow-lg text-4xl animate-bounce">location_on</span>
-        <span class="bg-black/80 text-white text-xs px-2 py-0.5 rounded font-semibold">Bosque Real ($28,000 USD)</span>
+        <span class="bg-black/90 text-white text-xs px-3 py-1 rounded-full font-bold shadow-xl border border-amber-500/40 backdrop-blur-sm group-hover:bg-amber-700 transition-all">Villa Real ($24,000 USD)</span>
+    </div>
+</div>
+
+<!-- Marker 3: La Fe -->
+<div class="absolute top-[28%] left-[74%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('La Fe', '$20,000 USD', '180 m²', 'Preventa')">
+    <div class="flex flex-col items-center">
+        <span class="material-symbols-outlined text-teal-300 drop-shadow-lg text-4xl animate-bounce">location_on</span>
+        <span class="bg-black/90 text-white text-xs px-3 py-1 rounded-full font-bold shadow-xl border border-teal-500/40 backdrop-blur-sm group-hover:bg-teal-700 transition-all">La Fe ($20,000 USD)</span>
     </div>
 </div>
 </div>
@@ -491,40 +632,42 @@
 </div>
 </div>
 
-<div class="w-full md:w-7/12 p-10 bg-white">
-<form id="contact-form" onsubmit="handleFormSubmit(event)" class="flex flex-col gap-6">
-<div class="relative z-0 w-full group">
-    <input class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="nombre" name="nombre" placeholder=" " required="" type="text"/>
-    <label class="peer-focus:font-medium absolute text-body-md text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="nombre">Nombre completo</label>
-</div>
+<div class="w-full md:w-7/12 p-8 md:p-10 bg-surface">
+<form id="contact-form" onsubmit="handleFormSubmit(event)" class="flex flex-col gap-5">
+    <h3 class="text-xl font-bold text-on-surface mb-1">Ingresa tus datos</h3>
+    
+    <div>
+        <label for="nombre" class="block text-sm font-bold text-on-surface mb-1.5">Nombre completo *</label>
+        <input class="w-full px-4 py-3 rounded-xl border border-outline-variant/40 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container transition-all" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required type="text"/>
+    </div>
 
-<div class="relative z-0 w-full group">
-    <input class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="telefono" name="telefono" placeholder=" " required="" type="tel"/>
-    <label class="peer-focus:font-medium absolute text-body-md text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="telefono">Teléfono / WhatsApp</label>
-</div>
+    <div>
+        <label for="telefono" class="block text-sm font-bold text-on-surface mb-1.5">Teléfono / WhatsApp *</label>
+        <input class="w-full px-4 py-3 rounded-xl border border-outline-variant/40 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container transition-all" id="telefono" name="telefono" placeholder="Ej. +505 8888 8888" required type="tel"/>
+    </div>
 
-<div class="relative z-0 w-full group">
-    <select class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="proyecto" name="proyecto" required>
-        <option disabled="" selected="" value="">Selecciona un proyecto de interés</option>
-        <option value="Valle Esmeralda Fase I ($15,000 USD)">Valle Esmeralda Fase I ($15,000 USD)</option>
-        <option value="Bosque Real Privada ($28,000 USD)">Bosque Real Privada ($28,000 USD)</option>
-        <option value="Mirador del Valle ($12,000 USD)">Mirador del Valle ($12,000 USD)</option>
-        <option value="Asesoría general">Aún no estoy seguro / Asesoría general</option>
-    </select>
-    <label class="peer-focus:font-medium absolute text-label-sm text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container" for="proyecto">Proyecto de Interés</label>
-</div>
+    <div>
+        <label for="proyecto" class="block text-sm font-bold text-on-surface mb-1.5">Proyecto de Interés *</label>
+        <select class="w-full px-4 py-3 rounded-xl border border-outline-variant/40 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container transition-all" id="proyecto" name="proyecto" required>
+            <option disabled selected value="">Selecciona un proyecto de interés</option>
+            <option value="Las Praderas ($23,000 USD)">Las Praderas ($23,000 USD)</option>
+            <option value="Villa Real ($24,000 USD)">Villa Real ($24,000 USD)</option>
+            <option value="La Fe ($20,000 USD)">La Fe ($20,000 USD)</option>
+            <option value="Asesoría general">Aún no estoy seguro / Asesoría general</option>
+        </select>
+    </div>
 
-<div class="relative z-0 w-full group">
-    <textarea class="block py-3 px-0 w-full text-body-md text-on-surface bg-transparent border-0 border-b-2 border-outline-variant appearance-none focus:outline-none focus:ring-0 focus:border-primary-container peer transition-colors" id="mensaje" name="mensaje" rows="2" placeholder=" "></textarea>
-    <label class="peer-focus:font-medium absolute text-body-md text-outline duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-container peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="mensaje">Mensaje o pregunta (opcional)</label>
-</div>
+    <div>
+        <label for="mensaje" class="block text-sm font-bold text-on-surface mb-1.5">Mensaje o pregunta (opcional)</label>
+        <textarea class="w-full px-4 py-3 rounded-xl border border-outline-variant/40 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container transition-all" id="mensaje" name="mensaje" rows="3" placeholder="¿En qué podemos ayudarte?"></textarea>
+    </div>
 
-<div class="mt-4 flex flex-col gap-3">
-    <button type="submit" class="w-full bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-8 py-4 rounded-full font-label-sm text-label-sm font-bold shadow-md transition-all flex items-center justify-center gap-2">
-        <span class="material-symbols-outlined">send</span>
-        Enviar datos por WhatsApp
-    </button>
-</div>
+    <div class="mt-2">
+        <button type="submit" class="w-full bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-8 py-3.5 rounded-full font-bold shadow-md transition-all flex items-center justify-center gap-2 text-base active:scale-95">
+            <span class="material-symbols-outlined">send</span>
+            Enviar datos por WhatsApp
+        </button>
+    </div>
 </form>
 </div>
 
@@ -546,9 +689,9 @@
 </div>
 <div class="col-span-1 flex flex-col gap-3 md:pl-8">
 <p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Nuestros Proyectos</p>
-<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Valle Esmeralda ($15k USD)</a>
-<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Bosque Real ($28k USD)</a>
-<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Mirador del Valle ($12k USD)</a>
+<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Las Praderas ($23k USD)</a>
+<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">Villa Real ($24k USD)</a>
+<a class="font-body-md text-on-primary-fixed-variant hover:text-secondary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#lotificaciones">La Fe ($20k USD)</a>
 </div>
 <div class="col-span-1 flex flex-col gap-3">
 <p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Contacto Directo</p>
@@ -837,9 +980,9 @@
             <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Proyecto Asignado</label>
                 <select id="form-cli-project" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
-                    <option value="Valle Esmeralda Fase I">Valle Esmeralda Fase I</option>
-                    <option value="Bosque Real Privada">Bosque Real Privada</option>
-                    <option value="Mirador del Valle">Mirador del Valle</option>
+                    <option value="Las Praderas">Las Praderas</option>
+                    <option value="Villa Real">Villa Real</option>
+                    <option value="La Fe">La Fe</option>
                 </select>
             </div>
             <div>
@@ -968,11 +1111,35 @@
     }
     document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
 
-    function scrollToSection(id) {
-        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    // --- DARK MODE LOGIC ---
+    function toggleDarkMode() {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        updateDarkModeUI(isDark);
     }
 
-    // Map Functions
+    function updateDarkModeUI(isDark) {
+        const desktopIcon = document.getElementById('dark-mode-icon');
+        const mobileIcon = document.getElementById('mobile-dark-mode-icon');
+        const topMobileIcon = document.getElementById('top-mobile-dark-icon');
+        const mobileText = document.getElementById('mobile-dark-mode-text');
+        
+        if (desktopIcon) desktopIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+        if (mobileIcon) mobileIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+        if (topMobileIcon) topMobileIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+        if (mobileText) mobileText.textContent = isDark ? 'Modo Claro' : 'Modo Oscuro';
+    }
+
+    // Auto Init Theme
+    (function initTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+        if (isDark) document.documentElement.classList.add('dark');
+        document.addEventListener('DOMContentLoaded', () => updateDarkModeUI(isDark));
+    })();
+
+    // --- MAP FUNCTIONS ---
     let currentMapScale = 1;
     function zoomMap(delta) {
         currentMapScale = Math.min(Math.max(currentMapScale + delta, 0.8), 1.6);
@@ -989,16 +1156,20 @@
         if (type === 'sat') {
             stdImg.classList.add('hidden');
             satImg.classList.remove('hidden');
-            satBtn.className = 'px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-label-sm shadow-sm transition-all';
-            stdBtn.className = 'px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-all';
-            label.textContent = '🛰️ Vista Satelital de Alta Definición';
+            satBtn.className = 'px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-xs shadow-sm transition-all font-bold';
+            stdBtn.className = 'px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-xs hover:text-primary transition-all font-bold';
+            label.textContent = '🛰️ Vista Satelital';
         } else {
             satImg.classList.add('hidden');
             stdImg.classList.remove('hidden');
-            stdBtn.className = 'px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-label-sm shadow-sm transition-all';
-            satBtn.className = 'px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-all';
+            stdBtn.className = 'px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-xs shadow-sm transition-all font-bold';
+            satBtn.className = 'px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-xs hover:text-primary transition-all font-bold';
             label.textContent = '📍 Mapa General de Desarrollo';
         }
+    }
+
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
 
     function openProjectModal(title, price, area, status, desc) {
