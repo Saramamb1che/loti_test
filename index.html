@@ -6,7 +6,7 @@
 <title>Terra Nova Collective - Inversión en Terrenos Residenciales</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <!-- Supabase SDK JS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -902,16 +902,16 @@
 </div>
 
 <script>
-    // --- SUPABASE CLOUD DATABASE ---
-    const SUPABASE_URL     = "https://dxrcapzeisszorxomqe.supabase.co";
+    // --- SUPABASE CLOUD DATABASE CONFIGURATION ---
+    const SUPABASE_URL = "https://dxrcapzeisszorxomwqe.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4cmNhcHplaXNzem9yeG9td3FlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5NDQzNjgsImV4cCI6MjEwMDUyMDM2OH0.hO5PjuwEOChR56e19ao6tf-5x68UiOtz8IKIA8m-DF4";
-    const ADMIN_EMAIL      = "admin@terranova.com";
-    const ADMIN_PASSWORD   = "admin123";
+    const ADMIN_EMAIL = "admin@terranova.com";
+    const ADMIN_PASSWORD = "admin123";
 
-    // --- SUPABASE DIRECT REST API (no SDK, bypasses all CORS issues) ---
+    // Direct REST API helper for 100% reliable network execution
     async function sbFetch(method, path, body) {
         const url = `${SUPABASE_URL}/rest/v1/${path}`;
-        const isWrite = method === 'POST' || method === 'PATCH' || method === 'PUT' || method === 'DELETE';
+        const isWrite = (method === 'POST' || method === 'PATCH' || method === 'PUT' || method === 'DELETE');
         const headers = {
             'apikey': SUPABASE_ANON_KEY,
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
@@ -922,6 +922,7 @@
         }
         const options = { method, headers };
         if (isWrite && body !== undefined) options.body = JSON.stringify(body);
+        
         try {
             const res = await fetch(url, options);
             if (res.status === 204) return { data: [], error: null };
@@ -931,15 +932,13 @@
             if (!res.ok) return { data: null, error: typeof parsed === 'object' ? parsed : { message: text } };
             return { data: parsed, error: null };
         } catch (err) {
-            return { data: null, error: { message: err.message, type: 'NETWORK' } };
+            return { data: null, error: { message: err.message } };
         }
     }
 
-
-
     let currentUser = null;
 
-    // --- HELPERS ---
+    // --- HELPERS & TOASTS ---
     function showToast(msg, type = 'success') {
         const t = document.createElement('div');
         t.className = `fixed bottom-6 right-6 z-[9999] px-5 py-3 rounded-xl shadow-xl font-bold text-sm transition-all ${
@@ -955,9 +954,7 @@
         if (btn) btn.textContent = loading ? 'Verificando...' : 'Ingresar';
     }
 
-
-
-    // --- NAVIGATION & GENERAL UI ---
+    // --- NAVIGATION & UI EVENTS ---
     const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 10) nav.classList.add('shadow-md');
@@ -1019,7 +1016,7 @@
         document.getElementById('project-modal').classList.add('hidden');
     }
 
-    // --- UNIFIED AUTHENTICATION ROUTING ---
+    // --- AUTHENTICATION ROUTING ---
     function handleNavAuthClick() {
         if (currentUser) {
             if (currentUser.role === 'admin') renderAdminDashboard();
@@ -1041,13 +1038,13 @@
 
     async function handleLogin(e) {
         e.preventDefault();
-        const input  = document.getElementById('login-email').value.trim().toLowerCase();
-        const pass   = document.getElementById('login-password').value;
+        const input = document.getElementById('login-email').value.trim().toLowerCase();
+        const pass = document.getElementById('login-password').value;
         const errDiv = document.getElementById('login-error');
         errDiv.classList.add('hidden');
         showLoginLoading(true);
 
-        // 1. Check admin credentials (hardcoded for security)
+        // 1. Admin login check
         if (input === ADMIN_EMAIL.toLowerCase() && pass === ADMIN_PASSWORD) {
             currentUser = { role: 'admin', nombre: 'Administrador TerraNova', correo: ADMIN_EMAIL };
             closeAuthModal();
@@ -1057,23 +1054,17 @@
             return;
         }
 
-        // 2. Check client in Supabase (by email or cedula)
+        // 2. Client login check in Supabase
         try {
-            // Try by correo first, then by cedula
-            let rows;
             let { data: byEmail } = await sbFetch('GET', `clientes?select=*&correo=eq.${encodeURIComponent(input)}&password=eq.${encodeURIComponent(pass)}&limit=1`);
-            rows = byEmail;
+            let rows = byEmail;
             if (!rows || rows.length === 0) {
                 let { data: byCedula } = await sbFetch('GET', `clientes?select=*&cedula=eq.${encodeURIComponent(input)}&password=eq.${encodeURIComponent(pass)}&limit=1`);
                 rows = byCedula;
             }
-            const data = rows && rows.length > 0 ? rows[0] : null;
-            const error = null;
 
-            if (error) throw error;
-
-            if (data) {
-                // Load payments for this client
+            if (rows && rows.length > 0) {
+                const data = rows[0];
                 const { data: pagosData } = await sbFetch('GET', `pagos?select=*&cliente_id=eq.${data.id}&order=fecha.desc`);
 
                 currentUser = {
@@ -1086,12 +1077,12 @@
                     direccion: data.direccion,
                     proyecto: data.proyecto,
                     numeroLote: data.numero_lote,
-                    saldoTotalUSD: parseFloat(data.saldo_total),
-                    saldoPendienteUSD: parseFloat(data.saldo_pendiente),
+                    saldoTotalUSD: parseFloat(data.saldo_total || 0),
+                    saldoPendienteUSD: parseFloat(data.saldo_pendiente || 0),
                     plazoMeses: data.plazo_meses,
                     historialPagos: (pagosData || []).map(p => ({
                         fecha: p.fecha,
-                        montoUSD: parseFloat(p.monto),
+                        montoUSD: parseFloat(p.monto || 0),
                         concepto: p.concepto
                     }))
                 };
@@ -1103,38 +1094,31 @@
                 errDiv.classList.remove('hidden');
             }
         } catch (err) {
-            console.error('Login error:', err);
             errDiv.textContent = 'Error de conexión. Intenta de nuevo.';
             errDiv.classList.remove('hidden');
         }
-
         showLoginLoading(false);
     }
 
     function updateNavState() {
         const text = document.getElementById('nav-user-text');
         const mobText = document.getElementById('mobile-nav-user-text');
-        const icon = document.getElementById('nav-icon');
 
         if (currentUser) {
             if (currentUser.role === 'admin') {
                 text.textContent = "👑 Panel Admin";
                 mobText.textContent = "👑 Panel Admin";
-                icon.textContent = "admin_panel_settings";
             } else {
-                const primerNombre = currentUser.nombre.split(' ')[0];
-                text.textContent = `👤 Mi Cuenta (${primerNombre})`;
-                mobText.textContent = `👤 Mi Cuenta (${primerNombre})`;
-                icon.textContent = "account_circle";
+                text.textContent = `👤 ${currentUser.nombre.split(' ')[0]}`;
+                mobText.textContent = `👤 Mi Cuenta (${currentUser.nombre.split(' ')[0]})`;
             }
         } else {
-            text.textContent = "Iniciar Sesión";
-            mobText.textContent = "Iniciar Sesión";
-            icon.textContent = "lock";
+            text.textContent = "Acceso Clientes / Admin";
+            mobText.textContent = "Acceso Clientes / Admin";
         }
     }
 
-    function logout() {
+    function handleLogout() {
         currentUser = null;
         updateNavState();
         document.getElementById('client-dashboard-modal').classList.add('hidden');
@@ -1145,38 +1129,33 @@
     // --- CLIENT DASHBOARD ---
     function renderClientDashboard(user) {
         document.getElementById('client-dash-name').textContent = user.nombre;
-        document.getElementById('client-dash-meta').textContent = `Lote: ${user.numeroLote} • Proyecto: ${user.proyecto}`;
-        document.getElementById('client-dash-cedula').textContent = user.cedula;
+        document.getElementById('client-dash-cedula').textContent = `Cédula: ${user.cedula}`;
+        document.getElementById('client-dash-phone').textContent = user.telefono || 'No registrado';
         document.getElementById('client-dash-email').textContent = user.correo;
-        document.getElementById('client-dash-phone').textContent = user.telefono;
-        document.getElementById('client-dash-address').textContent = user.direccion;
-        document.getElementById('client-dash-project').textContent = user.proyecto;
-        document.getElementById('client-dash-lot').textContent = user.numeroLote;
+        document.getElementById('client-dash-address').textContent = user.direccion || 'No registrada';
 
-        const total = user.saldoTotalUSD || 0;
-        const pending = user.saldoPendienteUSD || 0;
-        const paid = Math.max(0, total - pending);
-        const percent = total > 0 ? Math.round((paid / total) * 100) : 0;
+        document.getElementById('client-dash-lot').textContent = user.numeroLote || 'N/A';
+        document.getElementById('client-dash-project').textContent = user.proyecto || 'TerraNova Residencial';
+        document.getElementById('client-dash-total').textContent = `$${user.saldoTotalUSD.toLocaleString()} USD`;
+        document.getElementById('client-dash-pending').textContent = `$${user.saldoPendienteUSD.toLocaleString()} USD`;
 
-        document.getElementById('client-dash-total').textContent = `$${total.toLocaleString()} USD`;
-        document.getElementById('client-dash-paid').textContent = `$${paid.toLocaleString()} USD`;
-        document.getElementById('client-dash-pending').textContent = `$${pending.toLocaleString()} USD`;
-        
-        const monthly = user.plazoMeses > 0 ? Math.round(pending / user.plazoMeses) : 0;
-        document.getElementById('client-dash-installment').textContent = `${user.plazoMeses} Meses ($${monthly.toLocaleString()} USD/mes)`;
+        const paid = Math.max(0, user.saldoTotalUSD - user.saldoPendienteUSD);
+        const pct = user.saldoTotalUSD > 0 ? Math.round((paid / user.saldoTotalUSD) * 100) : 0;
+        document.getElementById('client-dash-percent').textContent = `${pct}% Pagado`;
+        document.getElementById('client-dash-progress-bar').style.width = `${pct}%`;
 
-        document.getElementById('client-dash-percent').textContent = `${percent}% Pagado`;
-        document.getElementById('client-dash-progress-bar').style.width = `${percent}%`;
+        const monthlyApprox = user.plazoMeses ? Math.round(user.saldoTotalUSD / user.plazoMeses) : 0;
+        document.getElementById('client-dash-installment').textContent = `$${monthlyApprox.toLocaleString()} USD / mes (${user.plazoMeses || 36} meses)`;
 
-        // Payments Table
         const tbody = document.getElementById('client-dash-payments-table');
         tbody.innerHTML = '';
+
         if (!user.historialPagos || user.historialPagos.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay abonos registrados en tu contrato aún.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay pagos registrados todavía.</td></tr>`;
         } else {
             user.historialPagos.forEach(p => {
                 const tr = document.createElement('tr');
-                tr.className = "border-b hover:bg-gray-50";
+                tr.className = "border-b border-gray-100";
                 tr.innerHTML = `
                     <td class="p-3 font-semibold text-gray-800">${p.fecha}</td>
                     <td class="p-3 text-gray-600">${p.concepto}</td>
@@ -1189,29 +1168,30 @@
 
         const msg = `Hola, soy ${user.nombre} (Cédula: ${user.cedula}), cliente del lote ${user.numeroLote} (${user.proyecto}). Quisiera consultar mi cuota/pago.`;
         document.getElementById('client-dash-wa-btn').href = `https://wa.me/50586664297?text=${encodeURIComponent(msg)}`;
-
         document.getElementById('client-dashboard-modal').classList.remove('hidden');
     }
 
-    // --- ADMIN DASHBOARD & EXPORT ---
+    // --- ADMIN DASHBOARD & CRUD ---
     async function renderAdminDashboard() {
         document.getElementById('admin-dashboard-modal').classList.remove('hidden');
-        document.getElementById('admin-clients-table-body').innerHTML =
-            `<tr><td colspan="7" class="p-6 text-center text-gray-400">Cargando datos...</td></tr>`;
+        const tbody = document.getElementById('admin-clients-table-body');
+        tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-400">Cargando clientes desde Supabase...</td></tr>`;
 
         const { data: clients, error } = await sbFetch('GET', 'clientes?select=*&order=fecha_registro.desc');
 
         if (error) {
-            showToast('Error al cargar clientes: ' + error.message, 'error');
+            showToast('Error al cargar clientes: ' + (error.message || JSON.stringify(error)), 'error');
+            tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-red-500 font-bold">Error de conexión: ${error.message}</td></tr>`;
             return;
         }
 
-        const totalClients = clients.length;
+        const list = clients || [];
+        const totalClients = list.length;
         let carteraTotal = 0;
         let saldoPendiente = 0;
 
-        clients.forEach(c => {
-            carteraTotal  += parseFloat(c.saldo_total || 0);
+        list.forEach(c => {
+            carteraTotal += parseFloat(c.saldo_total || 0);
             saldoPendiente += parseFloat(c.saldo_pendiente || 0);
         });
         const totalRecaudado = Math.max(0, carteraTotal - saldoPendiente);
@@ -1221,11 +1201,16 @@
         document.getElementById('admin-metric-collected').textContent = `$${totalRecaudado.toLocaleString()} USD`;
         document.getElementById('admin-metric-pending').textContent = `$${saldoPendiente.toLocaleString()} USD`;
 
-        // Normalise field names for the table renderer
-        const normalised = clients.map(c => ({
-            id: c.id, nombre: c.nombre, correo: c.correo, cedula: c.cedula,
-            telefono: c.telefono, proyecto: c.proyecto, numeroLote: c.numero_lote,
-            saldoTotalUSD: parseFloat(c.saldo_total), saldoPendienteUSD: parseFloat(c.saldo_pendiente)
+        const normalised = list.map(c => ({
+            id: c.id,
+            nombre: c.nombre,
+            correo: c.correo,
+            cedula: c.cedula,
+            telefono: c.telefono,
+            proyecto: c.proyecto,
+            numeroLote: c.numero_lote,
+            saldoTotalUSD: parseFloat(c.saldo_total || 0),
+            saldoPendienteUSD: parseFloat(c.saldo_pendiente || 0)
         }));
         renderAdminClientsTable(normalised);
     }
@@ -1234,7 +1219,7 @@
         const tbody = document.getElementById('admin-clients-table-body');
         tbody.innerHTML = '';
 
-        if (clientsList.length === 0) {
+        if (!clientsList || clientsList.length === 0) {
             tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-500">No hay clientes registrados en la base de datos.</td></tr>`;
             return;
         }
@@ -1246,7 +1231,7 @@
             const pct = total > 0 ? Math.round((paid / total) * 100) : 0;
 
             const tr = document.createElement('tr');
-            tr.className = "hover:bg-gray-50 transition-colors";
+            tr.className = "hover:bg-gray-50 transition-colors border-b border-gray-100";
             tr.innerHTML = `
                 <td class="p-4">
                     <div class="font-bold text-gray-900">${c.nombre}</div>
@@ -1290,7 +1275,6 @@
 
     async function filterAdminClients() {
         const query = document.getElementById('admin-search-input').value.trim().toLowerCase();
-
         if (!query) { renderAdminDashboard(); return; }
 
         const { data: clients } = await sbFetch('GET', `clientes?select=*&or=(nombre.ilike.*${encodeURIComponent(query)}*,cedula.ilike.*${encodeURIComponent(query)}*,numero_lote.ilike.*${encodeURIComponent(query)}*,proyecto.ilike.*${encodeURIComponent(query)}*)`);
@@ -1298,7 +1282,7 @@
         const normalised = (clients || []).map(c => ({
             id: c.id, nombre: c.nombre, correo: c.correo, cedula: c.cedula,
             telefono: c.telefono, proyecto: c.proyecto, numeroLote: c.numero_lote,
-            saldoTotalUSD: parseFloat(c.saldo_total), saldoPendienteUSD: parseFloat(c.saldo_pendiente)
+            saldoTotalUSD: parseFloat(c.saldo_total || 0), saldoPendienteUSD: parseFloat(c.saldo_pendiente || 0)
         }));
         renderAdminClientsTable(normalised);
     }
@@ -1313,7 +1297,7 @@
         });
 
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const url  = URL.createObjectURL(blob);
+        const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
         link.download = `TerraNova_Clientes_${new Date().toISOString().split('T')[0]}.csv`;
@@ -1321,7 +1305,7 @@
         URL.revokeObjectURL(url);
     }
 
-    // --- FORMULARIO DE CLIENTE ---
+    // --- FORMULARIO DE CLIENTE (CREAR / EDITAR) ---
     function openNewClientModal() {
         document.getElementById('admin-form-title').textContent = "Registrar Nuevo Cliente / Lote";
         document.getElementById('edit-client-id').value = "";
@@ -1338,18 +1322,18 @@
         if (!c) return;
 
         document.getElementById('admin-form-title').textContent = 'Editar Cliente y Lote';
-        document.getElementById('edit-client-id').value   = c.id;
-        document.getElementById('form-cli-name').value    = c.nombre;
-        document.getElementById('form-cli-cedula').value  = c.cedula;
-        document.getElementById('form-cli-email').value   = c.correo;
-        document.getElementById('form-cli-phone').value   = c.telefono || '';
+        document.getElementById('edit-client-id').value = c.id;
+        document.getElementById('form-cli-name').value = c.nombre;
+        document.getElementById('form-cli-cedula').value = c.cedula;
+        document.getElementById('form-cli-email').value = c.correo;
+        document.getElementById('form-cli-phone').value = c.telefono || '';
         document.getElementById('form-cli-address').value = c.direccion || '';
         document.getElementById('form-cli-project').value = c.proyecto || '';
-        document.getElementById('form-cli-lot').value     = c.numero_lote || '';
-        document.getElementById('form-cli-total').value   = c.saldo_total;
+        document.getElementById('form-cli-lot').value = c.numero_lote || '';
+        document.getElementById('form-cli-total').value = c.saldo_total;
         document.getElementById('form-cli-pending').value = c.saldo_pendiente;
-        document.getElementById('form-cli-months').value  = c.plazo_meses || 36;
-        document.getElementById('form-cli-password').value = c.password || '';
+        document.getElementById('form-cli-months').value = c.plazo_meses || 36;
+        document.getElementById('form-cli-password').value = c.password || 'cliente123';
         document.getElementById('admin-client-form-modal').classList.remove('hidden');
     }
 
@@ -1357,10 +1341,10 @@
         if (e && e.preventDefault) e.preventDefault();
         const editId = document.getElementById('edit-client-id').value.trim();
 
-        const nombre    = document.getElementById('form-cli-name').value.trim();
-        const cedula    = document.getElementById('form-cli-cedula').value.trim();
-        const correo    = document.getElementById('form-cli-email').value.trim();
-        const password  = document.getElementById('form-cli-password').value.trim();
+        const nombre = document.getElementById('form-cli-name').value.trim();
+        const cedula = document.getElementById('form-cli-cedula').value.trim();
+        const correo = document.getElementById('form-cli-email').value.trim();
+        const password = document.getElementById('form-cli-password').value.trim();
 
         if (!nombre || !cedula || !correo || !password) {
             showToast('Completa los campos obligatorios (Nombre, Cédula, Correo, Contraseña).', 'error');
@@ -1372,16 +1356,15 @@
             cedula,
             correo,
             password,
-            telefono:        document.getElementById('form-cli-phone').value.trim(),
-            direccion:       document.getElementById('form-cli-address').value.trim(),
-            proyecto:        document.getElementById('form-cli-project').value,
-            numero_lote:     document.getElementById('form-cli-lot').value.trim(),
-            saldo_total:     parseFloat(document.getElementById('form-cli-total').value) || 0,
+            telefono: document.getElementById('form-cli-phone').value.trim(),
+            direccion: document.getElementById('form-cli-address').value.trim(),
+            proyecto: document.getElementById('form-cli-project').value,
+            numero_lote: document.getElementById('form-cli-lot').value.trim(),
+            saldo_total: parseFloat(document.getElementById('form-cli-total').value) || 0,
             saldo_pendiente: parseFloat(document.getElementById('form-cli-pending').value) || 0,
-            plazo_meses:     parseInt(document.getElementById('form-cli-months').value) || 36
+            plazo_meses: parseInt(document.getElementById('form-cli-months').value) || 36
         };
 
-        // Show saving indicator
         const saveBtn = document.querySelector('#admin-client-form-modal button[onclick="saveAdminClient(event)"]');
         if (saveBtn) { saveBtn.textContent = 'Guardando...'; saveBtn.disabled = true; }
 
@@ -1393,20 +1376,11 @@
                 result = await sbFetch('POST', 'clientes', payload);
             }
 
-            // Restore button
             if (saveBtn) { saveBtn.textContent = 'Guardar Registro'; saveBtn.disabled = false; }
 
             if (result.error) {
                 const msg = result.error.message || result.error.hint || JSON.stringify(result.error);
                 showToast('❌ Error: ' + msg, 'error');
-                alert('ERROR AL GUARDAR:\n' + msg);
-                return;
-            }
-
-            const savedRows = Array.isArray(result.data) ? result.data : [result.data];
-            if (!savedRows || savedRows.length === 0 || !savedRows[0]) {
-                showToast('⚠️ Sin efecto — ejecuta el SQL de GRANT en Supabase.', 'error');
-                alert('0 filas afectadas.\nEjecuta en Supabase SQL Editor:\nGRANT ALL ON TABLE clientes TO anon;\nGRANT ALL ON TABLE pagos TO anon;');
                 return;
             }
 
@@ -1416,23 +1390,24 @@
         } catch (err) {
             if (saveBtn) { saveBtn.textContent = 'Guardar Registro'; saveBtn.disabled = false; }
             showToast('Error inesperado: ' + err.message, 'error');
-            alert('ERROR INESPERADO:\n' + err.message);
         }
     }
-
 
     async function deleteClient(id) {
         if (!confirm('¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.')) return;
         const { error } = await sbFetch('DELETE', `clientes?id=eq.${id}`);
-        if (error) { showToast('Error al eliminar: ' + error.message, 'error'); return; }
-        showToast('Cliente eliminado.');
+        if (error) {
+            showToast('Error al eliminar: ' + error.message, 'error');
+            return;
+        }
+        showToast('✅ Cliente eliminado.');
         renderAdminDashboard();
     }
 
     // --- SISTEMA DE ABONOS ---
     async function openPaymentModal(id) {
-        const { data: rows2 } = await sbFetch('GET', `clientes?select=id,nombre,numero_lote,saldo_pendiente&id=eq.${id}&limit=1`);
-        const c = rows2 && rows2[0] ? rows2[0] : null;
+        const { data: rows } = await sbFetch('GET', `clientes?select=id,nombre,numero_lote,saldo_pendiente&id=eq.${id}&limit=1`);
+        const c = rows && rows[0] ? rows[0] : null;
         if (!c) return;
 
         document.getElementById('pay-client-id').value = c.id;
@@ -1451,9 +1426,14 @@
     async function handleRecordPayment(e) {
         e.preventDefault();
         const clientId = document.getElementById('pay-client-id').value;
-        const amount   = parseFloat(document.getElementById('pay-amount').value);
-        const concept  = document.getElementById('pay-concept').value;
-        const date     = document.getElementById('pay-date').value;
+        const amount = parseFloat(document.getElementById('pay-amount').value);
+        const concept = document.getElementById('pay-concept').value;
+        const date = document.getElementById('pay-date').value;
+
+        if (!clientId || !amount || amount <= 0) {
+            showToast('Ingresa un monto de abono válido.', 'error');
+            return;
+        }
 
         const { data: balRows } = await sbFetch('GET', `clientes?select=saldo_pendiente&id=eq.${clientId}&limit=1`);
         const c = balRows && balRows[0] ? balRows[0] : null;
@@ -1461,17 +1441,26 @@
 
         const newBalance = Math.max(0, parseFloat(c.saldo_pendiente) - amount);
 
-        // 2. Insert payment record
+        // 1. Record payment in Supabase 'pagos' table
         const { error: payError } = await sbFetch('POST', 'pagos', {
-            cliente_id: clientId, fecha: date, monto: amount, concepto: concept
+            cliente_id: clientId,
+            fecha: date,
+            monto: amount,
+            concepto: concept
         });
-        if (payError) { showToast('Error al guardar abono: ' + payError.message, 'error'); return; }
+        if (payError) {
+            showToast('Error al registrar abono: ' + payError.message, 'error');
+            return;
+        }
 
-        // 3. Update client balance
+        // 2. Update client pending balance in 'clientes' table
         const { error: updError } = await sbFetch('PATCH', `clientes?id=eq.${clientId}`, { saldo_pendiente: newBalance });
-        if (updError) { showToast('Error al actualizar saldo: ' + updError.message, 'error'); return; }
+        if (updError) {
+            showToast('Error al actualizar saldo: ' + updError.message, 'error');
+            return;
+        }
 
-        showToast(`Abono de $${amount.toLocaleString()} registrado correctamente.`);
+        showToast(`✅ Abono de $${amount.toLocaleString()} USD registrado correctamente.`);
         closePaymentModal();
         renderAdminDashboard();
     }
