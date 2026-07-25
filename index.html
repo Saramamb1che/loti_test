@@ -116,6 +116,11 @@
         .whatsapp-btn-pulse {
             animation: pulse-ring 2s infinite;
         }
+        @media print {
+            body * { visibility: hidden; }
+            #printable-area, #printable-area * { visibility: visible; }
+            #printable-area { position: absolute; left: 0; top: 0; width: 100%; }
+        }
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
@@ -136,11 +141,18 @@
 <a class="text-on-surface-variant hover:text-primary transition-all text-body-md" href="#contacto">Contacto</a>
 </div>
 <div class="hidden md:flex items-center gap-3">
-    <a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita%20para%20conocer%20los%20terrenos." target="_blank" class="bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-6 py-2.5 rounded-full font-label-sm text-label-sm active:scale-95 transition-all duration-200 shadow-sm flex items-center gap-2">
+    <!-- Portal / Mi Cuenta Button -->
+    <button onclick="openAuthModal()" id="nav-user-btn" class="border border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-5 py-2 rounded-full font-label-sm text-label-sm transition-all flex items-center gap-2 font-semibold shadow-sm">
+        <span class="material-symbols-outlined" style="font-size: 20px;">account_circle</span>
+        <span id="nav-user-text">Portal / Mi Cuenta</span>
+    </button>
+    
+    <a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita%20para%20conocer%20los%20terrenos." target="_blank" class="bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim px-6 py-2 rounded-full font-label-sm text-label-sm active:scale-95 transition-all duration-200 shadow-sm flex items-center gap-2">
         <span class="material-symbols-outlined text-green-800" style="font-size: 20px;">calendar_month</span>
         Agenda tu visita
     </a>
 </div>
+
 <!-- Mobile Menu Toggle -->
 <button class="md:hidden text-primary p-2 focus:outline-none" id="mobile-menu-btn" aria-label="Abrir menú">
 <span class="material-symbols-outlined text-3xl" id="menu-icon">menu</span>
@@ -155,7 +167,13 @@
 <a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#financiamiento" onclick="toggleMobileMenu()">Financiamiento</a>
 <a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#nosotros" onclick="toggleMobileMenu()">Nosotros</a>
 <a class="text-on-surface-variant font-medium text-lg py-2 border-b border-outline-variant/20" href="#contacto" onclick="toggleMobileMenu()">Contacto</a>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita." target="_blank" class="bg-primary-container text-white text-center py-3 rounded-full font-semibold mt-2 flex items-center justify-center gap-2">
+
+<button onclick="openAuthModal(); toggleMobileMenu();" class="w-full bg-surface-container text-primary py-3 rounded-full font-bold flex items-center justify-center gap-2 border border-primary/20">
+    <span class="material-symbols-outlined">account_circle</span>
+    Portal / Mi Cuenta
+</button>
+
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20agendar%20una%20visita." target="_blank" class="bg-primary-container text-white text-center py-3 rounded-full font-semibold mt-1 flex items-center justify-center gap-2">
     <span class="material-symbols-outlined">chat</span>
     Contactar por WhatsApp (+505 86664297)
 </a>
@@ -164,10 +182,8 @@
 
 <!-- 2. Hero Section -->
 <header class="relative w-full h-[90vh] min-h-[620px] flex items-center justify-center mt-16 md:mt-0 pt-20 pb-12" id="inicio">
-<!-- Background Image - Crisp Ultra High Res -->
 <div class="absolute inset-0 z-0 overflow-hidden">
 <img src="hero_landscape.jpg" alt="Terra Nova Landscape" class="w-full h-full object-cover object-center transform scale-105 hover:scale-100 transition-transform duration-1000 ease-out" />
-<!-- Gradient Overlay for Contrast -->
 <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-transparent"></div>
 </div>
 
@@ -187,10 +203,10 @@
     <span class="material-symbols-outlined">grid_view</span>
     Ver lotes disponibles
 </a>
-<a href="https://wa.me/50586664297?text=Hola,%20me%20gustar%C3%ADa%20hablar%20con%20un%20asesor%20sobre%20los%20terrenos." target="_blank" class="border-2 border-white text-white bg-black/30 backdrop-blur-sm px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-white hover:text-primary transition-all w-full sm:w-auto text-center flex items-center justify-center gap-2">
-    <span class="material-symbols-outlined text-green-400">chat</span>
-    Contactar asesor (+505 86664297)
-</a>
+<button onclick="openAuthModal()" class="border-2 border-white text-white bg-black/40 backdrop-blur-sm px-8 py-4 rounded-full font-label-sm text-label-sm hover:bg-white hover:text-primary transition-all w-full sm:w-auto text-center flex items-center justify-center gap-2">
+    <span class="material-symbols-outlined text-amber-300">lock</span>
+    Ingresar a mi cuenta de cliente
+</button>
 </div>
 </div>
 </div>
@@ -203,7 +219,6 @@
 <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Nuestro compromiso es brindarte seguridad jurídica, plusvalía garantizada y el mejor entorno para tu próximo proyecto.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
-<!-- Benefit 1 -->
 <div class="bg-surface rounded-xl p-8 border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col items-start gap-stack-md hover:-translate-y-1 transition-transform duration-300">
 <div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container mb-2">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">account_balance_wallet</span>
@@ -211,7 +226,7 @@
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Financiamiento en USD</h3>
 <p class="font-body-md text-body-md text-on-surface-variant">Planes de pago flexibles en dólares, sin trámites bancarios complejos y sin intereses abusivos.</p>
 </div>
-<!-- Benefit 2 -->
+
 <div class="bg-surface rounded-xl p-8 border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col items-start gap-stack-md hover:-translate-y-1 transition-transform duration-300">
 <div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container mb-2">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">location_on</span>
@@ -219,7 +234,7 @@
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Ubicación estratégica</h3>
 <p class="font-body-md text-body-md text-on-surface-variant">Zonas de alto crecimiento y plusvalía continua, con acceso rápido a vías principales.</p>
 </div>
-<!-- Benefit 3 -->
+
 <div class="bg-surface rounded-xl p-8 border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col items-start gap-stack-md hover:-translate-y-1 transition-transform duration-300">
 <div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container mb-2">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">home_work</span>
@@ -227,7 +242,7 @@
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Servicios básicos</h3>
 <p class="font-body-md text-body-md text-on-surface-variant">Accesos estructurados, agua y energía eléctrica listos para comenzar a construir.</p>
 </div>
-<!-- Benefit 4 -->
+
 <div class="bg-surface rounded-xl p-8 border border-outline-variant/30 shadow-[0_4px_20px_rgba(6,78,59,0.04)] flex flex-col items-start gap-stack-md hover:-translate-y-1 transition-transform duration-300">
 <div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container mb-2">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">verified_user</span>
@@ -255,118 +270,68 @@
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-
-<!-- Card 1 -->
 <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
 <div class="relative h-64 overflow-hidden">
 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop" alt="Valle Esmeralda Fase I" />
-<div class="absolute top-4 right-4 bg-primary-container text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">
-    Disponible
-</div>
+<div class="absolute top-4 right-4 bg-primary-container text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Disponible</div>
 </div>
 <div class="p-6 flex flex-col flex-grow">
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Valle Esmeralda Fase I</h3>
 <p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
-<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span>
-    Zona de Alta Plusvalía
+<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Zona de Alta Plusvalía
 </p>
 <div class="grid grid-cols-2 gap-4 mb-6">
-<div class="flex flex-col">
-<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span>
-<span class="font-body-md font-semibold text-on-surface">Desde 200 m²</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span>
-<span class="font-body-md font-bold text-primary-container text-lg">$15,000 USD</span>
-</div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 200 m²</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$15,000 USD</span></div>
 </div>
 <div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
-<button onclick="openProjectModal('Valle Esmeralda Fase I', '$15,000 USD', '200 m²', 'Disponible', 'Excelente lote ubicado en zona residencial con topografía plana, calles de acceso y factibilidad de servicios públicos.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">
-    Ver detalles
-</button>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Valle%20Esmeralda%20Fase%20I%20($15,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp">
-    <span class="material-symbols-outlined" style="font-size: 20px;">chat</span>
-</a>
+<button onclick="openProjectModal('Valle Esmeralda Fase I', '$15,000 USD', '200 m²', 'Disponible', 'Excelente lote ubicado en zona residencial con topografía plana, calles de acceso y factibilidad de servicios públicos.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Valle%20Esmeralda%20Fase%20I%20($15,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
 </div>
 </div>
 </article>
 
-<!-- Card 2 -->
 <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
 <div class="relative h-64 overflow-hidden">
 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=800&auto=format&fit=crop" alt="Bosque Real Privada" />
-<div class="absolute top-4 right-4 bg-amber-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">
-    Últimos lotes
-</div>
+<div class="absolute top-4 right-4 bg-amber-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Últimos lotes</div>
 </div>
 <div class="p-6 flex flex-col flex-grow">
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Bosque Real Privada</h3>
 <p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
-<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span>
-    Corredor Ecológico
+<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Corredor Ecológico
 </p>
 <div class="grid grid-cols-2 gap-4 mb-6">
-<div class="flex flex-col">
-<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span>
-<span class="font-body-md font-semibold text-on-surface">Desde 350 m²</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span>
-<span class="font-body-md font-bold text-primary-container text-lg">$28,000 USD</span>
-</div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 350 m²</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$28,000 USD</span></div>
 </div>
 <div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
-<button onclick="openProjectModal('Bosque Real Privada', '$28,000 USD', '350 m²', 'Últimos Lotes', 'Terrenos amplios rodeados de un entorno natural idílico. Cuenta con garita de seguridad, acceso privado y alta demanda residencial.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">
-    Ver detalles
-</button>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Bosque%20Real%20Privada%20($28,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp">
-    <span class="material-symbols-outlined" style="font-size: 20px;">chat</span>
-</a>
+<button onclick="openProjectModal('Bosque Real Privada', '$28,000 USD', '350 m²', 'Últimos Lotes', 'Terrenos amplios rodeados de un entorno natural idílico. Cuenta con garita de seguridad, acceso privado y alta demanda residencial.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Bosque%20Real%20Privada%20($28,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
 </div>
 </div>
 </article>
 
-<!-- Card 3 -->
 <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/30 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group">
 <div class="relative h-64 overflow-hidden">
 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop" alt="Mirador del Valle" />
-<div class="absolute top-4 right-4 bg-teal-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">
-    Preventa
-</div>
+<div class="absolute top-4 right-4 bg-teal-700 text-white px-3 py-1 rounded-full font-label-sm text-[12px] shadow-sm font-semibold">Preventa</div>
 </div>
 <div class="p-6 flex flex-col flex-grow">
 <h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-1">Mirador del Valle</h3>
 <p class="font-body-md text-[14px] text-on-surface-variant flex items-center gap-1 mb-4">
-<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span>
-    Vista Panorámica
+<span class="material-symbols-outlined text-outline" style="font-size: 16px;">location_on</span> Vista Panorámica
 </p>
 <div class="grid grid-cols-2 gap-4 mb-6">
-<div class="flex flex-col">
-<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span>
-<span class="font-body-md font-semibold text-on-surface">Desde 160 m²</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span>
-<span class="font-body-md font-bold text-primary-container text-lg">$12,000 USD</span>
-</div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Superficie</span><span class="font-body-md font-semibold text-on-surface">Desde 160 m²</span></div>
+<div class="flex flex-col"><span class="font-label-sm text-[12px] text-outline uppercase tracking-wider">Precio Total</span><span class="font-body-md font-bold text-primary-container text-lg">$12,000 USD</span></div>
 </div>
 <div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
-<button onclick="openProjectModal('Mirador del Valle', '$12,000 USD', '160 m²', 'Preventa', 'Proyecto en preventa con precios especiales de lanzamiento y cuotas iniciales bajas. Ideal para primera inversión o construcción futura.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">
-    Ver detalles
-</button>
-<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Mirador%20del%20Valle%20($12,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp">
-    <span class="material-symbols-outlined" style="font-size: 20px;">chat</span>
-</a>
+<button onclick="openProjectModal('Mirador del Valle', '$12,000 USD', '160 m²', 'Preventa', 'Proyecto en preventa con precios especiales de lanzamiento y cuotas iniciales bajas. Ideal para primera inversión o construcción futura.')" class="w-full text-center border-2 border-primary-container text-primary-container hover:bg-primary-container hover:text-white px-4 py-2.5 rounded-full font-label-sm transition-all font-semibold">Ver detalles</button>
+<a href="https://wa.me/50586664297?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20Mirador%20del%20Valle%20($12,000%20USD)" target="_blank" class="bg-green-600 text-white p-2.5 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Consultar por WhatsApp"><span class="material-symbols-outlined" style="font-size: 20px;">chat</span></a>
 </div>
 </div>
 </article>
-
-</div>
-<div class="mt-8 text-center md:hidden">
-<button onclick="scrollToSection('contacto')" class="text-primary-container font-label-sm text-label-sm inline-flex items-center gap-2 hover:text-primary transition-colors border border-primary-container rounded-full px-6 py-2">
-    Ver todos los proyectos
-    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
-</button>
 </div>
 </div>
 </section>
@@ -378,22 +343,18 @@
 <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Explora nuestras ubicaciones</h2>
 <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Ubicaciones privilegiadas con fácil acceso y entorno natural.</p>
 
-<!-- Toggle -->
 <div class="inline-flex bg-surface border border-outline-variant/30 rounded-full p-1 mt-6 shadow-sm">
 <button id="map-btn-standard" onclick="switchMapView('standard')" class="px-6 py-2 rounded-full bg-primary-container text-white font-label-sm text-label-sm shadow-sm transition-all">Vista Terreno</button>
 <button id="map-btn-sat" onclick="switchMapView('sat')" class="px-6 py-2 rounded-full text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-all">Vista Satelital</button>
 </div>
 </div>
 
-<!-- Map Container -->
 <div class="w-full h-[450px] bg-slate-900 rounded-xl border border-outline-variant/30 shadow-lg overflow-hidden relative flex items-center justify-center">
-<!-- Map Layer -->
 <div class="absolute inset-0 transition-all duration-500" id="map-layer" style="transform: scale(1);">
     <img id="map-img-standard" class="w-full h-full object-cover opacity-80" src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1400&auto=format&fit=crop" alt="Mapa de desarrollo" />
     <img id="map-img-sat" class="w-full h-full object-cover hidden opacity-80" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1400&auto=format&fit=crop" alt="Vista Satelital" />
 </div>
 
-<!-- Controls Overlay -->
 <div class="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
 <div class="flex justify-between items-start pointer-events-auto">
     <div class="bg-surface/90 backdrop-blur-md px-4 py-2 rounded-lg border border-outline-variant/30 shadow-md">
@@ -410,7 +371,6 @@
     </div>
 </div>
 
-<!-- Pins -->
 <div class="absolute top-[35%] left-[30%] pointer-events-auto cursor-pointer group" onclick="openProjectModal('Valle Esmeralda Fase I', '$15,000 USD', '200 m²', 'Disponible')">
     <div class="flex flex-col items-center">
         <span class="material-symbols-outlined text-green-500 drop-shadow-lg text-4xl animate-bounce">location_on</span>
@@ -440,7 +400,6 @@
 <div class="hidden md:block absolute top-[40px] left-[10%] right-[10%] h-[2px] border-t-2 border-dashed border-primary/20 z-0"></div>
 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
 
-<!-- Step 1 -->
 <div class="flex flex-col items-center text-center">
 <div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-md flex items-center justify-center mb-6 relative bg-white">
 <div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">1</div>
@@ -450,7 +409,6 @@
 <p class="font-body-md text-[14px] text-on-surface-variant">Revisa nuestro catálogo y elige el terreno que mejor se ajuste a tu plan.</p>
 </div>
 
-<!-- Step 2 -->
 <div class="flex flex-col items-center text-center">
 <div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-md flex items-center justify-center mb-6 relative bg-white">
 <div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">2</div>
@@ -460,7 +418,6 @@
 <p class="font-body-md text-[14px] text-on-surface-variant">Coordinamos un recorrido guiado en el sitio o una videollamada interactiva.</p>
 </div>
 
-<!-- Step 3 -->
 <div class="flex flex-col items-center text-center">
 <div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-sm flex items-center justify-center mb-6 relative bg-white">
 <div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">3</div>
@@ -470,7 +427,6 @@
 <p class="font-body-md text-[14px] text-on-surface-variant">Personalizamos un plan de financiamiento en dólares con prima accesible.</p>
 </div>
 
-<!-- Step 4 -->
 <div class="flex flex-col items-center text-center">
 <div class="w-20 h-20 bg-surface rounded-full border border-primary/20 shadow-sm flex items-center justify-center mb-6 relative bg-white">
 <div class="absolute -top-2 -right-2 w-8 h-8 bg-secondary-container text-on-secondary-container rounded-full font-label-sm flex items-center justify-center font-bold">4</div>
@@ -490,7 +446,6 @@
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 <div class="bg-surface border border-outline-variant/30 rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
 
-<!-- Info Side -->
 <div class="w-full md:w-5/12 bg-primary-container p-10 flex flex-col justify-between text-white">
 <div>
 <h2 class="font-headline-lg text-headline-lg mb-4 text-white">Solicita más información</h2>
@@ -534,7 +489,6 @@
 </div>
 </div>
 
-<!-- Form Side -->
 <div class="w-full md:w-7/12 p-10 bg-white">
 <form id="contact-form" onsubmit="handleFormSubmit(event)" class="flex flex-col gap-6">
 <div class="relative z-0 w-full group">
@@ -568,7 +522,6 @@
         <span class="material-symbols-outlined">send</span>
         Enviar datos por WhatsApp
     </button>
-    <p class="text-[12px] text-outline text-center">Al enviar tus datos, serás redirigido directamente a un chat con nuestro equipo.</p>
 </div>
 </form>
 </div>
@@ -601,15 +554,10 @@
 <a class="font-body-md text-on-primary-fixed-variant opacity-80" href="tel:+50586664297">📞 Teléfono: +505 8666 4297</a>
 </div>
 <div class="col-span-1 flex flex-col gap-3">
-<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Síguenos</p>
-<div class="flex gap-4">
-<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-on-primary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" href="https://wa.me/50586664297" target="_blank">
-<span class="material-symbols-outlined" style="font-size: 20px;">chat</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-on-primary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" href="#contacto">
-<span class="material-symbols-outlined" style="font-size: 20px;">mail</span>
-</a>
-</div>
+<p class="font-label-sm text-on-primary opacity-80 uppercase tracking-wider mb-2 font-bold">Portal de Usuarios</p>
+<button onclick="openAuthModal()" class="text-left font-body-md text-amber-300 font-semibold hover:underline flex items-center gap-1">
+    <span class="material-symbols-outlined text-sm">lock</span> Acceder al Portal de Clientes
+</button>
 </div>
 <div class="col-span-1 md:col-span-4 mt-12 pt-8 border-t border-white/10 text-center">
 <p class="font-body-md text-on-primary-fixed-variant text-[14px]">
@@ -619,7 +567,7 @@
 </div>
 </footer>
 
-<!-- 9. Floating WhatsApp Widget -->
+<!-- Floating WhatsApp Widget -->
 <a href="https://wa.me/50586664297?text=Hola,%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20sus%20terrenos." target="_blank" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-2xl flex items-center gap-3 transition-all hover:scale-110 whatsapp-btn-pulse group" aria-label="Contacto WhatsApp">
     <span class="material-symbols-outlined text-3xl">chat</span>
     <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap font-bold pr-2 text-sm">
@@ -627,7 +575,7 @@
     </span>
 </a>
 
-<!-- 10. Project Details Modal -->
+<!-- Modal 1: Details Modal -->
 <div id="project-modal" class="fixed inset-0 bg-black/60 z-50 hidden backdrop-blur-sm flex items-center justify-center p-4">
 <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
     <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
@@ -637,37 +585,446 @@
         <p id="modal-price" class="text-xl font-extrabold text-amber-700 mt-1"></p>
     </div>
     <div class="bg-surface p-4 rounded-xl mb-4 border border-outline-variant/30">
-        <div class="flex justify-between text-sm mb-2">
-            <span class="text-gray-500">Superficie mínima:</span>
-            <strong id="modal-area" class="text-gray-800"></strong>
-        </div>
-        <div class="flex justify-between text-sm mb-2">
-            <span class="text-gray-500">Moneda:</span>
-            <strong class="text-gray-800">Dólares Estadounidenses (USD)</strong>
-        </div>
+        <div class="flex justify-between text-sm mb-2"><span class="text-gray-500">Superficie mínima:</span><strong id="modal-area" class="text-gray-800"></strong></div>
+        <div class="flex justify-between text-sm mb-2"><span class="text-gray-500">Moneda:</span><strong class="text-gray-800">Dólares Estadounidenses (USD)</strong></div>
         <p id="modal-desc" class="text-sm text-gray-600 mt-3 pt-3 border-t border-gray-200"></p>
     </div>
     <div class="flex gap-3">
         <a id="modal-wa-btn" href="#" target="_blank" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-full text-center transition-colors flex items-center justify-center gap-2">
-            <span class="material-symbols-outlined">chat</span>
-            Cotizar por WhatsApp
+            <span class="material-symbols-outlined">chat</span> Cotizar por WhatsApp
         </a>
     </div>
 </div>
 </div>
 
+<!-- Modal 2: Auth / Login / Register Modal -->
+<div id="auth-modal" class="fixed inset-0 bg-black/70 z-50 hidden backdrop-blur-md flex items-center justify-center p-4">
+<div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative overflow-hidden">
+    <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
+    
+    <!-- Modal Header -->
+    <div class="text-center mb-6">
+        <div class="w-14 h-14 bg-primary-container/10 text-primary-container rounded-full flex items-center justify-center mx-auto mb-3">
+            <span class="material-symbols-outlined text-3xl">lock</span>
+        </div>
+        <h3 class="text-2xl font-bold text-primary">Portal de Clientes</h3>
+        <p class="text-xs text-gray-500 mt-1">Ingresa para consultar tu estado de cuenta o gestionar lotes.</p>
+    </div>
+
+    <!-- Auth Tabs -->
+    <div class="flex bg-gray-100 rounded-full p-1 mb-6">
+        <button id="tab-login" onclick="switchAuthTab('login')" class="w-1/2 py-2 text-sm font-bold rounded-full bg-white text-primary shadow-sm transition-all">Iniciar Sesión</button>
+        <button id="tab-register" onclick="switchAuthTab('register')" class="w-1/2 py-2 text-sm font-bold rounded-full text-gray-500 hover:text-primary transition-all">Registrarse</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Correo o Cédula</label>
+            <input type="text" id="login-email" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary-container focus:outline-none text-sm" placeholder="ej. carlos@email.com o 001-150890-0002U">
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Contraseña</label>
+            <input type="password" id="login-password" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary-container focus:outline-none text-sm" placeholder="••••••••">
+        </div>
+        <div id="login-error" class="text-red-600 text-xs hidden text-center font-semibold"></div>
+        <button type="submit" class="w-full bg-primary-container text-white py-3.5 rounded-xl font-bold hover:bg-primary-fixed-variant transition-all shadow-md flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">login</span> Iniciar Sesión
+        </button>
+
+        <div class="pt-4 border-t border-gray-200 mt-4 text-center">
+            <p class="text-xs text-gray-500 mb-2">Accesos Demo para probar:</p>
+            <div class="flex gap-2 justify-center">
+                <button type="button" onclick="quickFillLogin('carlos@email.com', 'cliente123')" class="text-xs bg-emerald-50 text-emerald-800 border border-emerald-300 px-3 py-1.5 rounded-lg hover:bg-emerald-100">👤 Ver Demo Cliente</button>
+                <button type="button" onclick="quickFillLogin('admin@terranova.com', 'admin123')" class="text-xs bg-amber-50 text-amber-800 border border-amber-300 px-3 py-1.5 rounded-lg hover:bg-amber-100">👑 Ver Demo Admin</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Register Form (Hidden by default) -->
+    <form id="form-register" onsubmit="handleRegister(event)" class="space-y-3 hidden">
+        <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nombre Completo</label>
+            <input type="text" id="reg-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary-container text-sm" placeholder="ej. Juan Pérez">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Cédula / ID</label>
+                <input type="text" id="reg-cedula" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="001-XXXXXX-XXXX">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Teléfono</label>
+                <input type="tel" id="reg-phone" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="+505 8888 8888">
+            </div>
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Correo Electrónico</label>
+            <input type="email" id="reg-email" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="juan@email.com">
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Dirección de Domicilio</label>
+            <input type="text" id="reg-address" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="Managua, Nicaragua">
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Contraseña</label>
+            <input type="password" id="reg-password" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm" placeholder="Mínimo 6 caracteres">
+        </div>
+        <div id="reg-error" class="text-red-600 text-xs hidden text-center font-semibold"></div>
+        <button type="submit" class="w-full bg-secondary-container text-on-secondary-container py-3 rounded-xl font-bold hover:bg-secondary-fixed-dim transition-all shadow-md">
+            Crear Cuenta de Cliente
+        </button>
+    </form>
+</div>
+</div>
+
+<!-- Modal 3: Client Dashboard Modal -->
+<div id="client-dashboard-modal" class="fixed inset-0 bg-black/80 z-50 hidden backdrop-blur-md overflow-y-auto p-4 md:p-8">
+<div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden my-6 border border-gray-100" id="printable-area">
+    <!-- Header -->
+    <div class="bg-primary p-6 md:p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <span class="bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full uppercase">Estado de Cuenta Oficial</span>
+            <h2 id="client-dash-name" class="text-2xl md:text-3xl font-extrabold mt-2"></h2>
+            <p id="client-dash-meta" class="text-sm opacity-90 mt-1"></p>
+        </div>
+        <div class="flex gap-2">
+            <button onclick="window.print()" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">print</span> Imprimir
+            </button>
+            <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">logout</span> Salir
+            </button>
+        </div>
+    </div>
+
+    <!-- Financial Progress Card -->
+    <div class="p-6 md:p-8 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-surface p-5 rounded-2xl border border-outline-variant/30">
+                <span class="text-xs font-bold text-gray-500 uppercase">Valor Total Lote</span>
+                <p id="client-dash-total" class="text-2xl font-black text-primary mt-1"></p>
+            </div>
+            <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-200">
+                <span class="text-xs font-bold text-emerald-700 uppercase">Abonado a la Fecha</span>
+                <p id="client-dash-paid" class="text-2xl font-black text-emerald-700 mt-1"></p>
+            </div>
+            <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
+                <span class="text-xs font-bold text-amber-700 uppercase">Saldo Pendiente</span>
+                <p id="client-dash-pending" class="text-2xl font-black text-amber-800 mt-1"></p>
+            </div>
+            <div class="bg-surface p-5 rounded-2xl border border-outline-variant/30">
+                <span class="text-xs font-bold text-gray-500 uppercase">Plazo / Cuota Estimada</span>
+                <p id="client-dash-installment" class="text-xl font-bold text-gray-800 mt-1"></p>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="bg-surface p-6 rounded-2xl border border-outline-variant/30">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-bold text-gray-700">Progreso de Cancelación del Terreno</span>
+                <span id="client-dash-percent" class="text-sm font-black text-emerald-700"></span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                <div id="client-dash-progress-bar" class="bg-emerald-600 h-4 rounded-full transition-all duration-1000"></div>
+            </div>
+        </div>
+
+        <!-- Personal Info & Property Details -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-surface p-6 rounded-2xl border border-outline-variant/30 space-y-3">
+                <h4 class="font-bold text-primary text-base flex items-center gap-2 border-b pb-2">
+                    <span class="material-symbols-outlined">badge</span> Datos Registrados
+                </h4>
+                <p class="text-sm"><strong>Cédula / ID:</strong> <span id="client-dash-cedula"></span></p>
+                <p class="text-sm"><strong>Correo:</strong> <span id="client-dash-email"></span></p>
+                <p class="text-sm"><strong>Teléfono:</strong> <span id="client-dash-phone"></span></p>
+                <p class="text-sm"><strong>Dirección:</strong> <span id="client-dash-address"></span></p>
+            </div>
+            <div class="bg-surface p-6 rounded-2xl border border-outline-variant/30 space-y-3">
+                <h4 class="font-bold text-primary text-base flex items-center gap-2 border-b pb-2">
+                    <span class="material-symbols-outlined">home_pin</span> Datos de la Propiedad
+                </h4>
+                <p class="text-sm"><strong>Proyecto:</strong> <span id="client-dash-project"></span></p>
+                <p class="text-sm"><strong>Número de Lote:</strong> <span id="client-dash-lot"></span></p>
+                <p class="text-sm"><strong>Moneda de Contrato:</strong> Dólares Estadounidenses (USD)</p>
+                <p class="text-sm"><strong>Estado del Contrato:</strong> <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-bold">VIGENTE Y ACTIVO</span></p>
+            </div>
+        </div>
+
+        <!-- Payment History Table -->
+        <div class="bg-surface p-6 rounded-2xl border border-outline-variant/30">
+            <h4 class="font-bold text-primary text-base flex items-center gap-2 mb-4">
+                <span class="material-symbols-outlined">history</span> Historial de Pagos y Abonos
+            </h4>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+                        <tr>
+                            <th class="p-3">Fecha</th>
+                            <th class="p-3">Concepto</th>
+                            <th class="p-3">Monto Abonado ($ USD)</th>
+                            <th class="p-3">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="client-dash-payments-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-emerald-50 p-6 rounded-2xl border border-emerald-200">
+            <div>
+                <h5 class="font-bold text-emerald-900">¿Deseas realizar un pago o tienes dudas de tu cuota?</h5>
+                <p class="text-xs text-emerald-700">Comunícate directamente con tu asesor asignado por WhatsApp.</p>
+            </div>
+            <a id="client-dash-wa-btn" href="#" target="_blank" class="bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-full text-sm flex items-center gap-2 shadow-md">
+                <span class="material-symbols-outlined">chat</span> Reportar Pago por WhatsApp
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal 4: Admin Dashboard Modal -->
+<div id="admin-dashboard-modal" class="fixed inset-0 bg-black/80 z-50 hidden backdrop-blur-md overflow-y-auto p-4 md:p-8">
+<div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden my-4 border border-gray-100">
+    <!-- Header -->
+    <div class="bg-primary-container p-6 md:p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <div class="flex items-center gap-2">
+                <span class="bg-amber-400 text-amber-950 text-xs font-black px-3 py-1 rounded-full uppercase">Panel Administrativo TerraNova</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold mt-2">Control Global de Clientes y Lotes</h2>
+            <p class="text-xs text-emerald-200 mt-1">Gestión de cartera, registro de clientes, abonados y contratos.</p>
+        </div>
+        <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-full text-xs font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">logout</span> Cerrar Sesión Admin
+        </button>
+    </div>
+
+    <div class="p-6 md:p-8 space-y-8">
+        <!-- Admin Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-surface p-5 rounded-2xl border border-outline-variant/30">
+                <span class="text-xs font-bold text-gray-500 uppercase">Clientes Registrados</span>
+                <p id="admin-metric-count" class="text-3xl font-black text-primary mt-1">0</p>
+            </div>
+            <div class="bg-surface p-5 rounded-2xl border border-outline-variant/30">
+                <span class="text-xs font-bold text-gray-500 uppercase">Cartera Total Vendida</span>
+                <p id="admin-metric-total" class="text-2xl font-black text-gray-800 mt-1">$0 USD</p>
+            </div>
+            <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-200">
+                <span class="text-xs font-bold text-emerald-700 uppercase">Total Recaudado</span>
+                <p id="admin-metric-collected" class="text-2xl font-black text-emerald-700 mt-1">$0 USD</p>
+            </div>
+            <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
+                <span class="text-xs font-bold text-amber-800 uppercase">Saldo Pendiente Global</span>
+                <p id="admin-metric-pending" class="text-2xl font-black text-amber-800 mt-1">$0 USD</p>
+            </div>
+        </div>
+
+        <!-- Action bar & Search -->
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-surface p-4 rounded-2xl border border-outline-variant/30">
+            <div class="relative w-full sm:w-96">
+                <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400">search</span>
+                <input type="text" id="admin-search-input" onkeyup="filterAdminClients()" placeholder="Buscar por Nombre, Cédula o Lote..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary-container">
+            </div>
+            <button onclick="openNewClientModal()" class="w-full sm:w-auto bg-primary-container text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-primary-fixed-variant transition-all shadow-md flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined">person_add</span> + Registrar Nuevo Cliente
+            </button>
+        </div>
+
+        <!-- Clients Table -->
+        <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-gray-100 text-gray-700 uppercase text-xs border-b">
+                        <tr>
+                            <th class="p-4">Cliente</th>
+                            <th class="p-4">Cédula / Teléfono</th>
+                            <th class="p-4">Proyecto / Lote</th>
+                            <th class="p-4">Saldo Total</th>
+                            <th class="p-4">Saldo Pendiente</th>
+                            <th class="p-4">Progreso</th>
+                            <th class="p-4 text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-clients-table-body" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal 5: Add/Edit Client Admin Modal -->
+<div id="admin-client-form-modal" class="fixed inset-0 bg-black/75 z-50 hidden backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+<div class="bg-white rounded-3xl max-w-2xl w-full p-8 shadow-2xl relative my-8">
+    <button onclick="closeNewClientModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
+    <h3 id="admin-form-title" class="text-2xl font-bold text-primary mb-4">Registrar Nuevo Cliente</h3>
+
+    <form id="admin-client-form" onsubmit="saveAdminClient(event)" class="space-y-4">
+        <input type="hidden" id="edit-client-id">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nombre Completo</label>
+                <input type="text" id="form-cli-name" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Cédula / ID</label>
+                <input type="text" id="form-cli-cedula" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Correo Electrónico</label>
+                <input type="email" id="form-cli-email" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Teléfono</label>
+                <input type="tel" id="form-cli-phone" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Dirección de Domicilio</label>
+                <input type="text" id="form-cli-address" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Proyecto Asignado</label>
+                <select id="form-cli-project" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+                    <option value="Valle Esmeralda Fase I">Valle Esmeralda Fase I</option>
+                    <option value="Bosque Real Privada">Bosque Real Privada</option>
+                    <option value="Mirador del Valle">Mirador del Valle</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Número de Lote</label>
+                <input type="text" id="form-cli-lot" required placeholder="ej. Lote A-12" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Saldo Total ($ USD)</label>
+                <input type="number" id="form-cli-total" required min="1" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Saldo Pendiente ($ USD)</label>
+                <input type="number" id="form-cli-pending" required min="0" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Plazo en Meses</label>
+                <input type="number" id="form-cli-months" required min="1" value="36" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Contraseña de Acceso</label>
+                <input type="text" id="form-cli-password" required value="cliente123" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+            </div>
+        </div>
+
+        <div class="flex gap-3 pt-4 border-t">
+            <button type="button" onclick="closeNewClientModal()" class="w-1/2 py-3 rounded-xl border border-gray-300 font-bold text-gray-700 text-sm">Cancelar</button>
+            <button type="submit" class="w-1/2 bg-primary-container text-white py-3 rounded-xl font-bold text-sm hover:bg-primary-fixed-variant">Guardar Cliente</button>
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- Modal 6: Register Payment Modal -->
+<div id="payment-modal" class="fixed inset-0 bg-black/75 z-50 hidden backdrop-blur-sm flex items-center justify-center p-4">
+<div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+    <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
+    <h3 class="text-xl font-bold text-primary mb-1">Registrar Nuevo Abono</h3>
+    <p id="pay-client-name" class="text-xs text-gray-500 mb-4"></p>
+
+    <form onsubmit="handleRecordPayment(event)" class="space-y-4">
+        <input type="hidden" id="pay-client-id">
+        <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Monto a Abonar ($ USD)</label>
+            <input type="number" id="pay-amount" required min="1" class="w-full px-4 py-3 rounded-xl border border-gray-300 text-base font-bold text-emerald-800" placeholder="ej. 500">
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Concepto de Pago</label>
+            <input type="text" id="pay-concept" required value="Abono a mensualidad" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Fecha del Abono</label>
+            <input type="date" id="pay-date" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm">
+        </div>
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-xl font-bold text-sm shadow-md">
+            Registrar Abono
+        </button>
+    </form>
+</div>
+</div>
+
 <script>
-    // Navbar scroll effect
+    // --- DATABASE & INITIALIZATION ---
+    const INITIAL_USERS = [
+        {
+            id: "ADMIN-01",
+            role: "admin",
+            correo: "admin@terranova.com",
+            password: "admin123",
+            nombre: "Administrador TerraNova"
+        },
+        {
+            id: "CLI-1001",
+            role: "cliente",
+            nombre: "Carlos Alberto Mendoza",
+            cedula: "001-150890-0002U",
+            correo: "carlos@email.com",
+            password: "cliente123",
+            telefono: "+505 8899 1122",
+            direccion: "Reparto San Juan, Managua",
+            numeroLote: "Lote B-12",
+            proyecto: "Valle Esmeralda Fase I",
+            saldoTotalUSD: 15000,
+            saldoPendienteUSD: 9000,
+            plazoMeses: 36,
+            historialPagos: [
+                { fecha: "2026-01-15", montoUSD: 3000, concepto: "Prima Inicial" },
+                { fecha: "2026-02-15", montoUSD: 1500, concepto: "Abono a Capital Cuota 1" },
+                { fecha: "2026-03-15", montoUSD: 1500, concepto: "Abono a Capital Cuota 2" }
+            ]
+        },
+        {
+            id: "CLI-1002",
+            role: "cliente",
+            nombre: "María José Rodríguez",
+            cedula: "001-220485-0010K",
+            correo: "maria@email.com",
+            password: "cliente123",
+            telefono: "+505 8777 3344",
+            direccion: "Carretera Masaya Km 12",
+            numeroLote: "Lote A-05",
+            proyecto: "Bosque Real Privada",
+            saldoTotalUSD: 28000,
+            saldoPendienteUSD: 14000,
+            plazoMeses: 48,
+            historialPagos: [
+                { fecha: "2026-01-10", montoUSD: 8000, concepto: "Prima Inicial" },
+                { fecha: "2026-03-01", montoUSD: 6000, concepto: "Abono Especial" }
+            ]
+        }
+    ];
+
+    function getDB() {
+        const db = localStorage.getItem('terranova_db');
+        if (!db) {
+            localStorage.setItem('terranova_db', JSON.stringify(INITIAL_USERS));
+            return INITIAL_USERS;
+        }
+        return JSON.parse(db);
+    }
+
+    function saveDB(users) {
+        localStorage.setItem('terranova_db', JSON.stringify(users));
+    }
+
+    let currentUser = null;
+
+    // --- NAVIGATION & GENERAL UI ---
     const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 10) {
-            nav.classList.add('shadow-md');
-        } else {
-            nav.classList.remove('shadow-md');
-        }
+        if (window.scrollY > 10) nav.classList.add('shadow-md');
+        else nav.classList.remove('shadow-md');
     });
 
-    // Mobile Menu Toggle
     function toggleMobileMenu() {
         const menu = document.getElementById('mobile-menu');
         const icon = document.getElementById('menu-icon');
@@ -676,12 +1033,11 @@
     }
     document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
 
-    // Smooth Scroll Helper
     function scrollToSection(id) {
         document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Interactive Map Functions
+    // Map Functions
     let currentMapScale = 1;
     function zoomMap(delta) {
         currentMapScale = Math.min(Math.max(currentMapScale + delta, 0.8), 1.6);
@@ -710,30 +1066,412 @@
         }
     }
 
-    // Modal Details Handler
     function openProjectModal(title, price, area, status, desc) {
         document.getElementById('modal-title').textContent = title;
         document.getElementById('modal-price').textContent = price;
         document.getElementById('modal-area').textContent = area;
         document.getElementById('modal-status').textContent = status;
         document.getElementById('modal-desc').textContent = desc || 'Ubicación privilegiada con facilidades de pago en dólares y entrega rápida.';
-        
         const message = `Hola, estoy interesado en recibir más detalles sobre el proyecto *${title}* con precio de *${price}*.`;
         document.getElementById('modal-wa-btn').href = `https://wa.me/50586664297?text=${encodeURIComponent(message)}`;
-        
         document.getElementById('project-modal').classList.remove('hidden');
     }
-
     function closeProjectModal() {
         document.getElementById('project-modal').classList.add('hidden');
     }
 
-    // Close modal on click outside
-    document.getElementById('project-modal').addEventListener('click', (e) => {
-        if (e.target.id === 'project-modal') closeProjectModal();
-    });
+    // --- AUTHENTICATION SYSTEM ---
+    function openAuthModal() {
+        if (currentUser) {
+            if (currentUser.role === 'admin') renderAdminDashboard();
+            else renderClientDashboard(currentUser);
+            return;
+        }
+        document.getElementById('auth-modal').classList.remove('hidden');
+    }
+    function closeAuthModal() {
+        document.getElementById('auth-modal').classList.add('hidden');
+    }
 
-    // Form Submission to WhatsApp
+    function switchAuthTab(tab) {
+        const btnLogin = document.getElementById('tab-login');
+        const btnReg = document.getElementById('tab-register');
+        const formLogin = document.getElementById('form-login');
+        const formReg = document.getElementById('form-register');
+
+        if (tab === 'login') {
+            btnLogin.className = "w-1/2 py-2 text-sm font-bold rounded-full bg-white text-primary shadow-sm transition-all";
+            btnReg.className = "w-1/2 py-2 text-sm font-bold rounded-full text-gray-500 hover:text-primary transition-all";
+            formLogin.classList.remove('hidden');
+            formReg.classList.add('hidden');
+        } else {
+            btnReg.className = "w-1/2 py-2 text-sm font-bold rounded-full bg-white text-primary shadow-sm transition-all";
+            btnLogin.className = "w-1/2 py-2 text-sm font-bold rounded-full text-gray-500 hover:text-primary transition-all";
+            formReg.classList.remove('hidden');
+            formLogin.classList.add('hidden');
+        }
+    }
+
+    function quickFillLogin(email, password) {
+        document.getElementById('login-email').value = email;
+        document.getElementById('login-password').value = password;
+    }
+
+    function handleLogin(e) {
+        e.preventDefault();
+        const input = document.getElementById('login-email').value.trim().toLowerCase();
+        const pass = document.getElementById('login-password').value;
+        const errDiv = document.getElementById('login-error');
+        errDiv.classList.add('hidden');
+
+        const db = getDB();
+        const found = db.find(u => 
+            (u.correo.toLowerCase() === input || (u.cedula && u.cedula.toLowerCase() === input)) && 
+            u.password === pass
+        );
+
+        if (found) {
+            currentUser = found;
+            closeAuthModal();
+            updateNavState();
+            if (found.role === 'admin') renderAdminDashboard();
+            else renderClientDashboard(found);
+        } else {
+            errDiv.textContent = "Credenciales incorrectas. Verifica correo/cédula y contraseña.";
+            errDiv.classList.remove('hidden');
+        }
+    }
+
+    function handleRegister(e) {
+        e.preventDefault();
+        const name = document.getElementById('reg-name').value;
+        const cedula = document.getElementById('reg-cedula').value;
+        const phone = document.getElementById('reg-phone').value;
+        const email = document.getElementById('reg-email').value.trim().toLowerCase();
+        const address = document.getElementById('reg-address').value;
+        const password = document.getElementById('reg-password').value;
+        const errDiv = document.getElementById('reg-error');
+
+        const db = getDB();
+        if (db.some(u => u.correo.toLowerCase() === email)) {
+            errDiv.textContent = "Este correo electrónico ya está registrado.";
+            errDiv.classList.remove('hidden');
+            return;
+        }
+
+        const newUser = {
+            id: "CLI-" + Math.floor(1000 + Math.random() * 9000),
+            role: "cliente",
+            nombre: name,
+            cedula: cedula,
+            correo: email,
+            password: password,
+            telefono: phone,
+            direccion: address,
+            numeroLote: "Por Asignar",
+            proyecto: "Sin asignar",
+            saldoTotalUSD: 0,
+            saldoPendienteUSD: 0,
+            plazoMeses: 36,
+            historialPagos: []
+        };
+
+        db.push(newUser);
+        saveDB(db);
+        currentUser = newUser;
+        closeAuthModal();
+        updateNavState();
+        renderClientDashboard(newUser);
+    }
+
+    function updateNavState() {
+        const text = document.getElementById('nav-user-text');
+        if (currentUser) {
+            text.textContent = currentUser.role === 'admin' ? "👑 Panel Admin" : "👤 Mi Cuenta (" + currentUser.nombre.split(' ')[0] + ")";
+        } else {
+            text.textContent = "Portal / Mi Cuenta";
+        }
+    }
+
+    function logout() {
+        currentUser = null;
+        updateNavState();
+        document.getElementById('client-dashboard-modal').classList.add('hidden');
+        document.getElementById('admin-dashboard-modal').classList.add('hidden');
+    }
+
+    // --- CLIENT DASHBOARD ---
+    function renderClientDashboard(user) {
+        document.getElementById('client-dash-name').textContent = user.nombre;
+        document.getElementById('client-dash-meta').textContent = `Lote: ${user.numeroLote} • Proyecto: ${user.proyecto}`;
+        document.getElementById('client-dash-cedula').textContent = user.cedula;
+        document.getElementById('client-dash-email').textContent = user.correo;
+        document.getElementById('client-dash-phone').textContent = user.telefono;
+        document.getElementById('client-dash-address').textContent = user.direccion;
+        document.getElementById('client-dash-project').textContent = user.proyecto;
+        document.getElementById('client-dash-lot').textContent = user.numeroLote;
+
+        const total = user.saldoTotalUSD || 0;
+        const pending = user.saldoPendienteUSD || 0;
+        const paid = Math.max(0, total - pending);
+        const percent = total > 0 ? Math.round((paid / total) * 100) : 0;
+
+        document.getElementById('client-dash-total').textContent = `$${total.toLocaleString()} USD`;
+        document.getElementById('client-dash-paid').textContent = `$${paid.toLocaleString()} USD`;
+        document.getElementById('client-dash-pending').textContent = `$${pending.toLocaleString()} USD`;
+        
+        const monthly = user.plazoMeses > 0 ? Math.round(pending / user.plazoMeses) : 0;
+        document.getElementById('client-dash-installment').textContent = `${user.plazoMeses} Meses ($${monthly.toLocaleString()} USD/mes)`;
+
+        document.getElementById('client-dash-percent').textContent = `${percent}% Pagado`;
+        document.getElementById('client-dash-progress-bar').style.width = `${percent}%`;
+
+        // Payments Table
+        const tbody = document.getElementById('client-dash-payments-table');
+        tbody.innerHTML = '';
+        if (!user.historialPagos || user.historialPagos.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay pagos registrados aún.</td></tr>`;
+        } else {
+            user.historialPagos.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.className = "border-b hover:bg-gray-50";
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-gray-800">${p.fecha}</td>
+                    <td class="p-3 text-gray-600">${p.concepto}</td>
+                    <td class="p-3 font-bold text-emerald-700">+$${p.montoUSD.toLocaleString()} USD</td>
+                    <td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded-full font-bold">COMPLETADO</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        const msg = `Hola, soy ${user.nombre} (Cédula: ${user.cedula}), cliente del lote ${user.numeroLote} (${user.proyecto}). Quisiera reportar un pago / consultar mi cuota.`;
+        document.getElementById('client-dash-wa-btn').href = `https://wa.me/50586664297?text=${encodeURIComponent(msg)}`;
+
+        document.getElementById('client-dashboard-modal').classList.remove('hidden');
+    }
+
+    // --- ADMIN DASHBOARD ---
+    function renderAdminDashboard() {
+        const db = getDB();
+        const clients = db.filter(u => u.role === 'cliente');
+
+        const totalClients = clients.length;
+        let carteraTotal = 0;
+        let saldoPendiente = 0;
+
+        clients.forEach(c => {
+            carteraTotal += (c.saldoTotalUSD || 0);
+            saldoPendiente += (c.saldoPendienteUSD || 0);
+        });
+        const totalRecaudado = Math.max(0, carteraTotal - saldoPendiente);
+
+        document.getElementById('admin-metric-count').textContent = totalClients;
+        document.getElementById('admin-metric-total').textContent = `$${carteraTotal.toLocaleString()} USD`;
+        document.getElementById('admin-metric-collected').textContent = `$${totalRecaudado.toLocaleString()} USD`;
+        document.getElementById('admin-metric-pending').textContent = `$${saldoPendiente.toLocaleString()} USD`;
+
+        renderAdminClientsTable(clients);
+        document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+    }
+
+    function renderAdminClientsTable(clientsList) {
+        const tbody = document.getElementById('admin-clients-table-body');
+        tbody.innerHTML = '';
+
+        if (clientsList.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-500">No se encontraron clientes registrados.</td></tr>`;
+            return;
+        }
+
+        clientsList.forEach(c => {
+            const total = c.saldoTotalUSD || 0;
+            const pending = c.saldoPendienteUSD || 0;
+            const paid = Math.max(0, total - pending);
+            const pct = total > 0 ? Math.round((paid / total) * 100) : 0;
+
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-gray-50 transition-colors";
+            tr.innerHTML = `
+                <td class="p-4">
+                    <div class="font-bold text-gray-900">${c.nombre}</div>
+                    <div class="text-xs text-gray-500">${c.correo}</div>
+                </td>
+                <td class="p-4">
+                    <div class="text-xs font-semibold text-gray-800">${c.cedula || 'N/A'}</div>
+                    <div class="text-xs text-gray-500">${c.telefono || 'N/A'}</div>
+                </td>
+                <td class="p-4">
+                    <span class="bg-primary-container/10 text-primary-container text-xs px-2.5 py-1 rounded-md font-bold">${c.numeroLote || 'Sin Lote'}</span>
+                    <div class="text-xs text-gray-500 mt-1">${c.proyecto}</div>
+                </td>
+                <td class="p-4 font-bold text-gray-800">$${total.toLocaleString()} USD</td>
+                <td class="p-4 font-bold text-amber-800">$${pending.toLocaleString()} USD</td>
+                <td class="p-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-16 bg-gray-200 rounded-full h-2">
+                            <div class="bg-emerald-600 h-2 rounded-full" style="width: ${pct}%"></div>
+                        </div>
+                        <span class="text-xs font-bold text-gray-700">${pct}%</span>
+                    </div>
+                </td>
+                <td class="p-4 text-center">
+                    <div class="flex gap-1 justify-center">
+                        <button onclick="openPaymentModal('${c.id}')" title="Registrar Abono" class="p-2 bg-emerald-100 text-emerald-800 hover:bg-emerald-200 rounded-lg text-xs font-bold flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">payments</span> Abono
+                        </button>
+                        <button onclick="editClient('${c.id}')" title="Editar Cliente" class="p-2 bg-blue-100 text-blue-800 hover:bg-blue-200 rounded-lg text-xs font-bold">
+                            <span class="material-symbols-outlined text-sm">edit</span>
+                        </button>
+                        <button onclick="deleteClient('${c.id}')" title="Eliminar Cliente" class="p-2 bg-red-100 text-red-800 hover:bg-red-200 rounded-lg text-xs font-bold">
+                            <span class="material-symbols-outlined text-sm">delete</span>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function filterAdminClients() {
+        const query = document.getElementById('admin-search-input').value.toLowerCase();
+        const db = getDB();
+        const clients = db.filter(u => u.role === 'cliente' && (
+            u.nombre.toLowerCase().includes(query) ||
+            (u.cedula && u.cedula.toLowerCase().includes(query)) ||
+            (u.numeroLote && u.numeroLote.toLowerCase().includes(query)) ||
+            u.proyecto.toLowerCase().includes(query)
+        ));
+        renderAdminClientsTable(clients);
+    }
+
+    // --- ADMIN CLIENT FORM MODAL ---
+    function openNewClientModal() {
+        document.getElementById('admin-form-title').textContent = "Registrar Nuevo Cliente";
+        document.getElementById('edit-client-id').value = "";
+        document.getElementById('admin-client-form').reset();
+        document.getElementById('admin-client-form-modal').classList.remove('hidden');
+    }
+    function closeNewClientModal() {
+        document.getElementById('admin-client-form-modal').classList.add('hidden');
+    }
+
+    function editClient(id) {
+        const db = getDB();
+        const client = db.find(u => u.id === id);
+        if (!client) return;
+
+        document.getElementById('admin-form-title').textContent = "Editar Cliente";
+        document.getElementById('edit-client-id').value = client.id;
+        document.getElementById('form-cli-name').value = client.nombre;
+        document.getElementById('form-cli-cedula').value = client.cedula;
+        document.getElementById('form-cli-email').value = client.correo;
+        document.getElementById('form-cli-phone').value = client.telefono;
+        document.getElementById('form-cli-address').value = client.direccion;
+        document.getElementById('form-cli-project').value = client.proyecto;
+        document.getElementById('form-cli-lot').value = client.numeroLote;
+        document.getElementById('form-cli-total').value = client.saldoTotalUSD;
+        document.getElementById('form-cli-pending').value = client.saldoPendienteUSD;
+        document.getElementById('form-cli-months').value = client.plazoMeses || 36;
+        document.getElementById('form-cli-password').value = client.password;
+
+        document.getElementById('admin-client-form-modal').classList.remove('hidden');
+    }
+
+    function saveAdminClient(e) {
+        e.preventDefault();
+        const editId = document.getElementById('edit-client-id').value;
+        const db = getDB();
+
+        if (editId) {
+            const index = db.findIndex(u => u.id === editId);
+            if (index !== -1) {
+                db[index].nombre = document.getElementById('form-cli-name').value;
+                db[index].cedula = document.getElementById('form-cli-cedula').value;
+                db[index].correo = document.getElementById('form-cli-email').value;
+                db[index].telefono = document.getElementById('form-cli-phone').value;
+                db[index].direccion = document.getElementById('form-cli-address').value;
+                db[index].proyecto = document.getElementById('form-cli-project').value;
+                db[index].numeroLote = document.getElementById('form-cli-lot').value;
+                db[index].saldoTotalUSD = parseFloat(document.getElementById('form-cli-total').value);
+                db[index].saldoPendienteUSD = parseFloat(document.getElementById('form-cli-pending').value);
+                db[index].plazoMeses = parseInt(document.getElementById('form-cli-months').value);
+                db[index].password = document.getElementById('form-cli-password').value;
+            }
+        } else {
+            const newClient = {
+                id: "CLI-" + Math.floor(1000 + Math.random() * 9000),
+                role: "cliente",
+                nombre: document.getElementById('form-cli-name').value,
+                cedula: document.getElementById('form-cli-cedula').value,
+                correo: document.getElementById('form-cli-email').value,
+                telefono: document.getElementById('form-cli-phone').value,
+                direccion: document.getElementById('form-cli-address').value,
+                proyecto: document.getElementById('form-cli-project').value,
+                numeroLote: document.getElementById('form-cli-lot').value,
+                saldoTotalUSD: parseFloat(document.getElementById('form-cli-total').value),
+                saldoPendienteUSD: parseFloat(document.getElementById('form-cli-pending').value),
+                plazoMeses: parseInt(document.getElementById('form-cli-months').value),
+                password: document.getElementById('form-cli-password').value,
+                historialPagos: []
+            };
+            db.push(newClient);
+        }
+
+        saveDB(db);
+        closeNewClientModal();
+        renderAdminDashboard();
+    }
+
+    function deleteClient(id) {
+        if (!confirm("¿Estás seguro de que deseas eliminar este cliente?")) return;
+        let db = getDB();
+        db = db.filter(u => u.id !== id);
+        saveDB(db);
+        renderAdminDashboard();
+    }
+
+    // --- PAYMENT RECORD SYSTEM ---
+    function openPaymentModal(id) {
+        const db = getDB();
+        const client = db.find(u => u.id === id);
+        if (!client) return;
+
+        document.getElementById('pay-client-id').value = client.id;
+        document.getElementById('pay-client-name').textContent = `Cliente: ${client.nombre} (${client.numeroLote}) • Saldo Pendiente Actual: $${client.saldoPendienteUSD.toLocaleString()} USD`;
+        document.getElementById('pay-date').value = new Date().toISOString().split('T')[0];
+        document.getElementById('payment-modal').classList.remove('hidden');
+    }
+
+    function closePaymentModal() {
+        document.getElementById('payment-modal').classList.add('hidden');
+    }
+
+    function handleRecordPayment(e) {
+        e.preventDefault();
+        const clientId = document.getElementById('pay-client-id').value;
+        const amount = parseFloat(document.getElementById('pay-amount').value);
+        const concept = document.getElementById('pay-concept').value;
+        const date = document.getElementById('pay-date').value;
+
+        const db = getDB();
+        const client = db.find(u => u.id === clientId);
+        if (client) {
+            client.saldoPendienteUSD = Math.max(0, client.saldoPendienteUSD - amount);
+            if (!client.historialPagos) client.historialPagos = [];
+            client.historialPagos.unshift({
+                fecha: date,
+                montoUSD: amount,
+                concepto: concept
+            });
+            saveDB(db);
+        }
+
+        closePaymentModal();
+        renderAdminDashboard();
+    }
+
+    // Contact Form Redirection
     function handleFormSubmit(e) {
         e.preventDefault();
         const nombre = document.getElementById('nombre').value;
@@ -742,7 +1480,6 @@
         const mensaje = document.getElementById('mensaje').value;
 
         const text = `Hola, mi nombre es *${nombre}*.\n📱 Teléfono: ${telefono}\n📌 Proyecto de interés: *${proyecto}*\n${mensaje ? '💬 Mensaje: ' + mensaje : ''}`;
-        
         window.open(`https://wa.me/50586664297?text=${encodeURIComponent(text)}`, '_blank');
     }
 </script>
